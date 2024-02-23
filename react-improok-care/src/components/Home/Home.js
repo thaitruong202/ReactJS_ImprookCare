@@ -1,8 +1,10 @@
+import "./Home.css"
+
 const Home = () => {
     return (
         <>
             <div>
-                <h1>Trang chủ</h1>
+                <h1 className="text-3xl underline">Trang chủ</h1>
             </div>
         </>
     )
