@@ -56,6 +56,7 @@ const Login = () => {
                                                 required
                                             />
                                         </InputGroup>
+                                        <div className="Separate"></div>
                                         <InputGroup className="mb-3">
                                             <InputGroup.Text><Lock /></InputGroup.Text>
                                             <Form.Control
@@ -69,6 +70,7 @@ const Login = () => {
                                                 {showPassword ? <Visibility /> : <VisibilityOff />}
                                             </button>
                                         </InputGroup>
+                                        <div className="Separate"></div>
                                     </Form>
                                     {loading === true ? <Spinner /> : <button className="Login_Butt">Login</button>}
                                     <div className="Login_Help">

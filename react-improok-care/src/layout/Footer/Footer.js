@@ -2,7 +2,7 @@ import "./Footer.css"
 import dadangky from "../../assets/images/dadangky.svg"
 import dmcabadge from "../../assets/images/dmca-badge.png"
 import { Link } from "react-router-dom";
-import { Facebook, LinkedIn, Twitter, YouTube } from "@mui/icons-material";
+import { Facebook, Google, LinkedIn, YouTube } from "@mui/icons-material";
 
 const Footer = () => {
     return (<>
@@ -50,7 +50,7 @@ const Footer = () => {
                         <li><Facebook /></li>
                         <li><YouTube /></li>
                         <li><LinkedIn /></li>
-                        <li><Twitter /></li>
+                        <li><Google /></li>
                     </ul>
                 </div>
                 <div className="Footer1_6">
