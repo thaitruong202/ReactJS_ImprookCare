@@ -1,4 +1,3 @@
-// import { FaFacebook, FaGoogle } from "react-icons/fa";
 import "./Login.css"
 import LoginLogo from "../../assets/images/login-banner.png"
 import { useState } from "react";
@@ -76,7 +75,7 @@ const Login = () => {
                                         <span>
                                             <span><input className="Remember_Check" type="checkbox" /> Remember Me</span>
                                         </span>
-                                        <Link to="/forgetpassword">Forget Password</Link>
+                                        <Link to="/forgetpassword">Forget Password?</Link>
                                     </div>
                                     <div className="Login_Option">
                                         <div className="Login_Or">
