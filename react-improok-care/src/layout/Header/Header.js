@@ -46,7 +46,7 @@ const Header = () => {
                         <li>
                             <Dropdown>
                                 <NavDropdown title='Hợp tác bác sĩ ' id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/collabdoctor">Đăng ký</NavDropdown.Item>
+                                    <NavDropdown.Item href="/collaboration">Đăng ký</NavDropdown.Item>
                                 </NavDropdown>
                             </Dropdown>
                             <span>Đăng ký ngay</span>
