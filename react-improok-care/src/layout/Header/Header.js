@@ -1,19 +1,27 @@
-// import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import { FaSeedling } from "react-icons/fa"
 //import { FaSearch } from "react-icons/fa"
 // import { FaTimesCircle } from "react-icons/fa";
 // import Apis, { endpoints } from "../configs/Apis";
 import "./Header.css"
-import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { Dropdown, NavDropdown } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserContext } from "../../App";
 // import logo from "../../assets/images/tech-health-care.png"
 
 const Header = () => {
-    // const [currentUser,] = useContext(MyUserContext);
+    // const [currentUser,] = useContext(UserContext);
+    const [user, dispatch] = useContext(UserContext);
     const nav = useNavigate();
     const [loading, setLoading] = useState(true)
+
+    const logout = () => {
+        dispatch({
+            "type": "logout"
+        })
+        nav("/")
+    }
 
     return (<>
         <div className="Header">
@@ -54,36 +62,36 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="Header3">
-                    {/* {user === null ? */}
-                    <><button className="Sign-in"><Link to="/phoneverification">Đăng ký</Link></button>
-                        <button className="Log-in"><Link to="/login">Đăng nhập</Link></button></>
-                    {/* : */}
-                    {/* <>
-                    {user.roleId.roleId === 1 ?
+                    {user === null ?
+                        <><button className="Sign-in"><Link to="/phoneverification">Đăng ký</Link></button>
+                            <button className="Log-in"><Link to="/login">Đăng nhập</Link></button></>
+                        :
                         <>
-                            <button class="Admin"><Link to="/admin">Quản trị</Link></button>
-                        </> :
-                        <>
-                            {user.roleId.roleId === 2 ?
+                            {user.roleId.roleId === 1 ?
                                 <>
-                                    <button class="Doctor"><Link to="/doctor">Bác sĩ</Link></button>
+                                    <button class="Admin"><Link to="/admin">Quản trị</Link></button>
                                 </> :
-                                <></>}
+                                <>
+                                    {user.roleId.roleId === 2 ?
+                                        <>
+                                            <button class="Doctor"><Link to="/doctor">Bác sĩ</Link></button>
+                                        </> :
+                                        <></>}
+                                </>
+                            }
+                            {/* <span class="User-profile"><a href="/">Chào {user.lastname} {user.firstname}</a></span> */}
+                            <Dropdown>
+                                <NavDropdown title={`Chào ${user.lastname} ${user.firstname}`} id="basic-nav-dropdown">
+                                    {/* <NavDropdown title="Chào Teesa Reesa" id="basic-nav-dropdown"> */}
+                                    <NavDropdown.Item href="/" >Về trang chủ</NavDropdown.Item>
+                                    <NavDropdown.Item href="/personalpage" >Thông tin cá nhân</NavDropdown.Item>
+                                    <NavDropdown.Item href="/medicalrecord" >Lịch sử khám bệnh</NavDropdown.Item>
+                                    <NavDropdown.Item href="/changepassword" >Thay đổi mật khẩu</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={logout}>Đăng xuất</NavDropdown.Item>
+                                </NavDropdown>
+                            </Dropdown>
                         </>
                     }
-                    <span class="User-profile"><a href="/">Chào {user.lastname} {user.firstname}</a></span>
-                    <Dropdown>
-                        <NavDropdown title={`Chào ${user.lastname} ${user.firstname}`} id="basic-nav-dropdown">
-                        <NavDropdown title="Chào Teesa Reesa" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/" >Về trang chủ</NavDropdown.Item>
-                            <NavDropdown.Item href="/personalpage" >Thông tin cá nhân</NavDropdown.Item>
-                            <NavDropdown.Item href="/medicalrecord" >Lịch sử khám bệnh</NavDropdown.Item>
-                            <NavDropdown.Item href="/changepassword" >Thay đổi mật khẩu</NavDropdown.Item>
-                            <NavDropdown.Item>Đăng xuất</NavDropdown.Item>
-                        </NavDropdown>
-                    </Dropdown>
-                </>
-                } */}
                     {/* <button class="Little-menu">
                     <div><FaEllipsisV /></div>
                     <ul>
