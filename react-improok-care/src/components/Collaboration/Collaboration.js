@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./Collaboration.css"
-// import Apis, { endpoints } from "../configs/Apis";
+import Apis, { endpoints } from "../../configs/Apis";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
-import maledoctor from "../../assets/images/male-doctor.png"
-import femaledoctor from "../../assets/images/female-doctor.png"
+// import maledoctor from "../../assets/images/male-doctor.png"
+// import femaledoctor from "../../assets/images/female-doctor.png"
 import setting from "../../assets/images/settings.png"
 import timetable from "../../assets/images/timetable.png"
 import phonecall from "../../assets/images/phone-call.png"
@@ -14,7 +14,6 @@ import advice from "../../assets/images/advice.png"
 import managementapp from "../../assets/images/management-app.png"
 import collabdoctor from "../../assets/images/collab-doctor-register.png"
 import { TiTickOutline } from "react-icons/ti";
-import { FcSearch } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -25,26 +24,26 @@ const Collaboration = () => {
     const [email, setEmail] = useState();
     const [loading, setLoading] = useState(false);
 
-    // const addCollabDoctor = (evt) => {
-    //     evt.preventDefault();
+    const addCollabDoctor = (evt) => {
+        evt.preventDefault();
 
-    //     const process = async () => {
-    //         try {
-    //             setLoading(true);
-    //             let res = await Apis.post(endpoints['add-collab-doctor'], {
-    //                 "name": name,
-    //                 "phonenumber": phonenumber,
-    //                 "email": email
-    //             });
-    //             toast.success(res.data)
-    //             console.log(res.data);
-    //             setLoading(false);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     process();
-    // }
+        const process = async () => {
+            try {
+                setLoading(true);
+                let res = await Apis.post(endpoints['add-collab-doctor'], {
+                    "name": name,
+                    "phonenumber": phonenumber,
+                    "email": email
+                });
+                toast.success(res.data)
+                console.log(res.data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        process();
+    }
 
     return <>
         <div className="CollabDoctor_Wrapper">
@@ -208,7 +207,7 @@ const Collaboration = () => {
                             <h6>Để lại thông tin. Chúng tôi sẽ liên hệ với bạn.</h6>
                         </div>
                         <Form
-                        // onSubmit={(e) => addCollabDoctor(e)}
+                            onSubmit={(e) => addCollabDoctor(e)}
                         >
                             <div className="mb-3">
                                 <Form.Control defaultValue={name} style={{ width: "70%", marginBottom: '0.75rem' }} onChange={(e) => setName(e.target.value)} type="text" placeholder="Họ và tên *" required />

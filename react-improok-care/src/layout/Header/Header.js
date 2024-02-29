@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-// import { FaSeedling } from "react-icons/fa"
-//import { FaSearch } from "react-icons/fa"
-// import { FaTimesCircle } from "react-icons/fa";
 // import Apis, { endpoints } from "../configs/Apis";
 import "./Header.css"
 import { useNavigate, Link } from "react-router-dom"
-import { Dropdown, NavDropdown } from "react-bootstrap";
+import { Dropdown, Image, NavDropdown } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from "../../App";
+import { FaHome, FaInfoCircle, FaHistory } from "react-icons/fa";
+import { MdSecurity, MdLogout, MdAccountCircle, MdAdminPanelSettings } from "react-icons/md";
 // import logo from "../../assets/images/tech-health-care.png"
 
 const Header = () => {
@@ -43,10 +42,6 @@ const Header = () => {
                             <Link to="/">Chuyên khoa</Link>
                             <span>Tìm bác sĩ theo chuyên khoa</span>
                         </li>
-                        {/* <li>
-                        <a href="/">Cơ sở y tế</a>
-                        <span>Chọn bệnh viện, phòng khám</span>
-                        </li> */}
                         <li>
                             <Link to="/">Tin tức</Link>
                             <span>Tin tức về y tế thế giới</span>
@@ -67,27 +62,29 @@ const Header = () => {
                             <button className="Log-in"><Link to="/login">Đăng nhập</Link></button></>
                         :
                         <>
-                            {user.roleId.roleId === 1 ?
-                                <>
-                                    <button class="Admin"><Link to="/admin">Quản trị</Link></button>
-                                </> :
-                                <>
-                                    {user.roleId.roleId === 2 ?
-                                        <>
-                                            <button class="Doctor"><Link to="/doctor">Bác sĩ</Link></button>
-                                        </> :
-                                        <></>}
-                                </>
-                            }
                             {/* <span class="User-profile"><a href="/">Chào {user.lastname} {user.firstname}</a></span> */}
-                            <Dropdown>
-                                <NavDropdown title={`Chào ${user.lastname} ${user.firstname}`} id="basic-nav-dropdown">
-                                    {/* <NavDropdown title="Chào Teesa Reesa" id="basic-nav-dropdown"> */}
-                                    <NavDropdown.Item href="/" >Về trang chủ</NavDropdown.Item>
-                                    <NavDropdown.Item href="/personalpage" >Thông tin cá nhân</NavDropdown.Item>
-                                    <NavDropdown.Item href="/medicalrecord" >Lịch sử khám bệnh</NavDropdown.Item>
-                                    <NavDropdown.Item href="/changepassword" >Thay đổi mật khẩu</NavDropdown.Item>
-                                    <NavDropdown.Item onClick={logout}>Đăng xuất</NavDropdown.Item>
+                            <Dropdown style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image src={user?.avatar} style={{ width: "13%" }} alt="Avatar" roundedCircle />
+                                <NavDropdown title={`Chào, ${user.lastname} ${user.firstname}!`} id="basic-nav-dropdown">
+                                    <NavDropdown.Item href="/" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaHome />Về trang chủ</NavDropdown.Item>
+                                    <NavDropdown.Item href="/personalpage" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaInfoCircle />Thông tin cá nhân</NavDropdown.Item>
+                                    <NavDropdown.Item href="/medicalrecord" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaHistory />Lịch sử khám bệnh</NavDropdown.Item>
+                                    <NavDropdown.Item href="/changepassword" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdSecurity />Thay đổi mật khẩu</NavDropdown.Item>
+                                    {user.roleId.roleId === 1 ?
+                                        <>
+                                            <NavDropdown.Item href="/admin" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdAdminPanelSettings />Quản trị</NavDropdown.Item>
+                                            {/* <button class="Admin"><Link to="/admin">Quản trị</Link></button> */}
+                                        </> :
+                                        <>
+                                            {user.roleId.roleId === 2 ?
+                                                <>
+                                                    <NavDropdown.Item href="/doctor" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdAccountCircle />Bác sĩ</NavDropdown.Item>
+                                                    {/* <button class="Doctor"><Link to="/doctor">Bác sĩ</Link></button> */}
+                                                </> :
+                                                <></>}
+                                        </>
+                                    }
+                                    <NavDropdown.Item onClick={logout} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdLogout />Đăng xuất</NavDropdown.Item>
                                 </NavDropdown>
                             </Dropdown>
                         </>

@@ -7,7 +7,7 @@ import Spinner from "../../layout/Spinner"
 import { Facebook, Google, Lock, Person, Visibility, VisibilityOff } from "@mui/icons-material";
 import { InputGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
-import cookie from "react-cookies"
+import cookie from "react-cookies";
 import { UserContext } from "../../App";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 
@@ -47,7 +47,6 @@ const Login = () => {
                 if (res.status === 200)
                     toast.success("Đăng nhập thành công!");
             } catch (err) {
-                // toast.error(err.request.responseText)
                 // console.log(err.request.responseText);
                 setLoading(false);
                 toast.error("Sai tài khoản hoặc mật khẩu!");
@@ -103,14 +102,13 @@ const Login = () => {
                                                 value={password}
                                                 onChange={e => setPassword(e.target.value)}
                                             />
-                                            <button className="Show_Pass" onClick={toggleShowPassword}>
+                                            <button className="Show_Pass" type="button" onClick={toggleShowPassword}>
                                                 {showPassword ? <Visibility /> : <VisibilityOff />}
                                             </button>
                                         </InputGroup>
                                         <div className="Separate"></div>
                                         {loading === true ? <Spinner /> : <button className="Login_Butt" type="submit">Login</button>}
                                     </Form>
-                                    {/* {loading === true ? <Spinner /> : <button className="Login_Butt" onClick={login}>Login</button>} */}
                                     <div className="Login_Help">
                                         <span>
                                             <span><input className="Remember_Check" type="checkbox" /> Remember Me</span>

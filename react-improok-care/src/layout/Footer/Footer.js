@@ -9,17 +9,17 @@ const Footer = () => {
         <div className="Footer">
             <div className="Footer1">
                 <div className="Footer1_1">
-                    <label style={{ fontWeight: 600 }}>CÔNG TY TNHH IMPROOK VIỆT NAM</label>
+                    <label style={{ fontWeight: 600 }}>CÔNG TY TNHH I'MPROOK VIỆT NAM</label>
                     <ul>
-                        <li><strong>VPĐD:</strong> 371 Nguyễn Kiệm, P.3, Q.Gò Vấp, Tp. HCM</li>
+                        <li><strong>VPĐD:</strong> 371 Nguyễn Kiệm, P. 3, Q. Gò Vấp, TP. HCM</li>
                         <li>Số ĐKKD 0315268642 do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp lần đầu ngày 28/08/2023</li>
                         <li>Chịu trách nhiệm nội dung: <Link to="/" style={{ textDecoration: 'none', fontSize: '1rem', fontWeight: 'bold' }}>PGS. TS. Tuấn Trần</Link></li>
                     </ul>
                 </div>
                 <div className="Footer1_2">
-                    <label style={{ fontWeight: 600 }}>Về Spring Care</label>
+                    <label style={{ fontWeight: 600 }}>Về I'MPROOK Care</label>
                     <ul>
-                        <li>Giới thiệu về IMPROOK Care</li>
+                        <li>Giới thiệu về I'MPROOK Care</li>
                         <li>Ban điều hành</li>
                         <li>Nhân sự & Tuyển dụng</li>
                         <li>Liên hệ</li>
@@ -31,7 +31,7 @@ const Footer = () => {
                         <li>Đặt khám Bác sĩ</li>
                         <li>Đặt khám Bệnh viện</li>
                         <li>Đặt khám Phòng khám</li>
-                        <li>IMPROOK Store</li>
+                        <li>I'MPROOK Store</li>
                     </ul>
                 </div>
                 <div className="Footer1_4">
@@ -69,7 +69,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className="Footer2">
-                <p>Các thông tin trên IMPROOK Care chỉ dành cho mục đích tham khảo, tra cứu và không thay thế cho việc chuẩn đoán hoặc điều trị y khoa.
+                <p>Các thông tin trên I'MPROOK Care chỉ dành cho mục đích tham khảo, tra cứu và không thay thế cho việc chuẩn đoán hoặc điều trị y khoa.
                     <br />
                     Cần tuyệt đối tuân theo hướng dẫn của Bác sĩ và Nhân viên y tế.
                 </p>
