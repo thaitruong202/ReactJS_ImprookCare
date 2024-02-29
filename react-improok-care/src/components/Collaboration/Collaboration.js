@@ -51,12 +51,8 @@ const Collaboration = () => {
                 <div className="CollabDoctor_Content_1">
                     <div className="CollabDoctor_Content_1_Header">
                         <div>
-                            <h1>
-                                IM'PROOK CARE.
-                            </h1>
-                            <h2>
-                                Giải pháp chuyển đổi số phòng khám
-                            </h2>
+                            <h1>IM'PROOK CARE.</h1>
+                            <h2>Giải pháp chuyển đổi số phòng khám</h2>
                         </div>
                         <div>
                             <p>I'MPROOK cung cấp giải <strong>pháp chuyển đổi số</strong> giúp bác sĩ vận hành phòng khám hiệu quả,
@@ -206,9 +202,7 @@ const Collaboration = () => {
                             <h1 className="mb-3">Hợp tác với <strong>I'MPROOK</strong> ngay!</h1>
                             <h6>Để lại thông tin. Chúng tôi sẽ liên hệ với bạn.</h6>
                         </div>
-                        <Form
-                            onSubmit={(e) => addCollabDoctor(e)}
-                        >
+                        <Form onSubmit={(e) => addCollabDoctor(e)}>
                             <div className="mb-3">
                                 <Form.Control defaultValue={name} style={{ width: "70%", marginBottom: '0.75rem' }} onChange={(e) => setName(e.target.value)} type="text" placeholder="Họ và tên *" required />
                                 <Form.Control defaultValue={phonenumber} style={{ width: "70%", marginBottom: '0.75rem' }} onChange={(e) => setPhonenumber(e.target.value)} type="text" placeholder="Số điện thoại *" required />

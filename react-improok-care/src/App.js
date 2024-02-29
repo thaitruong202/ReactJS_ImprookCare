@@ -11,6 +11,8 @@ import Header from "./layout/Header/Header";
 import Footer from "./layout/Footer/Footer";
 import ForgetPassword from "./components/ForgetPassword/ForgetPassword"
 import Collaboration from "./components/Collaboration/Collaboration"
+import Personal from "./components/Personal/Personal"
+import Profile from "./components/Profile/Profile";
 import { ToastContainer } from "react-toastify";
 
 export const UserContext = createContext();
@@ -28,6 +30,8 @@ const App = () => {
           <Route path='/register' element={<Register />} />
           <Route path='/forgetpassword' element={<ForgetPassword />} />
           <Route path='/collaboration' element={<Collaboration />} />
+          <Route path='/personal' element={<Personal />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
         <Footer />
         <ToastContainer />
