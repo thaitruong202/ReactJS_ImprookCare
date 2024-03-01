@@ -295,10 +295,10 @@ const Profile = () => {
     }
 
     return <>
-        <div class="Profile_Wrapper">
-            <div class="Profile">
-                <div class="Profile_Left">
-                    <div class="Profile_Left_Content">
+        <div className="Profile_Wrapper">
+            <div className="Profile">
+                <div className="Profile_Left">
+                    <div className="Profile_Left_Content">
                         <ul>
                             <li><Link to="/personalpage">Thông tin cá nhân</Link></li>
                             {/* <li><Link to="/changepassword">Đổi mật khẩu</Link></li> */}
@@ -310,26 +310,26 @@ const Profile = () => {
                         </ul>
                     </div>
                 </div>
-                <div class="Profile_Middle">
-                    <div class="Profile_Middle_Header">
+                <div className="Profile_Middle">
+                    <div className="Profile_Middle_Header">
                         <h3>Hồ sơ</h3>
                     </div>
-                    <div class="Profile_Middle_Content">
-                        <div class="Profile_Middle_Container">
-                            <div class="Profile_Middle_Info">
+                    <div className="Profile_Middle_Content">
+                        <div className="Profile_Middle_Container">
+                            <div className="Profile_Middle_Info">
                                 <input type="text" placeholder="Nhập tên hồ sơ cần tìm..."></input>
-                                <div class="Profile_List">
+                                <div className="Profile_List">
                                     {profilePatient.length === 0 ? <>
-                                        <div class="Profile_List_404">
+                                        <div className="Profile_List_404">
                                             <img src={printer} alt="404" width={'20%'} />
                                             <span>Không tìm thấy kết quả</span>
                                         </div>
                                     </> : <>
-                                        <div class="Profile_List_Info">
+                                        <div className="Profile_List_Info">
                                             <ul>
                                                 {Object.values(profilePatient).map(pp => {
                                                     return <>
-                                                        <div class="Profile_List_Detail" value={selectedProfile} onClick={(e) => viewProfilePatient(e, pp)}>
+                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={(e) => viewProfilePatient(e, pp)}>
                                                             <img src={profileicon} alt="profileicon" width={'20%'} />
                                                             <li key={pp.profilePatientId} value={pp.profilePatientId}>{pp.name}</li>
                                                         </div>
@@ -340,50 +340,50 @@ const Profile = () => {
                                     </>}
                                 </div>
                             </div>
-                            <button class="addProfileButt" onClick={addProfileClick}>Thêm hồ sơ</button>
+                            <button className="addProfileButt" onClick={addProfileClick}>Thêm hồ sơ</button>
                         </div>
                     </div>
                 </div>
-                <div class="Profile_Right">
+                <div className="Profile_Right">
                     {addProfileInfo === false ?
                         <>
                             {checkProfileInfo === true ?
                                 <>
                                     <section>
-                                        <div class="Profile_Right_Header"><h3 className="text-center text-success mb-4">Thông tin cá nhân</h3></div>
-                                        <div class="Profile_Right_Content">
+                                        <div className="Profile_Right_Header"><h3 className="text-center text-success mb-4">Thông tin cá nhân</h3></div>
+                                        <div className="Profile_Right_Content">
                                             {profile === null ? <>
-                                                <div class="Profile_Null">
+                                                <div className="Profile_Null">
                                                     <h5 className="mb-4">Chọn hồ sơ cần xem</h5>
                                                     <img src={profile404} alt="Not found" width={'20%'} />
                                                 </div>
                                             </> :
                                                 <>
-                                                    <div class="Profile_Name">
+                                                    <div className="Profile_Name">
                                                         <Form.Label style={{ width: "30%" }}>Họ và tên</Form.Label>
                                                         <Form.Control value={profile.name} type="text" disabled />
                                                     </div>
-                                                    <div class="Profile_Phonenumber">
+                                                    <div className="Profile_Phonenumber">
                                                         <Form.Label style={{ width: "30%" }}>Số điện thoại</Form.Label>
                                                         <Form.Control value={profile.phonenumber} type="text" disabled />
                                                     </div>
-                                                    <div class="Profile_Email">
+                                                    <div className="Profile_Email">
                                                         <Form.Label style={{ width: "30%" }}>Email</Form.Label>
                                                         <Form.Control value={profile.email} type="email" disabled />
                                                     </div>
-                                                    <div class="Profile_Address">
+                                                    <div className="Profile_Address">
                                                         <Form.Label style={{ width: "30%" }}>Địa chỉ</Form.Label>
                                                         <Form.Control value={profile.address} type="Text" disabled />
                                                     </div>
-                                                    <div class="Profile_Gender">
+                                                    <div className="Profile_Gender">
                                                         <Form.Label style={{ width: "30%" }}>Giới tính</Form.Label>
                                                         <Form.Control value={profile.gender === true ? "Nam" : "Nữ"} type="Text" disabled />
                                                     </div>
-                                                    <div class="Profile_Relationship">
+                                                    <div className="Profile_Relationship">
                                                         <Form.Label style={{ width: "30%" }}>Quan hệ</Form.Label>
                                                         <Form.Control value={profile.relationship} type="Text" disabled />
                                                     </div>
-                                                    <div class="Profile_Birthday">
+                                                    <div className="Profile_Birthday">
                                                         <Form.Label style={{ width: "30%" }}>Ngày sinh</Form.Label>
                                                         {profile.birthday === null ? <>
                                                             <Form.Control value="Thiết lập ngày sinh" type="Text" disabled />
@@ -403,7 +403,7 @@ const Profile = () => {
 
                                                         </>}
                                                     </div>
-                                                    <div class="Change_Button">
+                                                    <div className="Change_Button">
                                                         <button type="button">Xóa</button>
                                                         <button type="button" onClick={updateClick}>Thay đổi thông tin</button>
                                                     </div>
@@ -412,21 +412,21 @@ const Profile = () => {
                                     </section>
                                 </> : <>
                                     <section>
-                                        <div class="Profile_Right_Header"><h3 className="text-center text-success mb-4">Thay đổi thông tin</h3></div>
-                                        <div class="Profile_Right_Content">
-                                            <div class="Profile_Name">
+                                        <div className="Profile_Right_Header"><h3 className="text-center text-success mb-4">Thay đổi thông tin</h3></div>
+                                        <div className="Profile_Right_Content">
+                                            <div className="Profile_Name">
                                                 <Form.Label style={{ width: "30%" }}>Họ và tên</Form.Label>
                                                 <Form.Control defaultValue={profile.name} onChange={(e) => setUpdateName(e.target.value)} type="text" placeholder="Họ và tên" required />
                                             </div>
-                                            <div class="Profile_Phonenumber">
+                                            <div className="Profile_Phonenumber">
                                                 <Form.Label style={{ width: "30%" }}>Số điện thoại</Form.Label>
                                                 <Form.Control defaultValue={profile.phonenumber} onChange={(e) => setUpdatePhonenumber(e.target.value)} type="text" placeholder="Số điện thoại" required />
                                             </div>
-                                            <div class="Profile_Email">
+                                            <div className="Profile_Email">
                                                 <Form.Label style={{ width: "30%" }}>Email</Form.Label>
                                                 <Form.Control defaultValue={profile.email} type="email" onChange={(e) => setUpdateEmail(e.target.value)} placeholder="Email" required />
                                             </div>
-                                            <div class="Profile_Address">
+                                            <div className="Profile_Address">
                                                 <div>
                                                     <Form.Label style={{ width: "30%" }}>Tỉnh/TP</Form.Label>
                                                     <Form.Select defaultValue={selectedProvinceCode} onChange={(e) => handleProvinceChange(e)} onFocus={(e) => focusProvince(e)}>
@@ -446,15 +446,15 @@ const Profile = () => {
                                                     </Form.Select>
                                                 </div>
                                             </div>
-                                            <div class="Profile_Address_Personal">
-                                                <div class="Profile_Personal_Address">
+                                            <div className="Profile_Address_Personal">
+                                                <div className="Profile_Personal_Address">
                                                     <Form.Label style={{ width: "30%" }}>Địa chỉ nhà</Form.Label>
                                                     <Form.Control type="text" defaultValue={profile.personalAddress} placeholder="Địa chỉ nhà" required onChange={(e) => setUpdatePersonalAddress(e.target.value)} />
                                                 </div>
                                             </div>
-                                            <div class="Profile_Gender">
+                                            <div className="Profile_Gender">
                                                 <Form.Label style={{ width: "22%" }}>Giới tính</Form.Label>
-                                                <div class="Profile_Gender_Tick">
+                                                <div className="Profile_Gender_Tick">
                                                     {profile.gender === true ? <>
                                                         <Form.Check type="radio" label="Nam" name="genderOption" defaultChecked onChange={() => setGender(true)} />
                                                         <Form.Check type="radio" label="Nữ" name="genderOption" onChange={() => setGender(false)} />
@@ -464,9 +464,9 @@ const Profile = () => {
                                                     </>}
                                                 </div>
                                             </div>
-                                            <div class="Profile_Birthday">
+                                            <div className="Profile_Birthday">
                                                 <Form.Label style={{ width: "22%" }}>Ngày sinh</Form.Label>
-                                                <div class="Profile_Birthday_Tick">
+                                                <div className="Profile_Birthday_Tick">
                                                     {profile.birthday === null ? <>
                                                         <input
                                                             type="date" id="dateInput" defaultValue={currentFormattedDate}
@@ -485,9 +485,9 @@ const Profile = () => {
                                                     </>}
                                                 </div>
                                             </div>
-                                            <div class="Profile_Relationship">
+                                            <div className="Profile_Relationship">
                                                 <Form.Label style={{ width: "22%" }}>Mối quan hệ</Form.Label>
-                                                <div class="Profile_Relationship_Tick">
+                                                <div className="Profile_Relationship_Tick">
                                                     <Form.Check type="radio" label="Cha" name="relationshipOption" defaultChecked={profile.relationship === "Cha"} onChange={(e) => handleRelationshipChange("Cha")} />
                                                     <Form.Check type="radio" label="Mẹ" name="relationshipOption" defaultChecked={profile.relationship === "Mẹ"} onChange={(e) => handleRelationshipChange("Mẹ")} />
                                                     <Form.Check type="radio" label="Con" name="relationshipOption" defaultChecked={profile.relationship === "Con"} onChange={(e) => handleRelationshipChange("Con")} />
@@ -496,7 +496,7 @@ const Profile = () => {
                                                     <Form.Check type="radio" label="Khác" name="relationshipOption" defaultChecked={profile.relationship === "Khác"} onChange={(e) => handleRelationshipChange("Khác")} />
                                                 </div>
                                             </div>
-                                            <div class="Update_Button">
+                                            <div className="Update_Button">
                                                 <button type="button" onClick={updateClick}>Hủy</button>
                                                 <button type="button" onClick={updateProfile}>Cập nhật thông tin</button>
                                             </div>
@@ -505,22 +505,22 @@ const Profile = () => {
                                 </>}
                         </> : <>
                             <section>
-                                <div class="Profile_Right_Header"><h3 className="text-left text-success mb-4">Thêm hồ sơ mới</h3></div>
-                                <div class="Profile_Right_Content">
+                                <div className="Profile_Right_Header"><h3 className="text-left text-success mb-4">Thêm hồ sơ mới</h3></div>
+                                <div className="Profile_Right_Content">
                                     <Form onSubmit={addNewProfile}>
-                                        <div class="Profile_Name">
+                                        <div className="Profile_Name">
                                             <Form.Label style={{ width: "30%" }}>Tên</Form.Label>
                                             <Form.Control defaultValue={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Họ và tên" required />
                                         </div>
-                                        <div class="Profile_Phonenumber">
+                                        <div className="Profile_Phonenumber">
                                             <Form.Label style={{ width: "30%" }}>Số điện thoại</Form.Label>
                                             <Form.Control defaultValue={phonenumber} onChange={(e) => setPhonenumber(e.target.value)} type="text" placeholder="Số điện thoại" required />
                                         </div>
-                                        <div class="Profile_Email">
+                                        <div className="Profile_Email">
                                             <Form.Label style={{ width: "30%" }}>Email</Form.Label>
                                             <Form.Control defaultValue={email} type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
                                         </div>
-                                        <div class="Profile_Address">
+                                        <div className="Profile_Address">
                                             <div>
                                                 <Form.Label style={{ width: "30%" }}>Tỉnh/TP</Form.Label>
                                                 <Form.Select defaultValue={selectedProvinceCode} onChange={(e) => handleProvinceChange(e)} onFocus={(e) => focusProvince(e)}>
@@ -540,28 +540,28 @@ const Profile = () => {
                                                 </Form.Select>
                                             </div>
                                         </div>
-                                        <div class="Profile_Personal_Address">
+                                        <div className="Profile_Personal_Address">
                                             <Form.Label style={{ width: "30%" }}>Địa chỉ nhà</Form.Label>
                                             <Form.Control type="text" defaultValue={personalAddress} placeholder="Địa chỉ nhà" required onChange={(e) => setPersonalAddress(e.target.value)} />
                                         </div>
-                                        <div class="Profile_Gender">
+                                        <div className="Profile_Gender">
                                             <Form.Label style={{ width: "22%" }}>Giới tính</Form.Label>
-                                            <div class="Profile_Gender_Tick">
+                                            <div className="Profile_Gender_Tick">
                                                 <Form.Check type="radio" label="Nam" name="genderOption" defaultChecked onChange={() => setGender(true)} />
                                                 <Form.Check type="radio" label="Nữ" name="genderOption" onChange={() => setGender(false)} />
                                             </div>
                                         </div>
-                                        <div class="Profile_Birthday">
+                                        <div className="Profile_Birthday">
                                             <Form.Label style={{ width: "22%" }}>Ngày sinh</Form.Label>
-                                            <div class="Profile_Birthday_Tick">
+                                            <div className="Profile_Birthday_Tick">
                                                 <input
                                                     type="date" id="birthdayInput" defaultValue={currentFormattedDate}
                                                 />
                                             </div>
                                         </div>
-                                        <div class="Profile_Relationship">
+                                        <div className="Profile_Relationship">
                                             <Form.Label style={{ width: "22%" }}>Mối quan hệ</Form.Label>
-                                            <div class="Profile_Relationship_Tick">
+                                            <div className="Profile_Relationship_Tick">
                                                 <Form.Check type="radio" defaultValue="Cha" label="Cha" name="relationshipOption" onChange={(e) => setRelationship(e.target.value)} />
                                                 <Form.Check type="radio" defaultValue="Mẹ" label="Mẹ" name="relationshipOption" onChange={(e) => setRelationship(e.target.value)} />
                                                 <Form.Check type="radio" defaultValue="Con" label="Con" name="relationshipOption" onChange={(e) => setRelationship(e.target.value)} />
@@ -570,7 +570,7 @@ const Profile = () => {
                                                 <Form.Check type="radio" defaultValue="Khác" label="Khác" name="relationshipOption" defaultChecked onChange={(e) => setRelationship(e.target.value)} />
                                             </div>
                                         </div>
-                                        <div class="Update_Button">
+                                        <div className="Update_Button">
                                             <button type="button" onClick={exitAddProfileClick}>Thoát</button>
                                             <Button type="submit">Thêm hồ sơ mới</Button>
                                         </div>

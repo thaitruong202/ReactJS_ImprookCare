@@ -8,6 +8,9 @@ import cookie from "react-cookies";
 import { toast } from "react-toastify";
 import avatar_user from "../../assets/images/user.png"
 import Moment from "react-moment";
+import { FaCalendar, FaHistory, FaInfoCircle } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
+import { MdLogout, MdMessage } from "react-icons/md";
 
 const Personal = () => {
     const [current_user, dispatch] = useContext(UserContext);
@@ -171,12 +174,12 @@ const Personal = () => {
                 <div className="PersonalPage_Left">
                     <div className="PersonalPage_Left_Content">
                         <ul>
-                            <li><Link to="/personal">Thông tin cá nhân</Link></li>
-                            <li><Link to="/appointment">Lịch khám</Link></li>
-                            <li><Link to="/medicalrecord">Lịch sử khám</Link></li>
-                            <li><Link to="/profile">Hồ sơ</Link></li>
-                            <li><Link to="/message">Tin nhắn</Link></li>
-                            <li onClick={logout}>Đăng xuất</li>
+                            <li><FaInfoCircle /><Link to="/personal">Thông tin cá nhân</Link></li>
+                            <li><FaCalendar /><Link to="/appointment">Lịch khám</Link></li>
+                            <li><FaHistory /><Link to="/medicalrecord">Lịch sử khám</Link></li>
+                            <li><ImProfile /><Link to="/profile">Hồ sơ</Link></li>
+                            <li><MdMessage /><Link to="/message">Tin nhắn</Link></li>
+                            <li onClick={logout}><MdLogout /> Đăng xuất</li>
                         </ul>
                     </div>
                 </div>

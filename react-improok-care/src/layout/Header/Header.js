@@ -27,7 +27,7 @@ const Header = () => {
             <header>
                 <div className="Header1">
                     {/* <Link to="/" className="Link_Title"><h2 className="Title">IM'PROOK CARE.</h2></Link> */}
-                    <a href="/" className="Link_Title"><h2 className="Title">IM'PROOK CARE.</h2></a>
+                    <a href="/" className="Link_Title"><h2 className="Title" style={{ textAlign: 'center' }}>IM'PROOK CARE.</h2></a>
                     {/* <Link to="/">
                     <img src={logo} alt="IMPROOKCARE" />
                 </Link> */}
