@@ -16,6 +16,7 @@ import Profile from "./components/Profile/Profile";
 import { ToastContainer } from "react-toastify";
 import Admin from "./components/Admin/Admin";
 import ChangePassword from "./components/ChangePassword/ChangePassword"
+import PhoneVerification from "./components/PhoneVerification/PhoneVerification";
 
 export const UserContext = createContext();
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route path='/profile' element={<Profile />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/changepassword' element={<ChangePassword />} />
+          <Route path='/phoneverification' element={<PhoneVerification />} />
         </Routes>
         <Footer />
         <ToastContainer />

@@ -1,16 +1,16 @@
 import { Form, InputGroup } from "react-bootstrap";
 import LoginLogo from "../../assets/images/login-banner.png"
 import Spinner from "../../layout/Spinner"
-// import Apis, { endpoints } from "../configs/Apis";
+import Apis, { endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { MyUserContext } from "../App";
+import { UserContext } from "../../App";
 import "./ForgetPassword.css"
 import { Lock, Password, Phone, Visibility, VisibilityOff } from "@mui/icons-material";
 
 const ForgetPassword = () => {
-    // const [user,] = useContext(MyUserContext)
+    const [user,] = useContext(UserContext)
     const [err, setErr] = useState(null);
     const [code, setCode] = useState('');
     const [phonenumber, setPhonenumber] = useState('');
@@ -36,36 +36,36 @@ const ForgetPassword = () => {
         setCheck(evt.target.checked);
     }
 
-    // const OTPSender = (evt) => {
-    //     evt.preventDefault();
+    const OTPSender = (evt) => {
+        evt.preventDefault();
 
-    //     const process = async () => {
-    //         try {
-    //             setLoading(true);
-    //             console.log(phonenumber);
-    //             // let form = new FormData();
-    //             // form.append("phonenumber", phonenumber);
-    //             let resVerification = await Apis.post(endpoints['verification-forgot-password'], {
-    //                 "phonenumber": phonenumber
-    //             })
-    //             // let resVerification = await Apis.get(endpoints['verification'], form)
-    //             console.log(resVerification.status);
-    //             setLoading(false);
+        const process = async () => {
+            try {
+                setLoading(true);
+                console.log(phonenumber);
+                // let form = new FormData();
+                // form.append("phonenumber", phonenumber);
+                let resVerification = await Apis.post(endpoints['verification-forgot-password'], {
+                    "phonenumber": phonenumber
+                })
+                // let resVerification = await Apis.get(endpoints['verification'], form)
+                console.log(resVerification.status);
+                setLoading(false);
 
-    //         } catch (error) {
-    //             if (error.response.data === "Số điện thoại " + phonenumber + " đã được đăng ký") {
-    //                 toast.warning(error.response.data);
-    //                 console.log(error.code);
-    //             }
-    //             else {
-    //                 toast.success(error.response.data);
-    //                 console.log(error.response.data);
-    //             }
-    //             setLoading(false);
-    //         }
-    //     }
-    //     process();
-    // }
+            } catch (error) {
+                if (error.response.data === "Số điện thoại " + phonenumber + " đã được đăng ký") {
+                    toast.warning(error.response.data);
+                    console.log(error.code);
+                }
+                else {
+                    toast.success(error.response.data);
+                    console.log(error.response.data);
+                }
+                setLoading(false);
+            }
+        }
+        process();
+    }
 
     const toggleShowNewPassword = () => {
         setShowNewPassword(!showNewPassword);
@@ -75,65 +75,65 @@ const ForgetPassword = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
 
-    // const verification = (evt) => {
-    //     evt.preventDefault();
+    const verification = (evt) => {
+        evt.preventDefault();
 
-    //     const process = async () => {
-    //         try {
-    //             setLoading(true)
-    //             if (code === '') {
-    //                 toast.warning("Vui lòng nhập OTP");
-    //                 setLoading(false);
-    //             }
+        const process = async () => {
+            try {
+                setLoading(true)
+                if (code === '') {
+                    toast.warning("Vui lòng nhập OTP");
+                    setLoading(false);
+                }
 
-    //             console.log("code" + code)
-    //             console.log("phonenumber" + phonenumber)
+                console.log("code" + code)
+                console.log("phonenumber" + phonenumber)
 
-    //             let res = await Apis.post(endpoints['verification-check'], {
-    //                 "code": code,
-    //                 "phonenumber": phonenumber
-    //             })
-    //             console.log(res.data);
-    //             setSuccessVerification(!successVerification);
-    //             setLoading(false);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     process();
-    // }
+                let res = await Apis.post(endpoints['verification-check'], {
+                    "code": code,
+                    "phonenumber": phonenumber
+                })
+                console.log(res.data);
+                setSuccessVerification(!successVerification);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        process();
+    }
 
-    // const createNewPassword = (evt) => {
-    //     evt.preventDefault();
+    const createNewPassword = (evt) => {
+        evt.preventDefault();
 
-    //     const process = async () => {
-    //         try {
-    //             setLoading(true)
+        const process = async () => {
+            try {
+                setLoading(true)
 
-    //             console.log("code" + code)
-    //             console.log("phonenumber" + phonenumber)
+                console.log("code" + code)
+                console.log("phonenumber" + phonenumber)
 
-    //             let res = await Apis.post(endpoints['forgot-password'], {
-    //                 "username": phonenumber,
-    //                 "newPassword": newPassword
-    //             })
+                let res = await Apis.post(endpoints['forgot-password'], {
+                    "username": phonenumber,
+                    "newPassword": newPassword
+                })
 
-    //             if (res.data === "Đổi mật khẩu thành công!") {
-    //                 toast.success(res.data)
-    //                 nav('/login')
-    //             }
-    //             else {
-    //                 toast.error(res.data)
-    //                 nav('/login')
-    //             }
-    //             console.log(res.data);
-    //             setLoading(false);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     process();
-    // }
+                if (res.data === "Đổi mật khẩu thành công!") {
+                    toast.success(res.data)
+                    nav('/login')
+                }
+                else {
+                    toast.error(res.data)
+                    nav('/login')
+                }
+                console.log(res.data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        process();
+    }
 
     const validatePhoneNumber = (evt) => {
         evt.preventDefault();
@@ -191,7 +191,7 @@ const ForgetPassword = () => {
                                                 </div>
                                                 <div class="Separate"></div>
                                             </div> */}
-                                            <Form>
+                                            <Form onSubmit={verification}>
                                                 <InputGroup className="mb-3 ForgetPassword_Warning">
                                                     <div className="ForgetPassword_User_OTP">
                                                         <InputGroup className="ForgetPassword_User_Input">
@@ -209,7 +209,7 @@ const ForgetPassword = () => {
                                                             // className="Input_Phone"
                                                             />
                                                         </InputGroup>
-                                                        {isPhonenumbervalid === true ? <button type="button" className="OTP">Gửi OTP</button> : <button type="button" className="OTP" disabled style={{ color: "gray", cursor: "auto" }}>Gửi OTP</button>}
+                                                        {isPhonenumbervalid === true ? <button type="button" onClick={OTPSender} className="OTP">Gửi OTP</button> : <button type="button" className="OTP" disabled style={{ color: "gray", cursor: "auto" }}>Gửi OTP</button>}
                                                     </div>
                                                     <p id="errorMsg" style={{ color: 'red', display: 'none' }}>Số điện thoại không hợp lệ</p>
                                                 </InputGroup>
@@ -221,11 +221,14 @@ const ForgetPassword = () => {
                                                         aria-label="OTP"
                                                         aria-describedby="basic-addon1"
                                                         required
+                                                        defaultValue={code}
+                                                        onChange={(e) => setCode(e.target.value)}
                                                     />
                                                 </InputGroup>
                                                 <div className="Separate"></div>
+                                                {loading === true ? <Spinner /> : <button type="submit" className="ForgetPassword_Butt">Xác thực</button>}
                                             </Form>
-                                            {loading === true ? <Spinner /> : <button type="button" className="ForgetPassword_Butt">Xác thực</button>}
+                                            {/* {loading === true ? <Spinner /> : <button type="button" className="ForgetPassword_Butt">Xác thực</button>} */}
                                         </div>
                                     </div>
                                 </Form>
@@ -324,7 +327,7 @@ const ForgetPassword = () => {
                                 <img src={LoginLogo} alt="IMPROOKCARE" />
                             </div>
                             <div className="NewPassword_Right">
-                                <Form className="NewPassword_Form">
+                                <Form className="NewPassword_Form" onSubmit={(e) => createNewPassword(e)}>
                                     <div className="NewPassword_Detail">
                                         <div className="NewPassword_Header">
                                             <div>MẬT KHẨU MỚI</div>
@@ -342,6 +345,7 @@ const ForgetPassword = () => {
                                                     aria-label="Username"
                                                     aria-describedby="basic-addon1"
                                                     disabled
+                                                    value={phonenumber}
                                                 />
                                             </InputGroup>
                                             <div className="Separate"></div>
@@ -353,6 +357,8 @@ const ForgetPassword = () => {
                                                     type={showNewPassword ? 'text' : 'password'}
                                                     aria-describedby="basic-addon1"
                                                     required
+                                                    defaultValue={newPassword}
+                                                    onChange={(e) => setNewPassword(e.target.value)}
                                                 />
                                                 <button type="button" className="Show_Pass" onClick={toggleShowNewPassword}>
                                                     {showNewPassword ? <Visibility /> : <VisibilityOff />}
@@ -367,6 +373,8 @@ const ForgetPassword = () => {
                                                     type={showConfirmPassword ? 'text' : 'password'}
                                                     aria-describedby="basic-addon1"
                                                     required
+                                                    defaultValue={confirmNewpassword}
+                                                    onChange={(e) => setConfirmNewpassword(e.target.value)}
                                                 />
                                                 <button type="button" className="Show_Pass" onClick={toggleShowConfirmPassword}>
                                                     {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
@@ -391,7 +399,7 @@ const ForgetPassword = () => {
                                                 </div>
                                                 <div class="Separate"></div>
                                             </div> */}
-                                            {loading === true ? <Spinner /> : <button type="button" className="ForgetPassword_Butt">Xác nhận</button>}
+                                            {loading === true ? <Spinner /> : <button type="submit" className="ForgetPassword_Butt">Xác nhận</button>}
                                         </div>
                                     </div>
                                 </Form>

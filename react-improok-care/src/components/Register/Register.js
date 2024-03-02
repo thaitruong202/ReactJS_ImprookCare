@@ -2,9 +2,9 @@ import "./Register.css"
 import LoginLogo from "../../assets/images/login-banner.png"
 import { useContext, useState } from "react";
 import { Form } from "react-bootstrap"
-// import Apis, { endpoints } from "../configs/Apis";
+import Apis, { endpoints } from "../../configs/Apis";
 import { Navigate, useNavigate, Link } from "react-router-dom"
-// import { MyUserContext } from "../App";
+import { UserContext } from "../../App";
 import cookie from "react-cookies"
 import { toast } from "react-toastify";
 import Spinner from "../../layout/Spinner";
@@ -12,7 +12,7 @@ import { AccountCircle, Facebook, Google, Lock, Person, Visibility, VisibilityOf
 import { InputGroup } from "react-bootstrap";
 
 const Register = (props) => {
-    // const [current_user,] = useContext(MyUserContext)
+    const [current_user,] = useContext(UserContext)
     // const [user, setUser] = useState({
     //     "firstname": "",
     //     "lastname": "",
@@ -22,67 +22,67 @@ const Register = (props) => {
     //     "gender": ""
     // })
 
-    // const nav = useNavigate();
-    // const [firstname, setFirstname] = useState('');
-    // const [lastname, setLastname] = useState('');
-    // const [username,] = useState(cookie.load("phonenumber"));
-    // // const [username,] = useState(props.username);
-    // const [password, setPassword] = useState('');
-    // const [confirmPass, setConfirmPass] = useState('');
+    const nav = useNavigate();
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [username,] = useState(cookie.load("phonenumber"));
+    // const [username,] = useState(props.username);
+    const [password, setPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
     const [gender, setGender] = useState(true)
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    // const register = (evt) => {
-    //     evt.preventDefault();
+    const register = (evt) => {
+        evt.preventDefault();
 
-    //     const process = async () => {
-    //         setLoading(true);
+        const process = async () => {
+            setLoading(true);
 
-    //         try {
-    //             // let form = new FormData();
-    //             // for (let field in user)
-    //             //     if (field !== "confirmPass" || field !== "gender")
-    //             //         form.append(field, user[field]);
+            try {
+                // let form = new FormData();
+                // for (let field in user)
+                //     if (field !== "confirmPass" || field !== "gender")
+                //         form.append(field, user[field]);
 
-    //             // form.delete("gender");
-    //             // if (gender === false) {
-    //             //     form.append("gender", false)
-    //             // } else {
-    //             //     form.append("gender", true)
-    //             // }
+                // form.delete("gender");
+                // if (gender === false) {
+                //     form.append("gender", false)
+                // } else {
+                //     form.append("gender", true)
+                // }
 
-    //             let res = await Apis.post(endpoints['register'], {
-    //                 "username": username,
-    //                 "password": password,
-    //                 "firstname": firstname,
-    //                 "lastname": lastname,
-    //                 "gender": gender
-    //             });
+                let res = await Apis.post(endpoints['register'], {
+                    "username": username,
+                    "password": password,
+                    "firstname": firstname,
+                    "lastname": lastname,
+                    "gender": gender
+                });
 
-    //             cookie.save("register", res.data);
-    //             console.log(res)
+                cookie.save("register", res.data);
+                console.log(res)
 
-    //             // let res = await Apis.post(endpoints['register']);
-    //             if (res.status === 200) {
-    //                 cookie.remove("register");
-    //                 cookie.remove("phonenumber");
-    //                 toast.success("Đăng ký thành công!");
-    //                 nav("/login");
-    //             }
-    //             else
-    //                 toast.error("Đăng ký thất bại!");
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
+                // let res = await Apis.post(endpoints['register']);
+                if (res.status === 200) {
+                    cookie.remove("register");
+                    cookie.remove("phonenumber");
+                    toast.success("Đăng ký thành công!");
+                    nav("/login");
+                }
+                else
+                    toast.error("Đăng ký thất bại!");
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-    //     if (password === confirmPass)
-    //         process();
-    //     else
-    //         toast.warning("Mật khẩu không khớp!")
-    // }
+        if (password === confirmPass)
+            process();
+        else
+            toast.warning("Mật khẩu không khớp!")
+    }
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -99,8 +99,8 @@ const Register = (props) => {
     // //     })
     // // }
 
-    // if (current_user !== null)
-    //     return <Navigate to="/" />
+    if (current_user !== null)
+        return <Navigate to="/" />
 
     return (<>
         <div className="Register_Wrapper">
@@ -113,9 +113,7 @@ const Register = (props) => {
                         <Form className="Register_Form">
                             <div className="Register_Detail">
                                 <div className="Register_Header">
-                                    <div>
-                                        <div>ĐĂNG KÝ</div>
-                                    </div>
+                                    <div>ĐĂNG KÝ</div>
                                 </div>
                                 <div className="Register_Fill">
                                     {/* <div className="Register_User">
@@ -161,13 +159,15 @@ const Register = (props) => {
                                             </div>
                                             <div className="Separate"></div>
                                         </div> */}
-                                    <Form>
+                                    <Form onSubmit={register}>
                                         <InputGroup className="mb-3">
                                             <InputGroup.Text><Person /></InputGroup.Text>
                                             <Form.Control
                                                 placeholder="Tên"
                                                 aria-label="Last Name"
                                                 aria-describedby="basic-addon1"
+                                                defaultValue={firstname}
+                                                onChange={(e) => setFirstname(e.target.value)}
                                                 required
                                             />
                                         </InputGroup>
@@ -178,6 +178,8 @@ const Register = (props) => {
                                                 placeholder="Họ và tên đệm"
                                                 aria-label="First Name"
                                                 aria-describedby="basic-addon1"
+                                                defaultValue={lastname}
+                                                onChange={(e) => setLastname(e.target.value)}
                                                 required
                                             />
                                         </InputGroup>
@@ -189,6 +191,7 @@ const Register = (props) => {
                                                 aria-label="Username"
                                                 aria-describedby="basic-addon1"
                                                 disabled
+                                                value={username}
                                             />
                                         </InputGroup>
                                         <div className="Register_User">
@@ -207,6 +210,8 @@ const Register = (props) => {
                                                 type={showPassword ? 'text' : 'password'}
                                                 aria-describedby="basic-addon1"
                                                 required
+                                                defaultValue={password}
+                                                onChange={(e) => setPassword(e.target.value)}
                                             />
                                             <button type="button" className="Show_Pass" onClick={toggleShowPassword}>
                                                 {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -221,14 +226,17 @@ const Register = (props) => {
                                                 type={showConfirmPassword ? 'text' : 'password'}
                                                 aria-describedby="basic-addon1"
                                                 required
+                                                defaultValue={confirmPass}
+                                                onChange={(e) => setConfirmPass(e.target.value)}
                                             />
                                             <button type="button" className="Show_Pass" onClick={toggleShowConfirmPassword}>
                                                 {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
                                             </button>
                                         </InputGroup>
                                         <div className="Separate"></div>
+                                        {loading === true ? <Spinner /> : <button type="submit" className="Register_Butt">Đăng ký</button>}
                                     </Form>
-                                    {loading === true ? <Spinner /> : <button className="Register_Butt">Đăng ký</button>}
+                                    {/* {loading === true ? <Spinner /> : <button className="Register_Butt">Đăng ký</button>} */}
                                     {/* <div className="Register_Help">
                                             <a href="/">Quên mật khẩu</a>
                                             <a href="/">Đăng ký với SMS</a>
