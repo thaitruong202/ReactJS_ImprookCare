@@ -9,6 +9,9 @@ import { toast } from "react-toastify";
 import printer from "../../assets/images/printer.png"
 import profileicon from "../../assets/images/profile-icon.png"
 import profile404 from "../../assets/images/profile.png"
+import { FaCalendar, FaHistory, FaInfoCircle, FaSearch } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
+import { MdLogout, MdMessage } from "react-icons/md";
 
 const Profile = () => {
     const [current_user, dispatch] = useContext(UserContext);
@@ -300,13 +303,12 @@ const Profile = () => {
                 <div className="Profile_Left">
                     <div className="Profile_Left_Content">
                         <ul>
-                            <li><Link to="/personalpage">Thông tin cá nhân</Link></li>
-                            {/* <li><Link to="/changepassword">Đổi mật khẩu</Link></li> */}
-                            <li><Link to="/appointment">Lịch khám</Link></li>
-                            <li><Link to="/medicalrecord">Lịch sử khám</Link></li>
-                            <li><Link to="/profile">Hồ sơ</Link></li>
-                            <li><Link to="/message">Tin nhắn</Link></li>
-                            <li onClick={logout}>Đăng xuất</li>
+                            <li><FaInfoCircle /><Link to="/personal">Thông tin cá nhân</Link></li>
+                            <li><FaCalendar /><Link to="/appointment">Lịch khám</Link></li>
+                            <li><FaHistory /><Link to="/medicalrecord">Lịch sử khám</Link></li>
+                            <li><ImProfile /><Link to="/profile">Hồ sơ</Link></li>
+                            <li><MdMessage /><Link to="/message">Tin nhắn</Link></li>
+                            <li onClick={logout}><MdLogout />Đăng xuất</li>
                         </ul>
                     </div>
                 </div>

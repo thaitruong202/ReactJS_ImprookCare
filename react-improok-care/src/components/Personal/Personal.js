@@ -179,7 +179,7 @@ const Personal = () => {
                             <li><FaHistory /><Link to="/medicalrecord">Lịch sử khám</Link></li>
                             <li><ImProfile /><Link to="/profile">Hồ sơ</Link></li>
                             <li><MdMessage /><Link to="/message">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout /> Đăng xuất</li>
+                            <li onClick={logout}><MdLogout />Đăng xuất</li>
                         </ul>
                     </div>
                 </div>

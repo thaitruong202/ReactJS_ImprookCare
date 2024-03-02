@@ -15,6 +15,7 @@ import Personal from "./components/Personal/Personal"
 import Profile from "./components/Profile/Profile";
 import { ToastContainer } from "react-toastify";
 import Admin from "./components/Admin/Admin";
+import ChangePassword from "./components/ChangePassword/ChangePassword"
 
 export const UserContext = createContext();
 
@@ -34,6 +35,7 @@ const App = () => {
           <Route path='/personal' element={<Personal />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/changepassword' element={<ChangePassword />} />
         </Routes>
         <Footer />
         <ToastContainer />

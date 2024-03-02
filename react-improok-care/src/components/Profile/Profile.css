@@ -15,7 +15,7 @@ div.Profile_Left {
 div.Profile_Left_Content>ul {
     display: grid;
     list-style: none;
-    background-color: antiquewhite;
+    background-color: #EEEEEE;
 }
 
 div.Profile_Left_Content>ul>li {
@@ -23,6 +23,14 @@ div.Profile_Left_Content>ul>li {
     height: 3rem;
     align-items: center;
     cursor: pointer;
+    gap: 0.75rem;
+}
+
+div.Profile_Left_Content>ul>li:hover {
+    border-color: rgb(26 118 227);
+    cursor: pointer;
+    border-right-width: 4px;
+    border-radius: 3px;
 }
 
 div.Profile_Left_Content>ul>li a {

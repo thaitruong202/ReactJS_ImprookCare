@@ -1,6 +1,6 @@
 div.PersonalPage {
     display: flex;
-    /* max-width: 80rem; */
+    max-width: 80rem;
     flex-wrap: wrap;
     padding-top: 2rem;
     gap: 5rem;
@@ -15,7 +15,7 @@ div.PersonalPage_Left {
 div.PersonalPage_Left_Content>ul {
     display: grid;
     list-style: none;
-    background-color: antiquewhite;
+    background-color: #EEEEEE;
 }
 
 div.PersonalPage_Left_Content>ul>li {
@@ -24,6 +24,13 @@ div.PersonalPage_Left_Content>ul>li {
     align-items: center;
     cursor: pointer;
     gap: 0.75rem;
+}
+
+div.PersonalPage_Left_Content>ul>li:hover {
+    border-color: rgb(26 118 227);
+    cursor: pointer;
+    border-right-width: 4px;
+    border-radius: 3px;
 }
 
 div.PersonalPage_Left_Content>ul>li a {
