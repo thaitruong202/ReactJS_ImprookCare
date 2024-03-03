@@ -305,7 +305,7 @@ const Profile = () => {
                         <ul>
                             <li><FaInfoCircle /><Link to="/personal">Thông tin cá nhân</Link></li>
                             <li><FaCalendar /><Link to="/appointment">Lịch khám</Link></li>
-                            <li><FaHistory /><Link to="/medicalrecord">Lịch sử khám</Link></li>
+                            <li><FaHistory /><Link to="/history">Lịch sử khám</Link></li>
                             <li><ImProfile /><Link to="/profile">Hồ sơ</Link></li>
                             <li><MdMessage /><Link to="/message">Tin nhắn</Link></li>
                             <li onClick={logout}><MdLogout />Đăng xuất</li>

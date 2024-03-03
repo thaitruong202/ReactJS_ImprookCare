@@ -17,6 +17,10 @@ import { ToastContainer } from "react-toastify";
 import Admin from "./components/Admin/Admin";
 import ChangePassword from "./components/ChangePassword/ChangePassword"
 import PhoneVerification from "./components/PhoneVerification/PhoneVerification";
+import Appointment from "./components/Appointment/Appointment";
+import History from "./components/History/History";
+import Doctor from "./components/Doctor/Doctor";
+
 
 export const UserContext = createContext();
 
@@ -38,6 +42,9 @@ const App = () => {
           <Route path='/admin' element={<Admin />} />
           <Route path='/changepassword' element={<ChangePassword />} />
           <Route path='/phoneverification' element={<PhoneVerification />} />
+          <Route path='/appointment' element={<Appointment />} />
+          <Route path='/history' element={<History />} />
+          <Route path='/doctor' element={<Doctor />} />
         </Routes>
         <Footer />
         <ToastContainer />

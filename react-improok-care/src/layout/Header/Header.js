@@ -68,7 +68,7 @@ const Header = () => {
                                 <NavDropdown title={`Chào, ${user.lastname} ${user.firstname}!`} id="basic-nav-dropdown">
                                     <NavDropdown.Item href="/" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaHome />Về trang chủ</NavDropdown.Item>
                                     <NavDropdown.Item href="/personal" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaInfoCircle />Thông tin cá nhân</NavDropdown.Item>
-                                    <NavDropdown.Item href="/medicalrecord" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaHistory />Lịch sử khám bệnh</NavDropdown.Item>
+                                    <NavDropdown.Item href="/history" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaHistory />Lịch sử khám bệnh</NavDropdown.Item>
                                     <NavDropdown.Item href="/changepassword" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdSecurity />Thay đổi mật khẩu</NavDropdown.Item>
                                     {user.roleId.roleId === 1 ?
                                         <>
