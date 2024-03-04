@@ -212,6 +212,12 @@ const PhoneVerification = () => {
                                                     onChange={(e) => setCode(e.target.value)}
                                                 />
                                             </InputGroup>
+                                            <div className="PhoneVerification_User">
+                                                <div className="PhoneVerification_User_PolicyCheck">
+                                                    <span><input type="checkbox" onChange={handleCheck} /> Tôi đã đọc và đồng ý với
+                                                        các điều khoản và điều kiện sử dụng</span>
+                                                </div>
+                                            </div>
                                             <div className="Separate"></div>
                                             {loading === true ? <Spinner /> : <button type="submit" className="PhoneVerification_Butt">Xác thực</button>}
                                         </Form>

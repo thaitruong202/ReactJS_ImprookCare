@@ -13,7 +13,7 @@ import bannerheader from "../../assets/images/banner-header.png"
 import advice from "../../assets/images/advice.png"
 import managementapp from "../../assets/images/management-app.png"
 import collabdoctor from "../../assets/images/collab-doctor-register.png"
-import { TiTickOutline } from "react-icons/ti";
+import { TiTick } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -227,11 +227,11 @@ const Collaboration = () => {
                         <h3>Tải ứng dụng I'MPROOK CARE</h3>
                         <ul>
                             <li>
-                                <TiTickOutline />
+                                <TiTick />
                                 <span>Đặt khám bác sĩ</span>
                             </li>
                             <li>
-                                <TiTickOutline />
+                                <TiTick />
                                 <span>Tiện lợi - Nhanh chóng - Dễ dàng</span>
                             </li>
                         </ul>

@@ -22,7 +22,7 @@ import History from "./components/History/History";
 import Doctor from "./components/Doctor/Doctor";
 import Booking from "./components/Booking/Booking";
 import ProfileDoctor from "./components/Doctor/ProfileDoctor";
-
+import BookingDetail from "./components/Booking/BookingDetail";
 
 export const UserContext = createContext();
 
@@ -49,6 +49,7 @@ const App = () => {
           <Route path='/doctor' element={<Doctor />} />
           <Route path='/profiledoctor' element={<ProfileDoctor />} />
           <Route path='/booking' element={<Booking />} />
+          <Route path='/booking/doctor/:profileDoctorId' element={<BookingDetail />} />
         </Routes>
         <Footer />
         <ToastContainer />
