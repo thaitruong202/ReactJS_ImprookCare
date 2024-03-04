@@ -20,6 +20,8 @@ import PhoneVerification from "./components/PhoneVerification/PhoneVerification"
 import Appointment from "./components/Appointment/Appointment";
 import History from "./components/History/History";
 import Doctor from "./components/Doctor/Doctor";
+import Booking from "./components/Booking/Booking";
+import ProfileDoctor from "./components/Doctor/ProfileDoctor";
 
 
 export const UserContext = createContext();
@@ -45,6 +47,8 @@ const App = () => {
           <Route path='/appointment' element={<Appointment />} />
           <Route path='/history' element={<History />} />
           <Route path='/doctor' element={<Doctor />} />
+          <Route path='/profiledoctor' element={<ProfileDoctor />} />
+          <Route path='/booking' element={<Booking />} />
         </Routes>
         <Footer />
         <ToastContainer />

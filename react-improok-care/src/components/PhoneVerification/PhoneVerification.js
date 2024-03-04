@@ -49,6 +49,7 @@ const PhoneVerification = () => {
                 setLoading(false);
 
             } catch (error) {
+                console.log(error);
                 if (error.response.data === "Số điện thoại " + phonenumber + " đã được đăng ký") {
                     toast.warning(error.response.data);
                     console.log(error.code);

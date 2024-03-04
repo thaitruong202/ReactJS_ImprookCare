@@ -105,9 +105,9 @@ const ChangePassword = () => {
 
     return <>
         <div className="ChangePassword_Wrapper">
-            <div className="ChangePassword_Content">
-                <div className="ChangePassword_Form">
-                    {/* <div class="ChangePassword_Left">
+            {/* <div className="ChangePassword_Content"> */}
+            <div className="ChangePassword_Form">
+                {/* <div class="ChangePassword_Left">
                         <ul>
                             <li><Link to="/personalpage">Thông tin cá nhân</Link></li>
                             <li><Link to="/changepassword">Đổi mật khẩu</Link></li>
@@ -117,16 +117,16 @@ const ChangePassword = () => {
                             <li onClick={logout}>Đăng xuất</li>
                         </ul>
                     </div> */}
-                    <div className="ChangePassword_Right">
-                        <div className="ChangePassword_Right_Form">
-                            <div className="ChangePassword_Detail">
-                                <div className="ChangePassword_Header">
-                                    <div>
-                                        <div>THAY ĐỔI MẬT KHẨU</div>
-                                    </div>
+                <div className="ChangePassword_Right">
+                    <div className="ChangePassword_Right_Form">
+                        <div className="ChangePassword_Detail">
+                            <div className="ChangePassword_Header">
+                                <div>
+                                    <div>THAY ĐỔI MẬT KHẨU</div>
                                 </div>
-                                <div className="ChangePassword_Fill">
-                                    {/* <div class="ChangePassword_User">
+                            </div>
+                            <div className="ChangePassword_Fill">
+                                {/* <div class="ChangePassword_User">
                                         <div class="ChangePassword_Old">
                                             <input type={showCurrentPassword ? 'text' : 'password'} defaultValue={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="Mật khẩu hiện tại" required></input>
                                             <button type="button" onClick={toggleShowCurrentPassword}>
@@ -154,63 +154,63 @@ const ChangePassword = () => {
                                         <div class="Separate"></div>
                                     </div>
                                     {loading === true ? <Spinner /> : <button type="button" class="ChangePassword_Butt" onClick={(e) => passwordChange(e)}>Lưu thay đổi</button>} */}
-                                    <Form onSubmit={(e) => passwordChange(e)}>
-                                        <InputGroup className="mb-3">
-                                            <InputGroup.Text><Lock /></InputGroup.Text>
-                                            <Form.Control
-                                                placeholder="Password"
-                                                aria-label="Password"
-                                                type={showCurrentPassword ? 'text' : 'password'}
-                                                aria-describedby="basic-addon1"
-                                                required
-                                                value={currentPassword}
-                                                onChange={(e) => setCurrentPassword(e.target.value)}
-                                            />
-                                            <button className="Show_Pass" type="button" onClick={toggleShowCurrentPassword}>
-                                                {showCurrentPassword ? <Visibility /> : <VisibilityOff />}
-                                            </button>
-                                        </InputGroup>
-                                        <div className="Separate"></div>
-                                        <InputGroup className="mb-3">
-                                            <InputGroup.Text><Key /></InputGroup.Text>
-                                            <Form.Control
-                                                placeholder="New Password"
-                                                aria-label="New Password"
-                                                type={showNewPassword ? 'text' : 'password'}
-                                                aria-describedby="basic-addon1"
-                                                required
-                                                value={newPassword}
-                                                onChange={e => setNewPassword(e.target.value)}
-                                            />
-                                            <button className="Show_Pass" type="button" onClick={toggleShowNewPassword}>
-                                                {showNewPassword ? <Visibility /> : <VisibilityOff />}
-                                            </button>
-                                        </InputGroup>
-                                        <div className="Separate"></div>
-                                        <InputGroup className="mb-3">
-                                            <InputGroup.Text><Key /></InputGroup.Text>
-                                            <Form.Control
-                                                placeholder="Confirm Password"
-                                                aria-label="Confirm Password"
-                                                type={showConfirmPassword ? 'text' : 'password'}
-                                                aria-describedby="basic-addon1"
-                                                required
-                                                value={confirmNewpassword}
-                                                onChange={e => setConfirmNewpassword(e.target.value)}
-                                            />
-                                            <button className="Show_Pass" type="button" onClick={toggleShowConfirmPassword}>
-                                                {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                                            </button>
-                                        </InputGroup>
-                                        {/* {loading === true ? <Spinner /> : <button type="button" className="ChangePassword_Butt" onClick={(e) => passwordChange(e)}>Lưu thay đổi</button>} */}
-                                        {loading === true ? <Spinner /> : <button type="submit" className="ChangePassword_Butt">Lưu thay đổi</button>}
-                                    </Form>
-                                </div>
+                                <Form onSubmit={(e) => passwordChange(e)}>
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Text><Lock /></InputGroup.Text>
+                                        <Form.Control
+                                            placeholder="Password"
+                                            aria-label="Password"
+                                            type={showCurrentPassword ? 'text' : 'password'}
+                                            aria-describedby="basic-addon1"
+                                            required
+                                            value={currentPassword}
+                                            onChange={(e) => setCurrentPassword(e.target.value)}
+                                        />
+                                        <button className="Show_Pass" type="button" onClick={toggleShowCurrentPassword}>
+                                            {showCurrentPassword ? <Visibility /> : <VisibilityOff />}
+                                        </button>
+                                    </InputGroup>
+                                    <div className="Separate"></div>
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Text><Key /></InputGroup.Text>
+                                        <Form.Control
+                                            placeholder="New Password"
+                                            aria-label="New Password"
+                                            type={showNewPassword ? 'text' : 'password'}
+                                            aria-describedby="basic-addon1"
+                                            required
+                                            value={newPassword}
+                                            onChange={e => setNewPassword(e.target.value)}
+                                        />
+                                        <button className="Show_Pass" type="button" onClick={toggleShowNewPassword}>
+                                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                                        </button>
+                                    </InputGroup>
+                                    <div className="Separate"></div>
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Text><Key /></InputGroup.Text>
+                                        <Form.Control
+                                            placeholder="Confirm Password"
+                                            aria-label="Confirm Password"
+                                            type={showConfirmPassword ? 'text' : 'password'}
+                                            aria-describedby="basic-addon1"
+                                            required
+                                            value={confirmNewpassword}
+                                            onChange={e => setConfirmNewpassword(e.target.value)}
+                                        />
+                                        <button className="Show_Pass" type="button" onClick={toggleShowConfirmPassword}>
+                                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                                        </button>
+                                    </InputGroup>
+                                    {/* {loading === true ? <Spinner /> : <button type="button" className="ChangePassword_Butt" onClick={(e) => passwordChange(e)}>Lưu thay đổi</button>} */}
+                                    {loading === true ? <Spinner /> : <button type="submit" className="ChangePassword_Butt">Lưu thay đổi</button>}
+                                </Form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {/* </div> */}
         </div>
     </>
 }
