@@ -24,6 +24,9 @@ import Booking from "./components/Booking/Booking";
 import BookingDoctor from "./components/Booking/BookingDoctor";
 import ProfileDoctor from "./components/Doctor/ProfileDoctor";
 import BookingDetail from "./components/Booking/BookingDetail";
+import DoctorMessage from "./components/Doctor/DoctorMessage";
+import Message from "./components/Message/Message"
+import PaymentResult from "./components/Payment/PaymentResult";
 
 export const UserContext = createContext();
 
@@ -52,6 +55,9 @@ const App = () => {
           <Route path='/booking' element={<Booking />} />
           <Route path='/doctor/:profileDoctorId' element={<BookingDoctor />} />
           <Route path='/booking/doctor/:profileDoctorId' element={<BookingDetail />} />
+          <Route path='/doctormessage' element={<DoctorMessage />} />
+          <Route path='/message' element={<Message />} />
+          <Route path='/paymentresult' element={<PaymentResult />} />
         </Routes>
         <Footer />
         <ToastContainer />

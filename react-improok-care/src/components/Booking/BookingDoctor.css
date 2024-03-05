@@ -311,7 +311,7 @@ div.User_Send_Message>div>button {
     grid-gap: 8px;
     align-items: center;
     background-color: #183e9f;
-    color: #fff;
+    color: #fff !important;
     border: 1px solid #000;
     border-radius: 4px;
     cursor: pointer;
