@@ -281,14 +281,14 @@ const BookingDetail = () => {
                                 <span>Bằng cách nhấn nút xác nhận, bạn đã đồng ý với các điều khoản và điều kiện đặt khám</span>
                             </div>
                         </div>
-                        <div className="Booking_Detail_Footer">
+                    </div>
+                    <div className="Booking_Detail_Footer">
+                        <div>
+                            <span>Đặt lịch khám Bác sĩ dễ dàng</span>
+                            <h3>Tải ngay IMPROOKCARE</h3>
                             <div>
-                                <span>Đặt lịch khám Bác sĩ dễ dàng</span>
-                                <h3>Tải ngay IMPROOKCARE</h3>
-                                <div>
-                                    <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
-                                    <Link to="/"><img src={appstore} alt="AppStore" /></Link>
-                                </div>
+                                <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
+                                <Link to="/"><img src={appstore} alt="AppStore" /></Link>
                             </div>
                         </div>
                     </div>
@@ -395,14 +395,14 @@ const BookingDetail = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="Booking_Detail_Footer">
+                    </div>
+                    <div className="Booking_Detail_Footer">
+                        <div>
+                            <span>Đặt lịch khám Bác sĩ dễ dàng</span>
+                            <h3>Tải ngay IMPROOKCARE</h3>
                             <div>
-                                <span>Đặt lịch khám Bác sĩ dễ dàng</span>
-                                <h3>Tải ngay IMPROOKCARE</h3>
-                                <div>
-                                    <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
-                                    <Link to="/"><img src={appstore} alt="AppStore" /></Link>
-                                </div>
+                                <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
+                                <Link to="/"><img src={appstore} alt="AppStore" /></Link>
                             </div>
                         </div>
                     </div>

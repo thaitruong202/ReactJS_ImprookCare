@@ -371,7 +371,7 @@ const BookingDoctor = () => {
                             {doctorDetail?.specialtyId?.specialtyName &&
                                 (<div className="Profile_Doctor_Info">
                                     <h3>{doctorDetail.name}</h3>
-                                    <span className="mb-2"><img src={verified} alt="verified" /> <span style={{ color: '#1975e3', fontSize: '1.1rem', fontWeight: 'bold' }}>Bác sĩ</span> | <strong>10</strong> năm kinh nghiệm</span>
+                                    <span className="mb-2" style={{ display: 'flex', gap: '0.25rem' }}><img src={verified} alt="verified" /> <span style={{ color: '#1975e3', fontSize: '1.1rem', fontWeight: 'bold' }}>Bác sĩ</span> | <strong>10</strong> năm kinh nghiệm</span>
                                     {doctorDetail.totalRating === null ?
                                         <>
                                             <div className="Profile_Doctor_Total_Rating">
@@ -400,7 +400,7 @@ const BookingDoctor = () => {
                             <span>2051052125</span>
                         </div>
                         {current_user === null ? <button><Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để đặt khám</Link></button> : <button><Link to={url}>ĐẶT KHÁM NGAY</Link></button>}
-                        {current_user === null ? <button><Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để nhắn tin cho bác sĩ</Link></button> : <button onClick={handleClick}><Chat /></button>}
+                        {current_user === null ? <button><Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để nhắn tin cho bác sĩ</Link></button> : <button onClick={handleClick}><Chat style={{ color: "white" }} /></button>}
                     </div>
                     {showChatRoom && (
                         <div>
@@ -557,14 +557,14 @@ const BookingDoctor = () => {
                         </div>
                     </div>
                 </div>
-                <div className="Booking_Doctor_Footer">
+            </div>
+            <div className="Booking_Doctor_Footer">
+                <div>
+                    <span>Đặt lịch khám Bác sĩ dễ dàng</span>
+                    <h3>Tải ngay I'MPROOK CARE</h3>
                     <div>
-                        <span>Đặt lịch khám Bác sĩ dễ dàng</span>
-                        <h3>Tải ngay IMPROOKCARE</h3>
-                        <div>
-                            <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
-                            <Link to="/"><img src={appstore} alt="AppStore" /></Link>
-                        </div>
+                        <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
+                        <Link to="/"><img src={appstore} alt="AppStore" /></Link>
                     </div>
                 </div>
             </div>

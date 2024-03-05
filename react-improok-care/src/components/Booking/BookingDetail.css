@@ -161,3 +161,22 @@ div.Booking__TimeSlotInfo>span:first-child {
 div.Booking__TimeSlotInfo>span:nth-child(2) {
     width: 40%;
 }
+
+div.Booking_Detail_Footer {
+    background-color: #F0F8FF;
+    color: darkblue;
+    margin-top: 3rem;
+}
+
+div.Booking_Detail_Footer>div {
+    padding-top: 2rem;
+    padding-left: 5rem;
+    padding-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+div.Booking_Detail_Footer>div>div {
+    display: flex;
+}
