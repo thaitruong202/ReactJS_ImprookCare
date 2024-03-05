@@ -81,7 +81,7 @@ const Booking = () => {
                     <div className="Booking_Content_2_Content">
                         <div className="Doctor_List">
                             {Object.values(listDoctor).map(ld => {
-                                let url = `/booking/doctor/${ld.profileDoctorId}`
+                                let url = `/doctor/${ld.profileDoctorId}`
                                 return <>
                                     <div className="Doctor_Item">
                                         <img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} style={{ width: '30%' }} alt="404" />
