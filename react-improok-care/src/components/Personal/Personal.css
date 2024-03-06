@@ -12,32 +12,6 @@ div.PersonalPage_Left {
     width: 20%;
 }
 
-div.PersonalPage_Left_Content>ul {
-    display: grid;
-    list-style: none;
-    background-color: #EEEEEE;
-}
-
-div.PersonalPage_Left_Content>ul>li {
-    display: flex;
-    height: 3rem;
-    align-items: center;
-    cursor: pointer;
-    gap: 0.75rem;
-}
-
-div.PersonalPage_Left_Content>ul>li:hover {
-    border-color: rgb(26 118 227);
-    cursor: pointer;
-    border-right-width: 4px;
-    border-radius: 3px;
-}
-
-div.PersonalPage_Left_Content>ul>li a {
-    text-decoration: none;
-    color: black;
-}
-
 div.PersonalPage_Right {
     width: 70%;
 }

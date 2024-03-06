@@ -1,28 +1,25 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate, Link } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./DoctorMessage.css";
-import { Form, Image } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
-import doctorprofile from "../../assets/images/doctor-profile-icon.png"
+// import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import printer from "../../assets/images/printer.png"
 import profileicon from "../../assets/images/profile-icon.png"
 import profile404 from "../../assets/images/profile.png"
 import message from "../../assets/images/message.png"
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { MessageBox, ChatItem } from "react-chat-elements";
+import { MessageBox } from "react-chat-elements";
 import 'react-chat-elements/dist/main.css';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
-import { FaCalendarCheck, FaInfoCircle } from "react-icons/fa";
-import { MdEditCalendar, MdLogout, MdMessage } from "react-icons/md";
-import { ImProfile } from "react-icons/im";
+import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 var stompClient = null;
 
 const DoctorMessage = () => {
     const [current_user, dispatch] = useContext(UserContext);
-    const nav = useNavigate();
     const [loading, setLoading] = useState(true);
     const [profileDoctor, setProfileDoctor] = useState([]);
 
@@ -79,13 +76,6 @@ const DoctorMessage = () => {
         // setListMessage(current => {
         //     return {...current, fakeListMessage}
         // })
-    }
-
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
     }
 
     const loadProfileDoctor = async () => {
@@ -233,14 +223,7 @@ const DoctorMessage = () => {
             <div className="Doctor_Message">
                 <div className="Doctor_Message_Left">
                     <div className="Doctor_Message_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/doctor">Thông tin cá nhân</Link></li>
-                            <li><MdEditCalendar /><Link to="/schedule">Đăng ký lịch khám</Link></li>
-                            <li><FaCalendarCheck /><Link to="/bookingmanagement">Lịch hẹn</Link></li>
-                            <li><ImProfile /><Link to="/profiledoctor">Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/doctormessage">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <DoctorMenu />
                     </div>
                 </div>
                 <div className="Doctor_Message_Middle">

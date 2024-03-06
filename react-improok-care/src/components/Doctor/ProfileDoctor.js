@@ -1,22 +1,18 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate, Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./ProfileDoctor.css";
-import { Form, Image } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
-import cookie from "react-cookies";
 import { toast } from "react-toastify";
 // import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import printer from "../../assets/images/printer.png"
 import profileicon from "../../assets/images/profile-icon.png"
 import profile404 from "../../assets/images/profile.png"
-import { FaCalendarCheck, FaInfoCircle } from "react-icons/fa";
-import { MdEditCalendar, MdLogout, MdMessage } from "react-icons/md";
-import { ImProfile } from "react-icons/im";
+import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
 const ProfileDoctor = () => {
     const [current_user, dispatch] = useContext(UserContext);
-    const nav = useNavigate();
     const [loading, setLoading] = useState(true);
     const [profileDoctor, setProfileDoctor] = useState([]);
 
@@ -57,13 +53,6 @@ const ProfileDoctor = () => {
     // console.log(typeof (current_user.birthday))
     // const formattedDate = current_user.birthDate.toISOString();
     // const formattedDate = new Date(current_birthday).toISOString();
-
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
 
     useEffect(() => {
         const loadProvince = async () => {
@@ -287,14 +276,7 @@ const ProfileDoctor = () => {
             <div className="Profile_Doctor">
                 <div className="Profile_Doctor_Left">
                     <div className="Profile_Doctor_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/doctor">Thông tin cá nhân</Link></li>
-                            <li><MdEditCalendar /><Link to="/schedule">Đăng ký lịch khám</Link></li>
-                            <li><FaCalendarCheck /><Link to="/bookingmanagement">Lịch hẹn</Link></li>
-                            <li><ImProfile /><Link to="/profiledoctor">Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/doctormessage">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <DoctorMenu />
                     </div>
                 </div>
                 <div className="Profile_Doctor_Middle">

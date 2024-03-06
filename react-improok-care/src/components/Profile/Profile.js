@@ -1,22 +1,18 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate, Link, useSearchParams, Navigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useSearchParams, Navigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./Profile.css";
-import { Button, Form, Image } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
-import cookie from "react-cookies";
 import { toast } from "react-toastify";
 import printer from "../../assets/images/printer.png"
 import profileicon from "../../assets/images/profile-icon.png"
 import profile404 from "../../assets/images/profile.png"
-import { FaCalendar, FaHistory, FaInfoCircle, FaSearch } from "react-icons/fa";
-import { ImProfile } from "react-icons/im";
-import { MdLogout, MdMessage } from "react-icons/md";
+import UserMenu from "../../layout/UserMenu/UserMenu";
 
 const Profile = () => {
     const [current_user, dispatch] = useContext(UserContext);
     const [gender, setGender] = useState()
-    const nav = useNavigate();
     const [loading, setLoading] = useState(true)
 
     const [q] = useSearchParams();
@@ -65,13 +61,6 @@ const Profile = () => {
 
     const currentDate = new Date();
     const currentFormattedDate = currentDate.toISOString().split('T')[0];
-
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
 
     const handleRelationshipChange = (e) => {
         setUpdateRelationship(e);
@@ -302,14 +291,7 @@ const Profile = () => {
             <div className="Profile">
                 <div className="Profile_Left">
                     <div className="Profile_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/personal">Thông tin cá nhân</Link></li>
-                            <li><FaCalendar /><Link to="/appointment">Lịch khám</Link></li>
-                            <li><FaHistory /><Link to="/history">Lịch sử khám</Link></li>
-                            <li><ImProfile /><Link to="/profile">Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/message">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <UserMenu />
                     </div>
                 </div>
                 <div className="Profile_Middle">

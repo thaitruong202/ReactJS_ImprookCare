@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./Doctor.css";
 import { Form, Image } from "react-bootstrap";
@@ -8,9 +8,7 @@ import cookie from "react-cookies";
 import { toast } from "react-toastify";
 import avatar_user from "../../assets/images/user.png"
 import Moment from "react-moment";
-import { FaCalendarCheck, FaInfoCircle } from "react-icons/fa";
-import { MdEditCalendar, MdLogout, MdMessage } from "react-icons/md";
-import { ImProfile } from "react-icons/im";
+import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
 const Doctor = () => {
     const [current_user, dispatch] = useContext(UserContext);
@@ -71,13 +69,6 @@ const Doctor = () => {
     // console.log(typeof (current_user.birthday))
     // const formattedDate = current_user.birthDate.toISOString();
     // const formattedDate = new Date(current_birthday).toISOString();
-
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
 
     const updateClick = () => {
         setCheckPersonalInfo(!checkPersonalInfo);
@@ -190,14 +181,7 @@ const Doctor = () => {
             <div className="Doctor">
                 <div className="Doctor_Left">
                     <div className="Doctor_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/doctor">Thông tin cá nhân</Link></li>
-                            <li><MdEditCalendar /><Link to="/schedule">Đăng ký lịch khám</Link></li>
-                            <li><FaCalendarCheck /><Link to="/bookingmanagement">Lịch hẹn</Link></li>
-                            <li><ImProfile /><Link to="/profiledoctor">Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/doctormessage">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <DoctorMenu />
                     </div>
                 </div>
                 <div className="Doctor_Right">

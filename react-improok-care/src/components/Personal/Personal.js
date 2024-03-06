@@ -8,9 +8,7 @@ import cookie from "react-cookies";
 import { toast } from "react-toastify";
 import avatar_user from "../../assets/images/user.png"
 import Moment from "react-moment";
-import { FaCalendar, FaHistory, FaInfoCircle } from "react-icons/fa";
-import { ImProfile } from "react-icons/im";
-import { MdLogout, MdMessage } from "react-icons/md";
+import UserMenu from "../../layout/UserMenu/UserMenu";
 
 const Personal = () => {
     const [current_user, dispatch] = useContext(UserContext);
@@ -19,7 +17,6 @@ const Personal = () => {
     const [birthday, setBirthday] = useState(null)
     const [gender, setGender] = useState(null)
     const avatar = useRef();
-    const nav = useNavigate();
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState({
         "firstname": current_user.firstname,
@@ -45,13 +42,6 @@ const Personal = () => {
     // console.log(typeof (current_user.birthday))
     // const formattedDate = current_user.birthDate.toISOString();
     // const formattedDate = new Date(current_birthday).toISOString();
-
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
 
     // useEffect(() => {
     //     const formattedDate = new Date(current_user.birthday).toISOString().substring(0, 10);
@@ -173,14 +163,7 @@ const Personal = () => {
             <div className="PersonalPage">
                 <div className="PersonalPage_Left">
                     <div className="PersonalPage_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/personal">Thông tin cá nhân</Link></li>
-                            <li><FaCalendar /><Link to="/appointment">Lịch khám</Link></li>
-                            <li><FaHistory /><Link to="/history">Lịch sử khám</Link></li>
-                            <li><ImProfile /><Link to="/profile">Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/message">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <UserMenu />
                     </div>
                 </div>
                 <div className="PersonalPage_Right">

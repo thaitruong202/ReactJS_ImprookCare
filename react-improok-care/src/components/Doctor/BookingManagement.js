@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, createContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext, BookingManagementContext } from "../../App";
 import { useNavigate, Link } from "react-router-dom";
 import "./BookingManagement.css";
@@ -9,9 +9,7 @@ import ProfileDoctor from "./ProfileDoctor";
 import Prescription from "./Prescription";
 import { PrescriptionProvider } from '../../reducers/PrescriptionContext';
 import cookie from "react-cookies"
-import { FaCalendarCheck, FaInfoCircle } from "react-icons/fa";
-import { MdEditCalendar, MdLogout, MdMessage } from "react-icons/md";
-import { ImProfile } from "react-icons/im";
+import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
 const BookingManagement = () => {
     const [current_user, dispatch] = useContext(UserContext);
@@ -42,13 +40,6 @@ const BookingManagement = () => {
     })
 
     // const [selectedBookingId, setSelectedBookingId] = useState('');
-
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
 
     useEffect(() => {
         const loadProfileDoctorByUserId = async () => {
@@ -125,7 +116,6 @@ const BookingManagement = () => {
 
     const loadWaitingBooking = async () => {
         try {
-            // console.log("qq");
             console.log(selectedProfileDoctorId);
             let res = await authApi().post(endpoints['booking-doctor-view'], {
                 "profileDoctorId": selectedProfileDoctorId
@@ -441,14 +431,7 @@ const BookingManagement = () => {
             <div class="BookingManagement">
                 <div class="BookingManagement_Left">
                     <div class="BookingManagement_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/doctor">Thông tin cá nhân</Link></li>
-                            <li><MdEditCalendar /><Link to="/schedule">Đăng ký lịch khám</Link></li>
-                            <li><FaCalendarCheck /><Link to="/bookingmanagement">Lịch hẹn</Link></li>
-                            <li><ImProfile /><Link to="/profiledoctor">Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/doctormessage">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <DoctorMenu />
                     </div>
                 </div>
                 <div class="BookingManagement_Right">

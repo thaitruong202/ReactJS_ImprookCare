@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Badge, Button, Form, Table } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Badge, Button, Table } from "react-bootstrap";
 import { UserContext } from "../../App";
 import "./History.css";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
@@ -13,19 +12,10 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { toast } from "react-toastify";
-import { FaCalendar, FaHistory, FaInfoCircle } from "react-icons/fa";
-import { MdLogout, MdMessage } from "react-icons/md";
-import { ImProfile } from "react-icons/im";
+import UserMenu from "../../layout/UserMenu/UserMenu";
 
 const History = () => {
     const [current_user, dispatch] = useContext(UserContext);
-    const nav = useNavigate();
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
 
     const [loading, setLoading] = useState(false);
 
@@ -240,14 +230,7 @@ const History = () => {
             <div className="MedicalRecords">
                 <div className="MedicalRecords_Left">
                     <div className="MedicalRecords_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/personal">Thông tin cá nhân</Link></li>
-                            <li><FaCalendar /><Link to="/appointment">Lịch khám</Link></li>
-                            <li><FaHistory /><Link to="/history">Lịch sử khám</Link></li>
-                            <li><ImProfile /><Link to="/profile">Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/message">Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <UserMenu />
                     </div>
                 </div>
                 <div className="MedicalRecords_Middle">
