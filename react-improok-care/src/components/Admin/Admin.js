@@ -174,7 +174,7 @@ const Admin = () => {
     const adminAuth = (current_user) => {
         if (isAdmin === 0) {
             if (current_user !== null && current_user.roleId.roleId !== 1) {
-                toast.error("Bạn không có quyền truy cập trang này!")
+                toast.error("Bạn không có quyền truy cập!")
                 isAdmin = 1;
                 navigate('/')
             }
