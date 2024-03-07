@@ -30,6 +30,7 @@ import Message from "./components/Message/Message"
 import PaymentResult from "./components/Payment/PaymentResult";
 import BookingManagement from "./components/Doctor/BookingManagement";
 import Prescription from "./components/Doctor/Prescription";
+import Schedule from "./components/Doctor/Schedule";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -67,6 +68,7 @@ const App = () => {
             <Route path='/paymentresult' element={<PaymentResult />} />
             <Route path='/bookingmanagement' element={<BookingManagement />} />
             <Route path='/prescription' element={<Prescription />} />
+            <Route path='/schedule' element={<Schedule />} />
           </Routes>
           <Footer />
           <ToastContainer />
