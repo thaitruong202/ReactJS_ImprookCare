@@ -18,6 +18,10 @@ div.Header {
     background-color: #ffffff;
     transition: all 0.3s;
     transform-origin: 50% 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
 }
 
 .Header header {

@@ -2,7 +2,7 @@ div.PersonalPage {
     display: flex;
     max-width: 80rem;
     flex-wrap: wrap;
-    padding-top: 2rem;
+    padding-top: 7rem;
     gap: 5rem;
     margin-left: auto;
     margin-right: auto;

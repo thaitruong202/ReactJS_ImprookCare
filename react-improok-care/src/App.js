@@ -43,10 +43,10 @@ const App = () => {
   return (
     <UserContext.Provider value={[user, dispatch]}>
       <BookingManagementContext.Provider value={[booking, dispatchBooking]}>
-        <BrowserRouter>
+        <BrowserRouter basename="/improok">
           <Header />
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route exact path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/forgetpassword' element={<ForgetPassword />} />

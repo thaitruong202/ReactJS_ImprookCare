@@ -1,7 +1,9 @@
 import { FcSearch } from "react-icons/fc";
 import "./Home.css"
 import { Link } from "react-router-dom";
-import { TiTick } from "react-icons/ti";
+import { FaHandshake, FaHospital } from "react-icons/fa";
+import { AiFillSecurityScan } from "react-icons/ai";
+import { MdPayments } from "react-icons/md";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
 
@@ -30,12 +32,20 @@ const Home = () => {
                             <h3>Tải ứng dụng I'MPROOK CARE</h3>
                             <ul>
                                 <li>
-                                    <TiTick />
-                                    <span>Đặt khám bác sĩ</span>
+                                    <FaHospital />
+                                    <span>Đặt lịch khám bệnh</span>
                                 </li>
                                 <li>
-                                    <TiTick />
-                                    <span>Tiện lợi - Nhanh chóng - Dễ dàng</span>
+                                    <FaHandshake />
+                                    <span>Tư vấn trực tuyến</span>
+                                </li>
+                                <li>
+                                    <AiFillSecurityScan />
+                                    <span>Lưu trữ hồ sơ sức khỏe</span>
+                                </li>
+                                <li>
+                                    <MdPayments />
+                                    <span>Thanh toán dịch vụ trực tuyến</span>
                                 </li>
                             </ul>
                             <div>

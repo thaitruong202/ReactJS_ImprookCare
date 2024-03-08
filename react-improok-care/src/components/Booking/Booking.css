@@ -5,6 +5,10 @@ div.Booking_Content {
     margin-right: auto;
 }
 
+div.Booking_Wrapper {
+    margin-top: 7rem;
+}
+
 div.Booking_Content_1 {
     /* background-image: linear-gradient(315deg, #4884ee 0%, #003366 74%);
     margin-top: 2rem;
@@ -12,7 +16,7 @@ div.Booking_Content_1 {
     margin-bottom: 3rem; */
     background-color: #ffffff;
     background-image: linear-gradient(180deg, #ffffff 0%, #91a6ff 74%);
-    color: darkblue;
+    color: black;
     margin-top: 3rem;
 }
 
@@ -21,6 +25,9 @@ div.Booking_Content_1>div {
     padding-left: 5rem;
     padding-bottom: 3rem;
     padding-right: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 div.Booking_Content_1 h3 {
@@ -37,22 +44,38 @@ div.Booking_Content_1 h5 {
 }
 
 div.Booking_Content_1_Content {
-    text-align: center;
-    position: relative;
+    border: 2px solid black;
+    width: 50%;
+    height: 2.8rem;
+    border-radius: 10rem;
+    display: flex;
+    align-items: center;
+}
+
+.Booking_Content_1_Content input[type="text"]:focus {
+    outline: none;
 }
 
 div.Booking_Content_1_Content input {
-    width: 60%;
-    height: 2.8rem;
-    border-radius: 10rem;
+    width: 93%;
+    height: 100%;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    border-top-left-radius: 10rem;
+    border-bottom-left-radius: 10rem;
 }
 
 div.Booking_Content_1_Content button {
-    position: absolute;
-    right: 20rem;
-    height: 2.5rem;
-    background-color: transparent;
-    border: none;
+    width: 7%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-right-radius: 10rem;
+    border-bottom-right-radius: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
 }
 
 div.Booking_Content_2 {
@@ -151,7 +174,7 @@ div.Booking_Content_5 {
     margin-top: 3rem; */
     background-color: #ffffff;
     background-image: linear-gradient(360deg, #ffffff 0%, #91a6ff 74%);
-    color: darkblue;
+    color: black;
     margin-top: 3rem;
 }
 

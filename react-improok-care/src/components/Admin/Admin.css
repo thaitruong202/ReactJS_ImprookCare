@@ -1,6 +1,7 @@
 div.Admin_Content {
     display: flex;
     margin: auto;
+    padding-top: 4.5rem;
 }
 
 div.Admin_Content_Left {

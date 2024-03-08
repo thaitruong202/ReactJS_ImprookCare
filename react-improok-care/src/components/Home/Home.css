@@ -5,6 +5,10 @@ div.Home_Content {
     margin-right: auto;
 }
 
+div.Home_Wrapper {
+    padding-top: 4rem;
+}
+
 div.Home_Header {
     /* background-image: linear-gradient(315deg, #4884ee 0%, #003366 74%);
     margin-top: 2rem;
@@ -21,6 +25,9 @@ div.Home_Header>div {
     padding-left: 5rem;
     padding-bottom: 3rem;
     padding-right: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 div.Home_Header h3 {
@@ -37,23 +44,39 @@ div.Home_Header h5 {
 }
 
 div.Home_Content_1_Content {
-    text-align: center;
-    position: relative;
+    border: 2px solid black;
+    width: 50%;
+    height: 2.8rem;
+    border-radius: 10rem;
+    display: flex;
+    align-items: center;
 }
 
 div.Home_Content_1_Content input {
-    width: 60%;
-    height: 2.8rem;
-    border-radius: 10rem;
+    width: 93%;
+    height: 100%;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    border-top-left-radius: 10rem;
+    border-bottom-left-radius: 10rem;
+}
+
+.Home_Content_1_Content input[type="text"]:focus {
+    outline: none;
 }
 
 div.Home_Content_1_Content button {
-    position: absolute;
-    right: 20rem;
-    height: 2.5rem;
-    background-color: transparent;
-    border: none;
-}
+    width: 7%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-right-radius: 10rem;
+    border-bottom-right-radius: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+} 
 
 div.Home_Content_2 {
     margin-bottom: 9rem;
@@ -179,6 +202,13 @@ div.Home_Content_5_Left>ul li {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: 0.5rem;
+}
+
+div.Home_Content_5_Left>ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 button.Home_Now {
