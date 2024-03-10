@@ -1,11 +1,14 @@
 import { FcSearch } from "react-icons/fc";
 import "./Home.css"
 import { Link } from "react-router-dom";
-import { FaHandshake, FaHospital } from "react-icons/fa";
+import { FaBriefcaseMedical, FaEye, FaHandshake, FaHospital, FaStethoscope } from "react-icons/fa";
+import { FaUserDoctor } from "react-icons/fa6";
 import { AiFillSecurityScan } from "react-icons/ai";
-import { MdPayments } from "react-icons/md";
+import { MdAccessTimeFilled, MdPayments } from "react-icons/md";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Home = () => {
     return (
@@ -24,7 +27,78 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="Home_Content">
-
+                    <div className="Home_Service">
+                        <div>
+                            <h3>Dịch vụ</h3>
+                            <div className="Split_Bar"></div>
+                        </div>
+                    </div>
+                    <div className="Home_Doctor">
+                        <div>
+                            <h3>Bác sĩ</h3>
+                            <div className="Split_Bar"></div>
+                        </div>
+                    </div>
+                    <div className="Home_Specialty">
+                        <div>
+                            <h3>Chuyên khoa</h3>
+                            <div className="Split_Bar"></div>
+                        </div>
+                    </div>
+                    <div className="Home_News">
+                        <div>
+                            <h3>Tin tức</h3>
+                            <div className="Split_Bar"></div>
+                        </div>
+                    </div>
+                    <div className="Home_Why">
+                        <div>
+                            <h3>5000+ người dùng chọn I'MPROOK CARE</h3>
+                            <div className="Split_Bar"></div>
+                            <ul>
+                                <li>
+                                    <div><FaUserDoctor /></div>
+                                    <span>Bác sĩ chuyên nghiệp</span>
+                                </li>
+                                <li>
+                                    <div><FaBriefcaseMedical /></div>
+                                    <span>Dịch vụ đa dạng</span>
+                                </li>
+                                <li>
+                                    <div><MdAccessTimeFilled /></div>
+                                    <span>Giờ giấc linh hoạt</span>
+                                </li>
+                                <li>
+                                    <div><MdPayments /></div>
+                                    <span>Thanh toán nhanh chóng</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="Home_Stats">
+                        <div>
+                            <h3>Thống kê</h3>
+                            <div className="Split_Bar"></div>
+                            <ul>
+                                <li>
+                                    <div><FaStethoscope /></div>
+                                    <span>1.1M+ lượt khám</span>
+                                </li>
+                                <li>
+                                    <div><FaUserDoctor /></div>
+                                    <span>500+ bác sĩ</span>
+                                </li>
+                                <li>
+                                    <div><FaHospital /></div>
+                                    <span>25+ bệnh viện</span>
+                                </li>
+                                <li>
+                                    <div><FaEye /></div>
+                                    <span>3200+ lượt truy cập ngày</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div className="Home_Footer">
                     <div>
