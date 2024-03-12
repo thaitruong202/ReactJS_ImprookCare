@@ -1,4 +1,6 @@
 import { FcSearch } from "react-icons/fc";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import "./Home.css"
 import { Link } from "react-router-dom";
 import { FaBriefcaseMedical, FaEye, FaHandshake, FaHospital, FaStethoscope } from "react-icons/fa";
@@ -7,10 +9,29 @@ import { AiFillSecurityScan } from "react-icons/ai";
 import { MdAccessTimeFilled, MdPayments } from "react-icons/md";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const Home = () => {
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
     return (
         <>
             <div className="Home_Wrapper">
@@ -31,6 +52,12 @@ const Home = () => {
                         <div>
                             <h3>Dịch vụ</h3>
                             <div className="Split_Bar"></div>
+                            <Carousel responsive={responsive}>
+                                <div>Item 1</div>
+                                <div>Item 2</div>
+                                <div>Item 3</div>
+                                <div>Item 4</div>
+                            </Carousel>
                         </div>
                     </div>
                     <div className="Home_Doctor">
@@ -70,7 +97,7 @@ const Home = () => {
                                 </li>
                                 <li>
                                     <div><MdPayments /></div>
-                                    <span>Thanh toán nhanh chóng</span>
+                                    <span>Thanh toán tiện lợi</span>
                                 </li>
                             </ul>
                         </div>
@@ -94,7 +121,7 @@ const Home = () => {
                                 </li>
                                 <li>
                                     <div><FaEye /></div>
-                                    <span>3200+ lượt truy cập ngày</span>
+                                    <span>3200+ lượt truy cập</span>
                                 </li>
                             </ul>
                         </div>

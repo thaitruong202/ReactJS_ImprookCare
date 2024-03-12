@@ -1,6 +1,6 @@
 div.BookingManagement {
     display: flex;
-    max-width: 80rem;
+    max-width: 85rem;
     flex-wrap: wrap;
     padding-top: 7rem;
     gap: 5rem;
@@ -13,7 +13,7 @@ div.BookingManagement_Left {
 }
 
 div.BookingManagement_Right {
-    width: 70%;
+    width: 74%;
 }
 
 div.List_Action>ul {

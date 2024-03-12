@@ -1,6 +1,6 @@
 div.Profile {
     display: flex;
-    max-width: 80rem;
+    max-width: 85rem;
     flex-wrap: wrap;
     padding-top: 7rem;
     gap: 5rem;

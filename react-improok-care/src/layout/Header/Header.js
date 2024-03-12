@@ -34,7 +34,7 @@ const Header = () => {
                 </div>
                 <div className="Header2">
                     <ul className="Menu-bar">
-                        <li>
+                        <li className="Hover">
                             <Link to="/booking">Đặt khám</Link>
                             <span>Đặt khám ngay</span>
                         </li>

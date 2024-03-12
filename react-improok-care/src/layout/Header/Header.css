@@ -14,7 +14,7 @@ div.Header {
     /* box-shadow: 0px 0px 40px 0px #c0f4b9; */
     width: 100%;
     margin: 0px;
-    padding-top: 0.75rem;
+    padding-top: 0.5rem;
     background-color: #ffffff;
     transition: all 0.3s;
     transform-origin: 50% 50%;
@@ -209,6 +209,7 @@ ul.Menu-bar li {
     display: inline-block;
     list-style: none;
     margin-left: 40px;
+    padding: 0.5rem;
 }
 
 /* ul.Menu-bar li:hover {
@@ -227,4 +228,22 @@ ul.Menu-bar li span {
     display: block;
     font-weight: lighter;
     font-size: 13px;
+}
+
+ul.Menu-bar li:hover {
+    /* background: yellow; */
+    color: darkblue;
+    /* background: #EEEEEE; */
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+ul.Menu-bar li:hover a {
+    color: darkblue;
+}
+
+ul.Menu-bar li a:hover {
+    color: darkblue;
 }

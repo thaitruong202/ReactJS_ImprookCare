@@ -174,9 +174,9 @@ const Personal = () => {
                                 <div className="PersonalPage_Right_Content">
                                     <div className="Personal_Avatar">
                                         {current_avatar === null ? <>
-                                            <Image className="user_Avatar" src={avatar_user} style={{ width: "20%" }} alt="Not Found" rounded />
+                                            <Image className="user_Avatar" src={avatar_user} style={{ width: "10%" }} alt="Not Found" rounded />
                                         </> : <>
-                                            <Image className="user_Avatar" src={current_user.avatar} style={{ width: "20%" }} alt="Avatar" rounded />
+                                            <Image className="user_Avatar" src={current_user.avatar} style={{ width: "10%" }} alt="Avatar" rounded />
                                         </>}
                                         <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} onChange={(e) => updateAvatar(e.target.files)} type="file" ref={avatar} />
                                     </div>

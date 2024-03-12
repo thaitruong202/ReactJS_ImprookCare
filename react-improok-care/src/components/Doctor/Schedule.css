@@ -1,6 +1,6 @@
 div.Schedule {
     display: flex;
-    max-width: 80rem;
+    max-width: 85rem;
     flex-wrap: wrap;
     padding-top: 7rem;
     gap: 5rem;
@@ -13,7 +13,7 @@ div.Schedule_Left {
 }
 
 div.Schedule_Right {
-    width: 73%;
+    width: 74%;
 }
 
 div.Schedule_Right_Content {

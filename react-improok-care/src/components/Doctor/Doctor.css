@@ -1,6 +1,6 @@
 div.Doctor {
     display: flex;
-    max-width: 80rem;
+    max-width: 85rem;
     flex-wrap: wrap;
     padding-top: 7rem;
     gap: 5rem;
@@ -13,7 +13,7 @@ div.Doctor_Left {
 }
 
 div.Doctor_Right {
-    width: 70%;
+    width: 74%;
 }
 
 div.Doctor_Avatar {

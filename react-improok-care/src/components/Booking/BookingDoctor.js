@@ -29,7 +29,7 @@ const BookingDoctor = () => {
     const [current_user, dispatch] = useContext(UserContext)
     const [comment, setComment] = useState([]);
     const [content, setContent] = useState(null);
-    const [rating, setRating] = useState('1');
+    const [rating, setRating] = useState(1);
 
     const [updateRating, setUpdateRating] = useState(null)
     const [updateContent, setUpdateContent] = useState(null)
@@ -245,16 +245,17 @@ const BookingDoctor = () => {
         setLoading(true);
 
         let form = new FormData();
-        form.append("profileDoctorId", doctorDetail.profileDoctorId);
+        form.append("profileDoctorId", profileDoctorId);
         form.append("userId", current_user.userId);
         form.append("content", content);
-        form.append("rating", rating)
+        form.append("rating", rating);
         // console.log(avatar.current.files[0]);
         if (avatar.current.files[0] !== undefined && avatar !== null) {
             form.append("avatar", avatar.current.files[0]);
         } else {
             form.append("avatar", new Blob());
         }
+        console.log(doctorDetail.profileDoctorId, current_user.userId, content, rating, avatar);
         try {
             let res = await authApi().post(endpoints['add-comment'], form, {
                 headers: {
@@ -262,6 +263,7 @@ const BookingDoctor = () => {
                 },
             });
             toast.success(res.data);
+            setContent("");
             loadComment();
             setLoading(false);
         } catch (error) {
@@ -372,7 +374,7 @@ const BookingDoctor = () => {
                                 (<div className="Profile_Doctor_Info">
                                     <h3>{doctorDetail.name}</h3>
                                     <span className="mb-2" style={{ display: 'flex', gap: '0.25rem' }}><img src={verified} alt="verified" /> <span style={{ color: '#1975e3', fontSize: '1.1rem', fontWeight: 'bold' }}>Bác sĩ</span> | <strong>10</strong> năm kinh nghiệm</span>
-                                    {doctorDetail.totalRating === null ?
+                                    {doctorDetail.totalRating === null || isNaN(doctorDetail.totalRating / doctorDetail.countRating) ?
                                         <>
                                             <div className="Profile_Doctor_Total_Rating">
                                                 <Rating className="mb-4" name="half-rating-read" defaultValue={0} precision={0.1} readOnly />

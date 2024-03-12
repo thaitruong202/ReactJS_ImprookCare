@@ -131,7 +131,7 @@ div.Home_Content_5_Left>ul {
 }
 
 div.Home_Content {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     justify-content: center;
     align-items: center;

@@ -116,7 +116,7 @@ const BookingDetail = () => {
         const process = async () => {
             try {
                 console.log(scheduleId, profilePatientName)
-                let res = await Apis.post(endpoints['add-booking'], {
+                let res = await authApi().post(endpoints['add-booking'], {
                     "scheduleId": scheduleId,
                     "profilePatientId": profilePatientId
                 })
