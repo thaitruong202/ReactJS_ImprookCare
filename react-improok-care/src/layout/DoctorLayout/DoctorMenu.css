@@ -1,18 +1,18 @@
 div.DoctorMenu {
-    display: grid;
-    list-style: none;
-    /* background-color: #CCFFFF; */
-    /* background-color: lightblue; */
-    /* background-color: #F0F8FF; */
-    background: white;
+  display: grid;
+  list-style: none;
+  /* background-color: #CCFFFF; */
+  /* background-color: lightblue; */
+  /* background-color: #F0F8FF; */
+  background: white;
 }
 
-div.DoctorMenu>div {
-    display: flex;
-    height: 3rem;
-    align-items: center;
-    cursor: pointer;
-    gap: 0.75rem;
+div.DoctorMenu > div {
+  display: flex;
+  height: 3rem;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.75rem;
 }
 
 /* ul.DoctorMenu>li:hover {
@@ -22,18 +22,26 @@ div.DoctorMenu>div {
     border-radius: 3px;
 } */
 
-div.DoctorMenu>div a {
-    text-decoration: none;
-    color: black;
+div.DoctorMenu > div a {
+  text-decoration: none;
+  color: black;
 }
 
 .DoctorMenu div.selected {
-    background-color: #183e9f; /* Màu xanh */
-    color: white;
-    padding-left: 10%;
-    border-radius: 0.25rem;
+  background-color: #183e9f; /* Màu xanh */
+  color: white;
+  padding-left: 10%;
+  border-radius: 0.25rem;
 }
 
 .DoctorMenu div a.selectedText {
-    color: #ffffff; /* Màu trắng */
+  color: #ffffff; /* Màu trắng */
+}
+
+.active {
+  /* color: red; */
+  background-color: #183e9f; /* Màu xanh */
+  color: white;
+  padding-left: 10%;
+  border-radius: 0.25rem;
 }
