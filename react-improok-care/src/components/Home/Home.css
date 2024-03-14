@@ -3,6 +3,9 @@ div.Home_Content {
     padding-top: 2rem;
     margin-left: auto;
     margin-right: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 div.Home_Wrapper {
@@ -126,16 +129,8 @@ div.Home_Content_5_Left>ul {
     width: 30%;
     height: 0.1rem;
     background-color: #91a6ff;
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-}
-
-div.Home_Content {
-    /* display: flex; */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 div.Home_Stats>div {
@@ -192,3 +187,71 @@ div.Home_Why>div>ul li>div {
     font-size: 1.5rem;
     color: black;
 }
+
+.Service_Carousel {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.Service_Carousel div  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.Doctor_Carousel {
+    display: flex;
+    gap: 1.1rem;
+}
+
+.Doctor_Carousel div  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+div.Home_Service>div.Home_Service_Cont {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.Service_Carousel div:hover  {
+    border: 1px solid blue;
+}
+
+div.Home_Doctor>div.Home_Doctor_Cont {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+div.Home_Specialty>div.Home_Specialty_Cont {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+button.Booking_Now {
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: #183e9f;
+}
+
+button.Booking_Now>a {
+    text-decoration: none;
+    color: black;
+}
+
+/* .custom-item {
+    padding-right: 5rem;
+} */
