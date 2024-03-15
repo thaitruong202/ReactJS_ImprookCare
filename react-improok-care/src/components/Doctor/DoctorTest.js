@@ -10,7 +10,7 @@ import avatar_user from "../../assets/images/user.png"
 import Moment from "react-moment";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
-const Doctor = () => {
+const DoctorTest = () => {
     const [current_user, dispatch] = useContext(UserContext);
     var isDoctor = 0;
     var isLogin = 0;
@@ -179,11 +179,6 @@ const Doctor = () => {
     return <>
         <div className="Doctor_Wrapper">
             <div className="Doctor">
-                <div className="Doctor_Left">
-                    <div className="Doctor_Left_Content">
-                        <DoctorMenu />
-                    </div>
-                </div>
                 <div className="Doctor_Right">
                     {checkPersonalInfo === true ?
                         <>
@@ -280,4 +275,4 @@ const Doctor = () => {
     </>
 }
 
-export default Doctor;
+export default DoctorTest;

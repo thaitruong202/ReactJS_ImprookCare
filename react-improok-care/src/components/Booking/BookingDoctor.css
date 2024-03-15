@@ -71,6 +71,18 @@ div.Phonenumber>button>a {
     font-weight: 700;
 }
 
+div.Phonenumber a {
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    width: 100%;
+    background-color: #183e9f;
+    border-radius: .5rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
 div.Booking_Doctor_Body {
     margin-top: 2rem;
 }

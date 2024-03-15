@@ -401,8 +401,8 @@ const BookingDoctor = () => {
                             <span>Hỗ trợ đặt khám</span>
                             <span>2051052125</span>
                         </div>
-                        {current_user === null ? <button><Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để đặt khám</Link></button> : <button><Link to={url}>ĐẶT KHÁM NGAY</Link></button>}
-                        {current_user === null ? <button><Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để nhắn tin cho bác sĩ</Link></button> : <button onClick={handleClick}><Chat style={{ color: "white" }} /></button>}
+                        {current_user === null ? <Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để đặt khám</Link> : <Link to={url}>ĐẶT KHÁM NGAY</Link>}
+                        {current_user === null ? <Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để nhắn tin cho bác sĩ</Link> : <button onClick={handleClick}><Chat style={{ color: "white" }} /></button>}
                     </div>
                     {showChatRoom && (
                         <div>

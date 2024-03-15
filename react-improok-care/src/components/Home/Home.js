@@ -1,10 +1,10 @@
 import { FcSearch } from "react-icons/fc";
 import "./Home.css"
 import { Link } from "react-router-dom";
-import { FaBriefcaseMedical, FaEye, FaHandshake, FaHospital, FaStethoscope } from "react-icons/fa";
+import { FaBriefcaseMedical, FaEye, FaHandshake, FaHeartbeat, FaHospital, FaStethoscope } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { AiFillSecurityScan } from "react-icons/ai";
-import { MdAccessTimeFilled, MdPayments } from "react-icons/md";
+import { MdPayments } from "react-icons/md";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
 import doctor from "../../assets/images/stethoscope.png"
@@ -17,7 +17,6 @@ import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 const Home = () => {
     const responsive = {
         superLargeDesktop: {
-            // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
             items: 5
         },
@@ -113,35 +112,11 @@ const Home = () => {
                             itemClass="custom-item"
                             centerMode={true}
                         >
-                            {/* <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div> */}
                             {Object.values(listDoctor).map(ld => {
                                 let url = `/doctor/${ld.profileDoctorId}`
                                 return (
                                     <div className="card">
-                                        <img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} style={{ width: '30%' }} alt="404" />
+                                        <div className="image-container"><img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} alt="404" /></div>
                                         <span style={{ fontSize: '1.2rem' }}><strong>{ld.name}</strong></span>
                                         <span>{ld.specialtyId.specialtyName}</span>
                                         <button className="Booking_Now"><Link to={url} style={{ color: 'white' }}>Đặt khám ngay</Link></button>
@@ -163,23 +138,23 @@ const Home = () => {
                         >
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa thần kinh</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa phụ sản</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa cơ - xương - khớp</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa nhi</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa răng - hàm - mặt</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
@@ -191,6 +166,35 @@ const Home = () => {
                         <div>
                             <h3>Tin tức</h3>
                             <div className="Split_Bar"></div>
+                            <div className="Home_News_Content">
+                                <div>
+                                    <div>
+                                        <img src={doctor} alt="Doctor" />
+                                        <div className="brand_name">I'MPROOK</div>
+                                        <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
+                                        <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức khai trương thêm mấy chục chi nhánh nữa</p></div>
+                                    </div>
+                                    <button>Đọc thêm</button>
+                                </div>
+                                <div>
+                                    <div>
+                                        <img src={doctor} alt="Doctor" />
+                                        <div className="brand_name">I'MPROOK</div>
+                                        <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
+                                        <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức bla bla</p></div>
+                                    </div>
+                                    <button>Đọc thêm</button>
+                                </div>
+                                <div>
+                                    <div>
+                                        <img src={doctor} alt="Doctor" />
+                                        <div className="brand_name">I'MPROOK</div>
+                                        <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
+                                        <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức khai trương thêm mấy chục chi nhánh nữa</p></div>
+                                    </div>
+                                    <button>Đọc thêm</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="Home_Why">
@@ -199,20 +203,19 @@ const Home = () => {
                             <div className="Split_Bar"></div>
                             <ul>
                                 <li>
-                                    <div><FaUserDoctor /></div>
+                                    <div><FaUserDoctor className="why_icon" /></div>
                                     <span>Bác sĩ chuyên nghiệp</span>
+                                    <p>Hệ thống bệnh viện và phòng khám của chúng tôi sở hữu đội ngũ bác sĩ siêng năng và tận tụy, hết mình nâng cao sức khỏe cho cộng đồng Việt Nam.</p>
                                 </li>
                                 <li>
-                                    <div><FaBriefcaseMedical /></div>
-                                    <span>Dịch vụ đa dạng</span>
+                                    <div><FaBriefcaseMedical className="why_icon" /></div>
+                                    <span>Người bệnh là trung tâm</span>
+                                    <p>Cam kết đem lại sự xuất sắc trong chuyên môn y khoa, đồng thời cung cấp dịch vụ chăm sóc chất lượng cao, giá cả phải chăng, tập trung vào sức khỏe của người bệnh.</p>
                                 </li>
                                 <li>
-                                    <div><MdAccessTimeFilled /></div>
-                                    <span>Giờ giấc linh hoạt</span>
-                                </li>
-                                <li>
-                                    <div><MdPayments /></div>
-                                    <span>Thanh toán tiện lợi</span>
+                                    <div><FaHeartbeat className="why_icon" /></div>
+                                    <span>Chăm sóc tận tình</span>
+                                    <p>Các dịch vụ cấp cứu và điều trị 24/24 tại các bệnh viện đảm bảo người bệnh luôn luôm nhận được sự an tâm và các dịch vụ chăm sóc y tế kịp thời.</p>
                                 </li>
                             </ul>
                         </div>
@@ -223,19 +226,19 @@ const Home = () => {
                             <div className="Split_Bar"></div>
                             <ul>
                                 <li>
-                                    <div><FaStethoscope /></div>
+                                    <div><FaStethoscope className="stats_icon" /></div>
                                     <span>1.1M+ lượt khám</span>
                                 </li>
                                 <li>
-                                    <div><FaUserDoctor /></div>
+                                    <div><FaUserDoctor className="stats_icon" /></div>
                                     <span>500+ bác sĩ</span>
                                 </li>
                                 <li>
-                                    <div><FaHospital /></div>
+                                    <div><FaHospital className="stats_icon" /></div>
                                     <span>25+ bệnh viện</span>
                                 </li>
                                 <li>
-                                    <div><FaEye /></div>
+                                    <div><FaEye className="stats_icon" /></div>
                                     <span>3200+ lượt truy cập</span>
                                 </li>
                             </ul>
@@ -273,7 +276,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

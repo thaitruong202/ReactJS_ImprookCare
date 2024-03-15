@@ -7,33 +7,57 @@ div.DoctorMenu {
     background: white;
 }
 
-div.DoctorMenu>div {
+/* .DoctorMenu>div {
     display: flex;
+    flex-direction: column;
     height: 3rem;
     align-items: center;
     cursor: pointer;
     gap: 0.75rem;
-}
+    width: 100%;
+} */
 
-/* ul.DoctorMenu>li:hover {
+/* .DoctorMenu>div>a:hover {
     border-color: rgb(26 118 227);
     cursor: pointer;
     border-right-width: 4px;
     border-radius: 3px;
 } */
 
-div.DoctorMenu>div a {
+.DoctorMenu>div>a {
     text-decoration: none;
     color: black;
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 16px;
 }
 
-.DoctorMenu div.selected {
-    background-color: #183e9f; /* Màu xanh */
-    color: white;
-    padding-left: 10%;
+.DoctorMenu>div>div {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-cotent: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #183e9f;
+    /* padding-left: 10%; */
     border-radius: 0.25rem;
 }
 
-.DoctorMenu div a.selectedText {
-    color: #ffffff; /* Màu trắng */
+.active .icon {
+    color: white;
+}
+  
+.active .text {
+    color: white;
 }

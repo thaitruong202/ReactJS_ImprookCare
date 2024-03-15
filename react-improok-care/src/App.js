@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import cookie from "react-cookies"
@@ -31,6 +31,9 @@ import PaymentResult from "./components/Payment/PaymentResult";
 import BookingManagement from "./components/Doctor/BookingManagement";
 import Prescription from "./components/Doctor/Prescription";
 import Schedule from "./components/Doctor/Schedule";
+import VideoCall from "./components/VideoCall/VideoCall";
+import DoctorSys from "./components/Doctor/DoctorSys";
+import DoctorTest from "./components/Doctor/DoctorTest"
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -63,12 +66,13 @@ const App = () => {
             <Route path='/booking' element={<Booking />} />
             <Route path='/doctor/:profileDoctorId' element={<BookingDoctor />} />
             <Route path='/booking/doctor/:profileDoctorId' element={<BookingDetail />} />
-            <Route path='/doctormessage' element={<DoctorMessage />} />
+            <Route path='/doctormessage' element={<DoctorMessage />} />/
             <Route path='/message' element={<Message />} />
             <Route path='/paymentresult' element={<PaymentResult />} />
             <Route path='/bookingmanagement' element={<BookingManagement />} />
             <Route path='/prescription' element={<Prescription />} />
             <Route path='/schedule' element={<Schedule />} />
+            <Route path='/videocall' element={<VideoCall />} />
           </Routes>
           <Footer />
           <ToastContainer />
