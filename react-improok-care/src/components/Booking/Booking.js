@@ -10,6 +10,8 @@ import { TiTick } from "react-icons/ti";
 import { FcSearch } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import doctorprofile from "../../assets/images/doctor-profile-icon.png"
+import Carousel from "react-multi-carousel";
+import 'react-multi-carousel/lib/styles.css';
 
 const Booking = () => {
     const [specialty, setSpecialty] = useState([]);
@@ -30,7 +32,6 @@ const Booking = () => {
     //             console.log(error);
     //         }
     //     }
-
     //     loadProfileDoctorById();
     // }, [])
 
@@ -58,6 +59,24 @@ const Booking = () => {
         loadSpecialty();
     }, [])
 
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 4
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
 
     return <>
         <div className="Booking_Wrapper">
@@ -76,21 +95,28 @@ const Booking = () => {
             <div className="Booking_Content">
                 <div className="Booking_Content_2">
                     <div className="Booking_Content_2_Header">
-                        <h4>Đặt khám bác sĩ</h4>
+                        <h3>Đặt khám bác sĩ</h3>
                     </div>
                     <div className="Booking_Content_2_Content">
                         <div className="Doctor_List">
-                            {Object.values(listDoctor).map(ld => {
-                                let url = `/doctor/${ld.profileDoctorId}`
-                                return <>
-                                    <div className="Doctor_Item">
-                                        <img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} style={{ width: '30%' }} alt="404" />
-                                        <span style={{ fontSize: '1.2rem' }}><strong>{ld.name}</strong></span>
-                                        <span>{ld.specialtyId.specialtyName}</span>
-                                        <button className="Booking_Now"><Link to={url} style={{ color: 'white' }}>Đặt khám ngay</Link></button>
-                                    </div>
-                                </>
-                            })}
+                            <Carousel
+                                responsive={responsive}
+                                sliderClass="Doctor_Carousel"
+                                itemClass="custom-item"
+                                centerMode={true}
+                            >
+                                {Object.values(listDoctor).map(ld => {
+                                    let url = `/doctor/${ld.profileDoctorId}`
+                                    return (
+                                        <div className="card">
+                                            <div className="image-container"><img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} alt="404" /></div>
+                                            <span style={{ fontSize: '1.2rem' }}><strong>{ld.name}</strong></span>
+                                            <span>{ld.specialtyId.specialtyName}</span>
+                                            <button className="Booking_Now"><Link to={url} style={{ color: 'white' }}>Đặt khám ngay</Link></button>
+                                        </div>
+                                    )
+                                })}
+                            </Carousel>
                         </div>
                     </div>
                 </div>
@@ -104,10 +130,9 @@ const Booking = () => {
                             {Object.values(specialty).map(s => {
                                 return <>
                                     <div className="Specialty_Item">
-                                        <img src={s.avatar} alt="404" />
+                                        <img src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/308833424_3412840289039678_7588527159202436779_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeESeSkjjFrwi0j5G00D1nD2TXPvQH1oHStNc-9AfWgdK4S_Ru-9Y_OIPx-wimFYB2lnSevQgzJOC_Y-F8CJc9HO&_nc_ohc=bGOGlAnIkYYAX_U28sZ&_nc_ht=scontent.fsgn2-3.fna&oh=00_AfBvju079OsOeRgTfSSO55Ltq6hgS6S4we8Z7pLwrfmCFw&oe=65F8924D" alt="404" />
                                         <span>{s.specialtyName}</span>
                                     </div>
-
                                 </>
                             })}
                         </div>
@@ -123,18 +148,26 @@ const Booking = () => {
                             {imageClick === true ? <img src={femaledoctor} alt="doctor" style={{ width: '100%' }} /> : <img src={maledoctor} alt="doctor" style={{ width: '100%' }} />}
                         </div>
                         <div className="Booking_Content_4_RightContent">
-                            <div >
+                            <div>
                                 <div className="Separate"></div>
-                                <div onClick={checkImageClick}>
-                                    <h5 style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>Đội ngũ bác sĩ</h5>
+                                <div onClick={checkImageClick} style={{ padding: '1.5rem' }}>
+                                    <h5 style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>Đội ngũ bác sĩ</h5>
                                     <h6 style={{ fontWeight: '400' }}>Tất cả các bác sĩ đều liên kết chính thức với IMPROOKCARE.</h6>
                                 </div>
                             </div>
                             <hr />
                             <div>
                                 <div className="Separate"></div>
-                                <div onClick={checkImageClick}>
-                                    <h5 style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>Đặt khám dễ dàng, nhanh chóng, chủ động</h5>
+                                <div onClick={checkImageClick} style={{ padding: '1.5rem' }}>
+                                    <h5 style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>Đặt khám dễ dàng, nhanh chóng, chủ động</h5>
+                                    <h6 style={{ fontWeight: '400' }}>Chỉ với 1 phút, bạn có thể đặt khám thành công với bác sĩ.</h6>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <div className="Separate"></div>
+                                <div onClick={checkImageClick} style={{ padding: '1.5rem' }}>
+                                    <h5 style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>Đặt khám dễ dàng, nhanh chóng, chủ động</h5>
                                     <h6 style={{ fontWeight: '400' }}>Chỉ với 1 phút, bạn có thể đặt khám thành công với bác sĩ.</h6>
                                 </div>
                             </div>

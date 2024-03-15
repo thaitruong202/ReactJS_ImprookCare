@@ -34,6 +34,9 @@ import Schedule from "./components/Doctor/Schedule";
 import VideoCall from "./components/VideoCall/VideoCall";
 import DoctorSys from "./components/Doctor/DoctorSys";
 import DoctorTest from "./components/Doctor/DoctorTest"
+import NewBooking from "./components/Doctor/NewBooking";
+import AcceptBooking from "./components/Doctor/AcceptBooking";
+import DeclineBooking from "./components/Doctor/DeclineBooking";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -69,10 +72,15 @@ const App = () => {
             <Route path='/doctormessage' element={<DoctorMessage />} />/
             <Route path='/message' element={<Message />} />
             <Route path='/paymentresult' element={<PaymentResult />} />
-            <Route path='/bookingmanagement' element={<BookingManagement />} />
+            {/* <Route path='/bookingmanagement' element={<BookingManagement />} /> */}
             <Route path='/prescription' element={<Prescription />} />
             <Route path='/schedule' element={<Schedule />} />
             <Route path='/videocall' element={<VideoCall />} />
+            <Route path='/bookingmanagement' element={<BookingManagement />}>
+              <Route path='newbooking' element={<NewBooking />} />
+              <Route path='acceptbooking' element={<AcceptBooking />} />
+              <Route path='declinebooking' element={<DeclineBooking />} />
+            </Route>
           </Routes>
           <Footer />
           <ToastContainer />

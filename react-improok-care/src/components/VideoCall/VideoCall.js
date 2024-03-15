@@ -139,7 +139,8 @@ const VideoCall = () => {
 
         const initVideoChat = async () => {
             signalingChannel = new WebSocket(
-                "ws://localhost:2024/IMPROOK_CARE/api/public/video-chat/"
+                // "ws://localhost:2024/IMPROOK_CARE/api/public/video-chat/"
+                "ws://springboot-improokcare-production.up.railway.app/IMPROOK_CARE/api/public/video-chat/"
             );
 
             signalingChannel.onmessage = handleSignalingMessage;

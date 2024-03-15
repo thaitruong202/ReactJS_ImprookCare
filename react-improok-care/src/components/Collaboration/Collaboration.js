@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Collaboration.css"
 import Apis, { endpoints } from "../../configs/Apis";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
-// import maledoctor from "../../assets/images/male-doctor.png"
-// import femaledoctor from "../../assets/images/female-doctor.png"
 import setting from "../../assets/images/settings.png"
 import timetable from "../../assets/images/timetable.png"
 import phonecall from "../../assets/images/phone-call.png"
