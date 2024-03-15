@@ -173,8 +173,8 @@ const BookingDoctor = () => {
         else form.append("avatar", new Blob());
 
         // console.log(c.commentId, c.userId.userId, current_user.userId, content, rating)
-        //console.log("userId đang đăng nhập", current_user.userId);
-        //console.log("user của comment", c.userId.userId);
+        // console.log("userId đang đăng nhập", current_user.userId);
+        // console.log("user của comment", c.userId.userId);
 
         setLoading(true);
 
@@ -437,9 +437,9 @@ const BookingDoctor = () => {
                       | <strong>10</strong> năm kinh nghiệm
                     </span>
                     {doctorDetail.totalRating === null ||
-                    isNaN(
-                      doctorDetail.totalRating / doctorDetail.countRating
-                    ) ? (
+                      isNaN(
+                        doctorDetail.totalRating / doctorDetail.countRating
+                      ) ? (
                       <>
                         <div className="Profile_Doctor_Total_Rating">
                           <Rating

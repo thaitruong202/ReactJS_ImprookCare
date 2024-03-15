@@ -31,7 +31,7 @@ import PaymentResult from "./components/Payment/PaymentResult";
 import BookingManagement from "./components/Doctor/BookingManagement";
 import Prescription from "./components/Doctor/Prescription";
 import Schedule from "./components/Doctor/Schedule";
-import VideoCall from "./components/VideoCall/Videocall";
+// import VideoCall from "./components/VideoCall/Videocall";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
