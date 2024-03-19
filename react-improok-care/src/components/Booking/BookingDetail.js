@@ -199,13 +199,15 @@ const BookingDetail = () => {
                                     </div>
                                     <div className="Booking_Date">
                                         {dateBooking.length === 0 ? (
-                                            <h5>Bác sĩ này chưa có lịch</h5>
+                                            <h5>Bác sĩ này hiện chưa đăng ký lịch khám</h5>
                                         ) : (
                                             Object.values(dateBooking).map(db => {
                                                 const currentDate = new Date();
                                                 const bookingDate = new Date(db);
 
-                                                if (bookingDate.getDate() >= currentDate.getDate()) {
+                                                if (bookingDate.getDate() >= currentDate.getDate() &&
+                                                    bookingDate.getMonth() >= currentDate.getMonth() &&
+                                                    bookingDate.getFullYear() >= currentDate.getFullYear()) {
                                                     const dateObj = new Date(db);
                                                     const dayOfWeek = dateObj.toLocaleString('vi-VN', { weekday: 'long' });
                                                     const day = dateObj.getDate();
@@ -279,16 +281,6 @@ const BookingDetail = () => {
                                     <button style={{ backgroundColor: "grey", cursor: "not-allowed" }}>Xác nhận đặt khám</button>
                                 </div>
                                 <span>Bằng cách nhấn nút xác nhận, bạn đã đồng ý với các điều khoản và điều kiện đặt khám</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="Booking_Detail_Footer">
-                        <div>
-                            <span>Đặt lịch khám Bác sĩ dễ dàng</span>
-                            <h3>Tải ngay IMPROOKCARE</h3>
-                            <div>
-                                <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
-                                <Link to="/"><img src={appstore} alt="AppStore" /></Link>
                             </div>
                         </div>
                     </div>
@@ -396,17 +388,17 @@ const BookingDetail = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="Booking_Detail_Footer">
-                        <div>
-                            <span>Đặt lịch khám Bác sĩ dễ dàng</span>
-                            <h3>Tải ngay IMPROOKCARE</h3>
-                            <div>
-                                <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
-                                <Link to="/"><img src={appstore} alt="AppStore" /></Link>
-                            </div>
-                        </div>
-                    </div>
                 </>}
+            <div className="Booking_Detail_Footer">
+                <div>
+                    <span>Đặt lịch khám Bác sĩ dễ dàng</span>
+                    <h3>Tải ngay I'MPROOK CARE</h3>
+                    <div>
+                        <Link to="/" style={{ marginRight: '1rem' }}><img src={googleplay} alt="GooglePlay" /></Link>
+                        <Link to="/"><img src={appstore} alt="AppStore" /></Link>
+                    </div>
+                </div>
+            </div>
         </div >
     </>
 }

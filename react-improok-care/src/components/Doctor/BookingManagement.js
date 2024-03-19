@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./BookingManagement.css";
 import Apis, { endpoints } from "../../configs/Apis";
 import { Form } from "react-bootstrap";
@@ -139,10 +139,10 @@ const BookingManagement = () => {
                         <DeclineBooking profileDoctorId={selectedProfileDoctorId} />
                     }
                 </>
-            case "cancelled":
-                return <>
-                    <div>Nội dung cho Đã hủy</div>
-                </>
+            // case "cancelled":
+            //     return <>
+            //         <div>Nội dung cho Đã hủy</div>
+            //     </>
             default:
                 return null;
         }

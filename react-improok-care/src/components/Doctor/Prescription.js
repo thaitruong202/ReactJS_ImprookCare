@@ -3,16 +3,13 @@ import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom"
 import { BookingManagementContext, UserContext } from "../../App";
 import "./Prescription.css";
 import { Button, Form, Table } from "react-bootstrap";
-import { useLocation } from 'react-router-dom';
 import cookie from "react-cookies"
 import { useState } from "react";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
 import { parse } from "date-fns";
 import { Autocomplete, Stack, TextField } from "@mui/material";
-import { FaCalendarCheck, FaInfoCircle } from "react-icons/fa";
-import { MdEditCalendar, MdLogout, MdMessage } from "react-icons/md";
-import { ImProfile } from "react-icons/im";
+import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
 
 const Prescription = () => {
@@ -86,13 +83,6 @@ const Prescription = () => {
         }
         loadMedicineCategories();
     }, [])
-
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
 
     // const loadMedicine = async () => {
     //     try {
@@ -289,14 +279,7 @@ const Prescription = () => {
             <div class="Prescription">
                 <div class="Prescription_Left">
                     <div class="Prescription_Left_Content">
-                        <ul>
-                            <li><FaInfoCircle /><Link to="/doctor" onClick={() => removePres()}>Thông tin cá nhân</Link></li>
-                            <li><MdEditCalendar /><Link to="/schedule" onClick={() => removePres()}>Đăng ký lịch khám</Link></li>
-                            <li><FaCalendarCheck /><Link to="/bookingmanagement" onClick={() => removePres()}>Lịch hẹn</Link></li>
-                            <li><ImProfile /><Link to="/profiledoctor" onClick={() => removePres()}>Hồ sơ</Link></li>
-                            <li><MdMessage /><Link to="/doctormessage" onClick={() => removePres()}>Tin nhắn</Link></li>
-                            <li onClick={logout}><MdLogout />Đăng xuất</li>
-                        </ul>
+                        <DoctorMenu />
                     </div>
                 </div>
                 <div class="Prescription_Right">
