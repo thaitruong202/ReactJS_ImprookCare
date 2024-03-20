@@ -19,6 +19,7 @@ import { MessageBox } from "react-chat-elements";
 import 'react-chat-elements/dist/main.css'
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
+import MessageChat from "./MessageChat";
 
 var stompClient = null;
 
@@ -66,7 +67,7 @@ const BookingDoctor = () => {
     }
 
     const onConnected = () => {
-        stompClient.subscribe('/user/' + current_user.userId + '/private', onPrivateMessage);
+        stompClient.subscribe('/user/' + current_user?.userId + '/private', onPrivateMessage);
         // stompClient.subscribe('/user/private', onPrivateMessage);
     }
 
@@ -75,7 +76,6 @@ const BookingDoctor = () => {
     }
 
     const onPrivateMessage = (payload) => {
-
         console.log("ĐÂY LÀ PAYLOAD");
         console.log(payload);
         var payloadData = JSON.parse(payload.body);
@@ -405,48 +405,50 @@ const BookingDoctor = () => {
                         {current_user === null ? <Link to={`/login?next=/doctor/${profileDoctorId}`}>Đăng nhập để nhắn tin cho bác sĩ</Link> : <button onClick={handleClick}><Chat style={{ color: "white" }} /></button>}
                     </div>
                     {showChatRoom && (
-                        <div>
-                            <div className="User_Message_Detail_Inner">
-                                <div className="User_Message_Detail_Header">
-                                    <h4 className="text-center mb-3 mt-3">{doctorDetail.name}</h4>
-                                    <button onClick={handleClose}><CloseOutlined /></button>
-                                </div>
-                                <div className="User_Message_Content">
-                                    {Object.values(listMessage).map((mes) => {
-                                        if (!mes) return null;
-                                        return <>
-                                            {current_user.userId === mes.senderId ?
-                                                <MessageBox
-                                                    key={mes.messageId}
-                                                    position={'right'}
-                                                    type={'text'}
-                                                    avatar={null}
-                                                    status={null}
-                                                    text={mes.messageContent}
-                                                    date={mes.createdDate}
-                                                /> :
-                                                <MessageBox
-                                                    key={mes.messageId}
-                                                    position={'left'}
-                                                    type={'text'}
-                                                    avatar={null}
-                                                    status={null}
-                                                    text={mes.messageContent}
-                                                    date={mes.createdDate}
-                                                />
-                                            }
-                                        </>
-                                    })}
-                                </div>
-                                <div className="User_Send_Message">
-                                    <Form.Control className="mt-2" accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
-                                    <div>
-                                        <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                                        <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        // <div>
+                        //     <div className="User_Message_Detail_Inner">
+                        //         <div className="User_Message_Detail_Header">
+                        //             <h4 className="text-center mb-3 mt-3">{doctorDetail.name}</h4>
+                        //             <button onClick={handleClose}><CloseOutlined /></button>
+                        //         </div>
+                        //         <div className="User_Message_Content">
+                        //             {Object.values(listMessage).map((mes) => {
+                        //                 if (!mes) return null;
+                        //                 return <>
+                        //                     {current_user.userId === mes.senderId ?
+                        //                         <MessageBox
+                        //                             key={mes.messageId}
+                        //                             position={'right'}
+                        //                             type={'text'}
+                        //                             avatar={null}
+                        //                             status={null}
+                        //                             text={mes.messageContent}
+                        //                             date={mes.createdDate}
+                        //                         /> :
+                        //                         <MessageBox
+                        //                             key={mes.messageId}
+                        //                             position={'left'}
+                        //                             type={'text'}
+                        //                             avatar={null}
+                        //                             status={null}
+                        //                             text={mes.messageContent}
+                        //                             date={mes.createdDate}
+                        //                         />
+                        //                     }
+                        //                 </>
+                        //             })}
+                        //         </div>
+                        //         <div className="User_Send_Message">
+                        //             <Form.Control className="mt-2" accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                        //             <div>
+                        //                 <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
+                        //                 <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>
+                        //             </div>
+                        //         </div>
+                        //     </div>
+                        // </div>
+                        // <MessageChat profileDoctorId={doctorDetail.profileDoctorId} />
+                        <MessageChat {...doctorDetail} onClose={handleClose} onButtonClick={handleClick} />
                     )}
                     <div className="googleMapAPI">
                         <GoogleMapAPI address={doctorDetail.workAddress} />

@@ -41,16 +41,16 @@ const DoctorMessage = () => {
         "messageContent": null
     })
 
-    const connect = () => {
-        let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
-        stompClient = over(Sock);
-        stompClient.connect({}, onConnected, onError);
-    }
+    // const connect = () => {
+    //     let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
+    //     stompClient = over(Sock);
+    //     stompClient.connect({}, onConnected, onError);
+    // }
 
-    const onConnected = () => {
-        stompClient.subscribe('/user/' + selectedProfile + '/private', onPrivateMessage);
-        // stompClient.subscribe('/user/private', onPrivateMessage);
-    }
+    // const onConnected = () => {
+    //     stompClient.subscribe('/user/' + selectedProfile + '/private', onPrivateMessage);
+    //     // stompClient.subscribe('/user/private', onPrivateMessage);
+    // }
 
     const onError = (err) => {
         console.log(err);
@@ -97,6 +97,16 @@ const DoctorMessage = () => {
         setSelectedProfile(pd.profileDoctorId, () => {
             console.log(selectedProfile);
         });
+        const connect = () => {
+            let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
+            stompClient = over(Sock);
+            stompClient.connect({}, onConnected, onError);
+        }
+
+        const onConnected = () => {
+            stompClient.subscribe('/user/' + pd.profileDoctorId + '/private', onPrivateMessage);
+            // stompClient.subscribe('/user/private', onPrivateMessage);
+        }
         // setListMessage(prevList => [...prevList, payloadData], () => {
         //     console.log("List sau làm sạch");
         //     console.log(listMessage);
@@ -133,7 +143,6 @@ const DoctorMessage = () => {
     // }
 
     const viewDoctorMessage = (userId) => {
-
         const process = async () => {
             try {
                 setLoading(true);

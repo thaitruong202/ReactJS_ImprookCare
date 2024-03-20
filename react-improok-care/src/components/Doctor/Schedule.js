@@ -135,7 +135,6 @@ const Schedule = () => {
                     } else {
                         setSelectedTimeSlots([...selectedTimeSlots, timeSlotId]);
                     }
-                    // toast(res.data)
                 }
                 else {
                     toast(res.data)
@@ -191,8 +190,8 @@ const Schedule = () => {
                 }
 
                 for (let i = 0; i < selectedTimeSlots.length; i++) {
-                    const timeSlotId = selectedTimeSlots[i];
 
+                    const timeSlotId = selectedTimeSlots[i];
                     let res = await authApi().post(endpoints['add-schedule'], {
                         "profileDoctorId": selectedProfileDoctorId,
                         "date": formattedDate,

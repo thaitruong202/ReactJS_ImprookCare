@@ -1,7 +1,7 @@
 div.Admin_Content {
     display: flex;
     margin: auto;
-    padding-top: 4.5rem;
+    padding-top: 7rem;
 }
 
 div.Admin_Content_Left {
@@ -44,10 +44,9 @@ div.Medicine>button {
     border: 0px solid transparent;
     border-radius: 4px;
     text-decoration: none;
-    cursor: pointer;
     background-color: rgb(9, 128, 76);
     box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px;
-    color: rgb(255, 255, 255);
+    color: #fff !important;
     font-size: 14px;
     font-weight: 400;
     height: 36px;
@@ -116,8 +115,8 @@ div.Add_User_Button button {
     outline: 0;
     grid-gap: 8px;
     align-items: center;
-    background-color: #1975dc;
-    color: #000;
+    background-color: #183e9f;
+    color: #fff !important;
     border: 1px solid #000;
     border-radius: 4px;
     cursor: pointer;
@@ -171,19 +170,22 @@ input[type=file]::file-selector-button:hover {
 }
 
 div.Avatar_Choice>div {
-    width: 15rem;
-    height: 15rem;
+    width: 10rem;
+    height: 10rem;
     margin-bottom: 0.25rem;
 }
 
 div.Avatar_Null {
-    text-align: center;
     border: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 div.Avatar_Null>img {
     margin-top: 0.5rem;
-    width: 85%;
+    width: 80%;
 }
 
 /* ======================== */
@@ -207,7 +209,7 @@ div.Update_User_Button>button {
     cursor: pointer;
     background-color: rgb(9, 128, 76);
     box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px;
-    color: rgb(255, 255, 255);
+    color: #fff !important;
     font-size: 14px;
     font-weight: 400;
     height: 36px;
@@ -273,7 +275,7 @@ div.Update_User_Button button {
     grid-gap: 8px;
     align-items: center;
     background-color: #1975dc;
-    color: #000;
+    color: #fff !important;
     border: 1px solid #000;
     border-radius: 4px;
     cursor: pointer;
@@ -372,7 +374,7 @@ div.Add_Medicine_Button button {
     grid-gap: 8px;
     align-items: center;
     background-color: #1975dc;
-    color: #000;
+    color: #fff !important;
     border: 1px solid #000;
     border-radius: 4px;
     cursor: pointer;
@@ -416,7 +418,7 @@ div.Update_Medicine_Button>button {
     cursor: pointer;
     background-color: rgb(9, 128, 76);
     box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px;
-    color: rgb(255, 255, 255);
+    color: #fff !important;
     font-size: 14px;
     font-weight: 400;
     height: 36px;
@@ -466,7 +468,7 @@ div.Update_Medicine_Button button {
     grid-gap: 8px;
     align-items: center;
     background-color: #1975dc;
-    color: #000;
+    color: #fff !important;
     border: 1px solid #000;
     border-radius: 4px;
     cursor: pointer;
