@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./Schedule.css";
 import { UserContext } from "../../App";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
@@ -9,7 +9,7 @@ import Spinner from "../../layout/Spinner";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
 const Schedule = () => {
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const nav = useNavigate();
     const [minDate, setMinDate] = useState('');
     const [timeDistance, setTimeDistance] = useState([]);
@@ -56,12 +56,12 @@ const Schedule = () => {
         loadTimeDistance();
         loadTimeSlot();
         setLoading(false);
-    }, [selectedTimeDistanceId, current_user.userId])
+    }, [selectedTimeDistanceId, current_user?.userId])
 
     useEffect(() => {
         const loadProfileDoctorByUserId = async () => {
             try {
-                let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user.userId));
+                let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId));
                 setProfileDoctorByUserId(res.data);
                 if (res.data.length === 0) {
                     toast.info("Vui lòng tạo hồ sơ trước khi đăng ký lịch khám!");
@@ -214,37 +214,37 @@ const Schedule = () => {
     // console.log(current_user.userId);
 
     return <>
-        <div class="Schedule_Wrapper">
-            <div class="Schedule">
-                <div class="Schedule_Left">
-                    <div class="Schedule_Left_Content">
+        <div className="Schedule_Wrapper">
+            <div className="Schedule">
+                <div className="Schedule_Left">
+                    <div className="Schedule_Left_Content">
                         <DoctorMenu />
                     </div>
                 </div>
                 {/* <button onClick={scheduleCheck}>Xem</button> */}
-                <div class="Schedule_Right">
-                    <div class="Schedule_Right_Content">
-                        <h3 className="text-center text-primary">ĐĂNG KÝ LỊCH KHÁM BỆNH</h3>
-                        <div class="Schedule_Option">
-                            <div class="Schedule_Date_Option">
+                <div className="Schedule_Right">
+                    <div className="Schedule_Right_Content">
+                        <h3 className="text-center">ĐĂNG KÝ LỊCH KHÁM BỆNH</h3>
+                        <div className="Schedule_Option">
+                            <div className="Schedule_Date_Option">
                                 <Form.Label style={{ width: "30%" }}>Chọn ngày</Form.Label>
                                 <input type="date" style={{ width: "60%" }} defaultValue={minDate} onChange={() => scheduleDateChange()} id="dateInput" min={minDate} />
                             </div>
-                            <div class="Schedule_Profile_Option">
+                            <div className="Schedule_Profile_Option">
                                 <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
-                                <select class="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)} onFocus={(e) => profileDoctorChange(e)}>
+                                <select className="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)} onFocus={(e) => profileDoctorChange(e)}>
                                     {Object.values(profileDoctorByUserId).map(pd => <option key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</option>)}
                                 </select>
                             </div>
-                            <div class="Schedule_Distance_Option">
-                                <Form.Label class="label" style={{ width: "40%" }}>Chọn giãn cách</Form.Label>
-                                <select class="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
+                            <div className="Schedule_Distance_Option">
+                                <Form.Label className="label" style={{ width: "40%" }}>Chọn giãn cách</Form.Label>
+                                <select className="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
                                     {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
                                 </select>
                             </div>
                         </div>
-                        <div class="Schedule_Timeslot">
-                            <div class="TimeSlot_Option">
+                        <div className="Schedule_Timeslot">
+                            <div className="TimeSlot_Option">
                                 {loading === true ? <Spinner /> :
                                     <>
                                         {Object.values(timeSlot).map(ts => {
@@ -264,8 +264,8 @@ const Schedule = () => {
                             </div>
                         </div>
                     </div>
-                    <div class="Create_Butt">
-                        <button class="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
+                    <div className="Create_Butt">
+                        <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
                     </div>
                 </div>
             </div>

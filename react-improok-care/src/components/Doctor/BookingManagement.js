@@ -11,7 +11,7 @@ import DeclineBooking from "./DeclineBooking";
 import AcceptBooking from "./AcceptBooking";
 
 const BookingManagement = () => {
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const [profileDoctorByUserId, setProfileDoctorByUserId] = useState([]);
     const [selectedProfileDoctorId, setSelectedProfileDoctorId] = useState('');
     const [minDate, setMinDate] = useState('');
@@ -107,14 +107,6 @@ const BookingManagement = () => {
     //     }
     // }
 
-    // useEffect(() => {
-    //     loadWaitingBooking();
-    // }, [bookingList])
-
-    // useEffect(() => {
-    //     loadWaitingBooking();
-    // }, [selectedProfileDoctorId]);
-
     const handleOptionClick = (option) => {
         setSelectedOption(option);
     };
@@ -149,31 +141,31 @@ const BookingManagement = () => {
     };
 
     return <>
-        <div class="BookingManagement_Wrapper">
-            <div class="BookingManagement">
-                <div class="BookingManagement_Left">
-                    <div class="BookingManagement_Left_Content">
+        <div className="BookingManagement_Wrapper">
+            <div className="BookingManagement">
+                <div className="BookingManagement_Left">
+                    <div className="BookingManagement_Left_Content">
                         <DoctorMenu />
                     </div>
                 </div>
-                <div class="BookingManagement_Right">
-                    <div class="BookingManagement_Right_Header">
-                        <h2 className="text-center mb-3 text-info">QUẢN LÝ LỊCH HẸN</h2>
+                <div className="BookingManagement_Right">
+                    <div className="BookingManagement_Right_Header">
+                        <h2 className="text-center mb-3">QUẢN LÝ LỊCH HẸN</h2>
                     </div>
-                    <div class="BookingManagement_Right_Body_1">
-                        <div class="BookingManagement_Date_Option">
+                    <div className="BookingManagement_Right_Body_1">
+                        <div className="BookingManagement_Date_Option">
                             <Form.Label style={{ width: "30%" }}>Chọn ngày</Form.Label>
                             <input type="date" style={{ width: "60%" }} defaultValue={minDate} min={minDate} id="dateInput" />
                         </div>
-                        <div class="BookingManagement_Profile_Option">
+                        <div className="BookingManagement_Profile_Option">
                             <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
-                            <select style={{ width: "60%" }} class="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)}>
+                            <select style={{ width: "60%" }} className="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)}>
                                 {Object.values(profileDoctorByUserId).map(pd => <option key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</option>)}
                             </select>
                         </div>
                     </div>
-                    <div class="BookingManagement_Right_Body_2">
-                        <div class="List_Action">
+                    <div className="BookingManagement_Right_Body_2">
+                        <div className="List_Action">
                             <ul>
                                 <li className={selectedOption === "new" ? "active" : ""}
                                     onClick={() => handleOptionClick("new")}>Bệnh nhân mới</li>
@@ -185,9 +177,7 @@ const BookingManagement = () => {
                                     onClick={() => handleOptionClick("cancelled")}>Đã hủy</li>
                             </ul>
                         </div>
-                        <div>
-                            {renderContent()}
-                        </div>
+                        <div>{renderContent()}</div>
                     </div>
                 </div>
             </div>

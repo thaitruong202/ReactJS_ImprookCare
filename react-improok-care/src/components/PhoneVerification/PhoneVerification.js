@@ -24,9 +24,9 @@ const PhoneVerification = () => {
 
     const [verificationInfo, setVerificationInfo] = useState(null)
 
-    const handleCodeChange = (evt) => {
-        setCode(evt.target.value);
-    };
+    // const handleCodeChange = (evt) => {
+    //     setCode(evt.target.value);
+    // };
 
     const handleCheck = (evt) => {
         setCheck(evt.target.checked);
@@ -63,7 +63,6 @@ const PhoneVerification = () => {
         }
         process();
     }
-
 
     const verification = (evt) => {
         evt.preventDefault();
@@ -147,7 +146,7 @@ const PhoneVerification = () => {
                             <div className="PhoneVerification_Form">
                                 <div className="PhoneVerification_Detail">
                                     <div className="PhoneVerification_Header">
-                                        <div>XÁC THỰC NGƯỜI DÙNG</div>
+                                        <div>XÁC THỰC SỐ ĐIỆN THOẠI</div>
                                     </div>
                                     <div className="PhoneVerification_Fill">
                                         {/* <div className="PhoneVerification_User">
@@ -178,7 +177,7 @@ const PhoneVerification = () => {
                                         {/* <button type="button" className="PhoneVerification_Butt" onClick={toRegister}>Register</button>
                                         <button className="PhoneVerification_Butt">Đăng ký</button> */}
                                         {/* {loading === true ? <Spinner /> : <button type="button" className="PhoneVerification_Butt" onClick={verification}>Xác thực</button>} */}
-                                        <Form>
+                                        <Form onSubmit={verification}>
                                             <InputGroup className="mb-3 PhoneVerification_Warning">
                                                 <div className="PhoneVerification_User_OTP">
                                                     <InputGroup className="PhoneVerification_User_Input">
@@ -209,8 +208,7 @@ const PhoneVerification = () => {
                                                     aria-describedby="basic-addon1"
                                                     required
                                                     defaultValue={code}
-                                                    onChange={(e) => setCode(e.target.value)}
-                                                />
+                                                    onChange={(e) => setCode(e.target.value)} />
                                             </InputGroup>
                                             <div className="PhoneVerification_User">
                                                 <div className="PhoneVerification_User_PolicyCheck">

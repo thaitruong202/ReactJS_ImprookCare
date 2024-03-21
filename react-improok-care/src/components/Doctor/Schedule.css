@@ -103,3 +103,7 @@ button.Create_Schedule_Butt {
     transition: all .14s ease-out;
     white-space: nowrap;
 }
+
+div.Schedule_Right_Content>h3 {
+    color: #183e9f;
+}

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./Doctor.css";
 import { Form, Image } from "react-bootstrap";
@@ -42,8 +42,8 @@ const Doctor = () => {
 
     const [current_avatar, setCurrent_avatar] = useState(current_user?.avatar);
     const [current_birthday, setCurrent_birthday] = useState(current_user?.birthday);
-    const [birthday, setBirthday] = useState(null)
-    const [gender, setGender] = useState(null)
+    const [birthday, setBirthday] = useState(null);
+    const [gender, setGender] = useState(null);
     const avatar = useRef();
     const nav = useNavigate();
     const [loading, setLoading] = useState(true)
@@ -54,8 +54,8 @@ const Doctor = () => {
         "birthday": current_user?.birthday,
         "gender": current_user?.gender,
         "avatar": current_user?.avatar
-    })
-    const [checkPersonalInfo, setCheckPersonalInfo] = useState(true)
+    });
+    const [checkPersonalInfo, setCheckPersonalInfo] = useState(true);
     const formattedBirthday = (
         <Moment locale="vi" format="DD/MM/YYYY">
             {current_user?.birthday}
@@ -145,8 +145,8 @@ const Doctor = () => {
                     setLoading(false);
                 }
                 setCheckPersonalInfo(!checkPersonalInfo);
-            } catch (ex) {
-                console.log(ex)
+            } catch (error) {
+                console.log(error)
             }
         }
         process();
@@ -188,31 +188,31 @@ const Doctor = () => {
                     {checkPersonalInfo === true ?
                         <>
                             <section>
-                                <div className="Doctor_Right_Header"><h2 className="text-center text-success">Thông tin cá nhân của {current_user.firstname}</h2></div>
+                                <div className="Doctor_Right_Header"><h2 className="text-center">Thông tin cá nhân của {current_user?.firstname}</h2></div>
                                 <div className="Doctor_Right_Content">
                                     <div className="Doctor_Avatar">
                                         {current_avatar === null ? <>
-                                            <Image className="user_Avatar" src={avatar_user} style={{ width: "10%" }} alt="Not Found" rounded />
+                                            <Image className="user_Avatar" src={avatar_user} style={{ width: "15%" }} alt="Not Found" rounded />
                                         </> : <>
-                                            <Image className="user_Avatar" src={current_user.avatar} style={{ width: "10%" }} alt="Not Found" rounded />
+                                            <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "10%" }} alt="Not Found" rounded />
                                         </>}
                                         <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} onChange={(e) => updateAvatar(e.target.files)} type="file" ref={avatar} />
                                     </div>
                                     <div className="Doctor_LastName">
                                         <Form.Label style={{ width: "30%" }}>Họ và tên đệm</Form.Label>
-                                        <Form.Control value={current_user.lastname} type="text" disabled />
+                                        <Form.Control value={current_user?.lastname} type="text" disabled />
                                     </div>
                                     <div className="Doctor_FirstName">
                                         <Form.Label style={{ width: "30%" }}>Tên</Form.Label>
-                                        <Form.Control value={current_user.firstname} type="text" disabled />
+                                        <Form.Control value={current_user?.firstname} type="text" disabled />
                                     </div>
                                     <div className="Doctor_Email">
                                         <Form.Label style={{ width: "30%" }}>Email</Form.Label>
-                                        <Form.Control value={current_user.email} type="email" disabled />
+                                        <Form.Control value={current_user?.email} type="email" disabled />
                                     </div>
                                     <div className="Doctor_Gender">
                                         <Form.Label style={{ width: "30%" }}>Giới tính</Form.Label>
-                                        <Form.Control value={current_user.gender === true ? "Nam" : "Nữ"} type="Text" disabled />
+                                        <Form.Control value={current_user?.gender === true ? "Nam" : "Nữ"} type="Text" disabled />
                                     </div>
                                     <div className="Doctor_Birthday">
                                         <Form.Label style={{ width: "30%" }}>Ngày sinh</Form.Label>
@@ -229,28 +229,28 @@ const Doctor = () => {
                             </section>
                         </> : <>
                             <section>
-                                <div className="Doctor_Right_Header"><h2 className="text-center text-success">Thông tin cá nhân của {current_user.firstname}</h2></div>
+                                <div className="Doctor_Right_Header"><h2 className="text-center">Thông tin cá nhân của {current_user?.firstname}</h2></div>
                                 <div className="Doctor_Right_Content">
                                     <div className="Doctor_Avatar">
-                                        <div><Image className="user_Avatar" src={current_user.avatar} style={{ width: "35%" }} alt="Not Found" rounded /></div>
+                                        <div><Image className="user_Avatar" src={current_user?.avatar} style={{ width: "15%" }} alt="Not Found" rounded /></div>
                                         <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} type="file" ref={avatar} />
                                     </div>
                                     <div className="Doctor_LastName">
                                         <Form.Label style={{ width: "30%" }}>Họ và tên đệm</Form.Label>
-                                        <Form.Control defaultValue={current_user.lastname} onChange={(e) => change(e, "lastname")} type="text" placeholder="Họ và tên đệm" required />
+                                        <Form.Control defaultValue={current_user?.lastname} onChange={(e) => change(e, "lastname")} type="text" placeholder="Họ và tên đệm" required />
                                     </div>
                                     <div className="Doctor_FirstName">
                                         <Form.Label style={{ width: "30%" }}>Tên</Form.Label>
-                                        <Form.Control defaultValue={current_user.firstname} onChange={(e) => change(e, "firstname")} type="text" placeholder="Tên" required />
+                                        <Form.Control defaultValue={current_user?.firstname} onChange={(e) => change(e, "firstname")} type="text" placeholder="Tên" required />
                                     </div>
                                     <div className="Doctor_Email">
                                         <Form.Label style={{ width: "30%" }}>Email</Form.Label>
-                                        <Form.Control defaultValue={current_user.email} type="email" placeholder="Email" required />
+                                        <Form.Control defaultValue={current_user?.email} type="email" placeholder="Email" required />
                                     </div>
                                     <div className="Doctor_Gender">
                                         <Form.Label style={{ width: "22%" }}>Giới tính</Form.Label>
                                         <div className="Doctor_Gender_Tick">
-                                            {current_user.gender === true ? <>
+                                            {current_user?.gender === true ? <>
                                                 <Form.Check type="radio" label="Nam" name="radioOption" defaultChecked onChange={() => setGender(true)} />
                                                 <Form.Check type="radio" label="Nữ" name="radioOption" onChange={() => setGender(false)} />
                                             </> : <>
@@ -260,12 +260,8 @@ const Doctor = () => {
                                         </div>
                                     </div>
                                     <div className="Doctor_Birthday">
-                                        <Form.Label style={{ width: "22%" }}>Ngày sinh</Form.Label>
-                                        <div className="Doctor_Birthday_Tick">
-                                            <input
-                                                type="date" defaultValue={formattedDateTime} id="dateInput"
-                                            />
-                                        </div>
+                                        <Form.Label style={{ width: "30%" }}>Ngày sinh</Form.Label>
+                                        <input type="date" defaultValue={formattedDateTime} id="dateInput" />
                                     </div>
                                     <div className="Update_Button">
                                         <button type="button" onClick={updateClick}>Hủy</button>

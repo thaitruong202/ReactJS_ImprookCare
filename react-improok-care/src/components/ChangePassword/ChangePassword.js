@@ -3,14 +3,13 @@ import { Form, InputGroup } from "react-bootstrap";
 import { useContext, useState } from "react";
 import { UserContext } from "../../App";
 import "./ChangePassword.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
-// import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Key, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 
 const ChangePassword = () => {
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const [loading, setLoading] = useState(null);
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -50,7 +49,7 @@ const ChangePassword = () => {
                 // form.append("newPassword", newPassword.newPassword);
 
                 let res = await authApi().post(endpoints['change-password'], {
-                    "username": current_user.username,
+                    "username": current_user?.username,
                     "currentPassword": currentPassword,
                     "newPassword": newPassword
                 });
@@ -96,26 +95,11 @@ const ChangePassword = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
 
-    const logout = () => {
-        dispatch({
-            "type": "logout"
-        })
-        nav("/")
-    }
-
     return <>
         <div className="ChangePassword_Wrapper">
             {/* <div className="ChangePassword_Content"> */}
             <div className="ChangePassword_Form">
                 {/* <div class="ChangePassword_Left">
-                        <ul>
-                            <li><Link to="/personalpage">Thông tin cá nhân</Link></li>
-                            <li><Link to="/changepassword">Đổi mật khẩu</Link></li>
-                            <li><Link to="/appointment">Lịch khám</Link></li>
-                            <li><Link to="/medicalrecord">Lịch sử khám</Link></li>
-                            <li><Link to="/profile">Hồ sơ</Link></li>
-                            <li onClick={logout}>Đăng xuất</li>
-                        </ul>
                     </div> */}
                 <div className="ChangePassword_Right">
                     <div className="ChangePassword_Right_Form">
