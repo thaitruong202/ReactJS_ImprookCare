@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaCalendarCheck, FaInfoCircle } from "react-icons/fa";
+import { FaCalendarCheck, FaInfoCircle, FaVideo } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { MdEditCalendar, MdLogout, MdMessage } from "react-icons/md";
 import { useNavigate, NavLink } from "react-router-dom";
@@ -66,6 +66,14 @@ const DoctorMenu = () => {
                 >
                     <MdMessage className="icon" />
                     <span className="text">Tin nhắn</span>
+                </NavLink>
+                <NavLink
+                    activeClassName="active"
+                    onClick={() => handleItemClick("videocall", "/videocall")}
+                    to="/videocall"
+                >
+                    <FaVideo className="icon" />
+                    <span className="text">Cuộc họp</span>
                 </NavLink>
                 <div onClick={logout}><MdLogout />Đăng xuất</div>
             </div>

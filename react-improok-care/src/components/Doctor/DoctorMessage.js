@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./DoctorMessage.css";
 import { Form } from "react-bootstrap";

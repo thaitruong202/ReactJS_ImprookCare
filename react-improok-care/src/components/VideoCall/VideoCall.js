@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import profile404 from "../../assets/images/profile.png"
+import "./VideoCall.css"
 
 const VideoCall = () => {
     const selfViewRef = useRef(null);
@@ -7,6 +9,13 @@ const VideoCall = () => {
     const videoSelectRef = useRef(null);
     const [audioSource, setAudioSource] = useState("");
     const [videoSource, setVideoSource] = useState("");
+
+    const [isCameraOn, setIsCameraOn] = useState(true);
+    const [isMicrophoneOn, setIsMicrophoneOn] = useState(true);
+
+    const handleToggleMicrophone = () => {
+        setIsMicrophoneOn((prevMicrophoneState) => !prevMicrophoneState);
+    };
 
     useEffect(() => {
         let signalingChannel;
@@ -86,8 +95,28 @@ const VideoCall = () => {
             }
         };
 
+        // const getDevices = async () => {
+        //     const mediaDevices = await navigator.mediaDevices.enumerateDevices();
+
+        //     mediaDevices.forEach((device) => {
+        //         const option = document.createElement("option");
+        //         option.value = device.deviceId;
+        //         option.text = device.label;
+
+        //         if (device.kind === "videoinput") {
+        //             videoSelect.appendChild(option);
+        //         } else if (device.kind === "audioinput") {
+        //             audioSelect.appendChild(option);
+        //         }
+        //     });
+        // };
+
         const getDevices = async () => {
             const mediaDevices = await navigator.mediaDevices.enumerateDevices();
+
+            // Xóa các tùy chọn hiện có
+            audioSelect.innerHTML = "";
+            videoSelect.innerHTML = "";
 
             mediaDevices.forEach((device) => {
                 const option = document.createElement("option");
@@ -139,8 +168,8 @@ const VideoCall = () => {
 
         const initVideoChat = async () => {
             signalingChannel = new WebSocket(
-                // "ws://localhost:2024/IMPROOK_CARE/api/public/video-chat/"
-                "ws://springboot-improokcare-production.up.railway.app/IMPROOK_CARE/api/public/video-chat/"
+                "ws://localhost:2024/IMPROOK_CARE/api/public/video-chat/"
+                // "ws://springboot-improokcare-production.up.railway.app/IMPROOK_CARE/api/public/video-chat/"
             );
 
             signalingChannel.onmessage = handleSignalingMessage;
@@ -165,19 +194,50 @@ const VideoCall = () => {
         // };
     }, [audioSource, videoSource]);
 
+    const toggleCamera = () => {
+        setIsCameraOn(!isCameraOn);
+        const videoElement = document.getElementById("selfView");
+        const imageElement = document.getElementById("selfImage");
+
+        if (videoElement.style.display === "none") {
+            videoElement.style.display = "block";
+            imageElement.style.display = "none";
+        } else {
+            videoElement.style.display = "none";
+            imageElement.style.display = "block";
+        }
+    };
+
     return (
         <>
-            <div className="video">
-                <video id="selfView" autoPlay ref={selfViewRef}></video>
-                <video id="remoteView" autoPlay ref={remoteViewRef}></video>
-            </div>
-            <div className="select">
-                <label htmlFor="audioSource">Audio source: </label>
-                <select id="audioSource" ref={audioSelectRef}></select>
-            </div>
-            <div className="select">
-                <label htmlFor="videoSource">Video source: </label>
-                <select id="videoSource" ref={videoSelectRef}></select>
+            <div className="video_call_wrapper">
+                <div className="video_call_header">
+                    <button>Tạo cuộc họp</button>
+                    <button>Tham gia cuộc họp</button>
+                </div>
+                <div className="video_call_content">
+                    <div className="video">
+                        <video id="selfView" autoPlay ref={selfViewRef} muted={!isMicrophoneOn}></video>
+                        <img id="selfImage" src={profile404} alt="User" style={{ display: 'none', width: '20%' }} />
+                        <video id="remoteView" autoPlay ref={remoteViewRef}></video>
+                    </div>
+                    <div className="controls">
+                        <button onClick={toggleCamera}>
+                            {isCameraOn ? "Tắt Camera" : "Bật Camera"}
+                        </button>
+                        <button onClick={handleToggleMicrophone}>
+                            {isMicrophoneOn ? "Tắt Micro" : "Bật Micro"}
+                        </button>
+                    </div>
+                    <div className="select">
+                        <label htmlFor="audioSource">Audio source: </label>
+                        <select id="audioSource" ref={audioSelectRef}></select>
+                    </div>
+                    <div className="select">
+                        <label htmlFor="videoSource">Video source: </label>
+                        <select id="videoSource" ref={videoSelectRef}></select>
+                    </div>
+                </div>
             </div>
         </>
     );
