@@ -1,16 +1,14 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
 import { BookingManagementContext, UserContext } from "../../App";
 import "./Prescription.css";
 import { Button, Form, Table } from "react-bootstrap";
 import cookie from "react-cookies"
-import { useState } from "react";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
 import { parse } from "date-fns";
 import { Autocomplete, Stack, TextField } from "@mui/material";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
-
 
 const Prescription = () => {
     const [current_user, dispatch] = useContext(UserContext);
@@ -275,46 +273,46 @@ const Prescription = () => {
         nav('/bookingmanagement');
 
     return <>
-        <div class="Prescription_Wrapper">
-            <div class="Prescription">
-                <div class="Prescription_Left">
-                    <div class="Prescription_Left_Content">
+        <div className="Prescription_Wrapper">
+            <div className="Prescription">
+                <div className="Prescription_Left">
+                    <div className="Prescription_Left_Content">
                         <DoctorMenu />
                     </div>
                 </div>
-                <div class="Prescription_Right">
-                    <div class="Prescription_Right_Header">
-                        <h2 className="text-center mb-3 text-info">THÔNG TIN ĐƠN THUỐC</h2>
+                <div className="Prescription_Right">
+                    <div className="Prescription_Right_Header">
+                        <h2 className="text-center mb-4">THÔNG TIN ĐƠN THUỐC</h2>
                     </div>
-                    <div class="Prescription_Right_Body_1">
-                        <div class="Patient_Name">
-                            <Form.Label style={{ width: "30%" }}>Bệnh nhân</Form.Label>
+                    <div className="Prescription_Right_Body_1">
+                        <div className="Patient_Name">
+                            <Form.Label style={{ width: "40%" }}>Bệnh nhân</Form.Label>
                             <Form.Control type="text" value={profilePatientName} disabled />
                         </div>
-                        <div class="Doctor_Name">
-                            <Form.Label style={{ width: "30%" }}>Bác sĩ</Form.Label>
+                        <div className="Doctor_Name">
+                            <Form.Label style={{ width: "40%" }}>Bác sĩ</Form.Label>
                             <Form.Control type="text" value={profileDoctorName} disabled />
                         </div>
-                        <div class="Create_Date">
-                            <Form.Label style={{ width: "30%" }}>Ngày lập</Form.Label>
+                        <div className="Create_Date">
+                            <Form.Label style={{ width: "40%" }}>Ngày lập</Form.Label>
                             <Form.Control type="date" value={currentFormattedDate} disabled />
                         </div>
-                        <div class="Booking_Price">
-                            <Form.Label style={{ width: "30%" }}>Phí khám</Form.Label>
+                        <div className="Booking_Price">
+                            <Form.Label style={{ width: "40%" }}>Phí khám</Form.Label>
                             <Form.Control type="Text" value={bookingPrice} disabled />
                         </div>
-                        <div class="Symptom">
+                        <div className="Symptom">
                             <Form.Label style={{ width: "40%" }}>Triệu chứng</Form.Label>
                             <Form.Control type="Text" defaultValue={diagnosis} onChange={(e) => setDiagnosis(e.target.value)} placeholder="Nhập triệu chứng..." required />
                         </div>
-                        <div class="Diagnosis">
+                        <div className="Diagnosis">
                             <Form.Label style={{ width: "40%" }}>Chuẩn đoán</Form.Label>
                             <Form.Control type="Text" defaultValue={symptom} onChange={(e) => setSymptom(e.target.value)} placeholder="Nhập chuẩn đoán..." required />
                         </div>
                     </div>
-                    <div class="Prescription_Right_Body_2">
+                    <div className="Prescription_Right_Body_2">
                         <div>
-                            <div class="Prescription_Detail_Header">
+                            <div className="Prescription_Detail_Header">
                                 <h4 className="mt-4">Chi tiết đơn thuốc</h4>
                             </div>
                             {/* <div class="Medicine_Search_Group">
@@ -387,7 +385,7 @@ const Prescription = () => {
                                     />
                                 </Stack>
                             </div> */}
-                            <div class="Prescription_Detail_Search_Medicine">
+                            <div className="Prescription_Detail_Search_Medicine">
                                 <Stack spacing={2} sx={{ width: 300 }}>
                                     <Autocomplete
                                         freeSolo
@@ -414,7 +412,7 @@ const Prescription = () => {
                                     />
                                 </Stack>
                             </div>
-                            <div class="Prescription_Detail_Medicine_Choice">
+                            <div className="Prescription_Detail_Medicine_Choice">
                                 <Table striped bordered hover>
                                     <thead>
                                         <tr>

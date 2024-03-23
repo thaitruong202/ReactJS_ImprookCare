@@ -100,3 +100,7 @@ div.Update_Button button:hover {
 div.Update_Button button:focus-visible {
     outline-offset: 1px;
 }
+
+div.Profile_Doctor_Right_Header>h2 {
+    color: #183e9f;
+}

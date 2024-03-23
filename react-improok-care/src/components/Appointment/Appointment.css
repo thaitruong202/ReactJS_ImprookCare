@@ -203,3 +203,7 @@ div.Result_In4_1>span:nth-child(2),
 div.Result_In4_2>span:nth-child(2) {
     width: 60%;
 }
+
+div.Appointment_Right_Header {
+    color: #183e9f;
+}

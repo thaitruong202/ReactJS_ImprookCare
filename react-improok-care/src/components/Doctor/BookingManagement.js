@@ -150,7 +150,7 @@ const BookingManagement = () => {
                 </div>
                 <div className="BookingManagement_Right">
                     <div className="BookingManagement_Right_Header">
-                        <h2 className="text-center mb-3">QUẢN LÝ LỊCH HẸN</h2>
+                        <h2 className="text-center mb-3">Quản lý lịch hẹn</h2>
                     </div>
                     <div className="BookingManagement_Right_Body_1">
                         <div className="BookingManagement_Date_Option">

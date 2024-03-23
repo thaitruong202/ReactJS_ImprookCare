@@ -60,7 +60,6 @@ const Appointment = () => {
                         'Content-Type': 'text/plain'
                     }
                 })
-
                 console.log(res.data);
             } catch (error) {
                 console.log(error);
@@ -121,6 +120,7 @@ const Appointment = () => {
                 </div>
                 <div className="Appointment_Right">
                     <section>
+                        <div className="Appointment_Right_Header"><h3 className="text-center mb-4">Thông tin lịch khám</h3></div>
                         <div className="Appointment_Right_Content">
                             {bookingDetail === null ? <>
                                 <div className="Appointment_Null">

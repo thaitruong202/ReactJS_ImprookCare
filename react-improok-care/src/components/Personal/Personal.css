@@ -43,8 +43,10 @@ div.Personal_Gender_Tick {
     height: 2.4rem;
 }
 
-div.Personal_Birthday_Tick {
+div.Personal_Birthday>input {
+    width: 100%;
     border: var(--bs-border-width) solid var(--bs-border-color);
+    padding: 0.25rem;
 }
 
 div.Change_Button {
@@ -90,4 +92,8 @@ div.Update_Button button:hover {
 
 div.Update_Button button:focus-visible {
     outline-offset: 1px;
+}
+
+div.PersonalPage_Right_Header>h2{
+    color: #183e9f;
 }

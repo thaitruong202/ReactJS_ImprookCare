@@ -224,11 +224,11 @@ const Schedule = () => {
                 {/* <button onClick={scheduleCheck}>Xem</button> */}
                 <div className="Schedule_Right">
                     <div className="Schedule_Right_Content">
-                        <h3 className="text-center">ĐĂNG KÝ LỊCH KHÁM BỆNH</h3>
+                        <h2 className="text-center">Đăng ký lịch khám bệnh</h2>
                         <div className="Schedule_Option">
                             <div className="Schedule_Date_Option">
                                 <Form.Label style={{ width: "30%" }}>Chọn ngày</Form.Label>
-                                <input type="date" style={{ width: "60%" }} defaultValue={minDate} onChange={() => scheduleDateChange()} id="dateInput" min={minDate} />
+                                <input type="date" defaultValue={minDate} onChange={() => scheduleDateChange()} id="dateInput" min={minDate} />
                             </div>
                             <div className="Schedule_Profile_Option">
                                 <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
@@ -237,7 +237,7 @@ const Schedule = () => {
                                 </select>
                             </div>
                             <div className="Schedule_Distance_Option">
-                                <Form.Label className="label" style={{ width: "40%" }}>Chọn giãn cách</Form.Label>
+                                <Form.Label className="label" style={{ width: "30%" }}>Chọn giãn cách</Form.Label>
                                 <select className="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
                                     {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
                                 </select>

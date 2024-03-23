@@ -13,9 +13,11 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { toast } from "react-toastify";
 import UserMenu from "../../layout/UserMenu/UserMenu";
+import reminder from "../../assets/images/reminder.png"
+import Pagination from "../../utils/Pagination"
 
 const History = () => {
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
 
     const [loading, setLoading] = useState(false);
 
@@ -177,7 +179,7 @@ const History = () => {
             try {
                 setLoading(true);
                 console.log(tempTotal);
-                // console.log(requestBody)
+
                 let res = await Apis.post(endpoints['vnpay-payment'], {
                     "amount": tempTotal,
                     "orderInfor": "2:-" + prescriptionId + "-Medicine Payment: " + profilePatientName + " đã thanh toán tiền thuốc cho đơn thuốc " + prescriptionId + " - ",
@@ -269,7 +271,7 @@ const History = () => {
                 <div className="MedicalRecords_Right">
                     <>
                         <section>
-                            <div className="MedicalRecords_Right_Header"><h3 className="text-center text-success mb-4">Danh sách đơn thuốc</h3></div>
+                            <div className="MedicalRecords_Right_Header"><h3 className="text-center mb-4">Thông tin đơn thuốc</h3></div>
                             <div className="MedicalRecords_Right_Content">
                                 {profilePatient === null ? <>
                                     <div className="MedicalRecords_Null">
@@ -280,8 +282,9 @@ const History = () => {
                                     <>
                                         <div>
                                             {prescriptionList.length === 0 ? <>
-                                                <div>
-                                                    <span>Không tìm thấy đơn thuốc</span>
+                                                <div className="Appointment_Null">
+                                                    <h5 className="mb-4">Không tìm thấy đơn thuốc</h5>
+                                                    <img src={reminder} alt="Not found" width={'20%'} />
                                                 </div>
                                             </> :
                                                 <>
@@ -294,8 +297,7 @@ const History = () => {
                                                                     aria-controls="panel1a-content"
                                                                     id="panel1a-header"
                                                                     className="Prescription_Item"
-                                                                    onClick={(e) => loadPrescriptionDetail(e, pl)}
-                                                                >
+                                                                    onClick={(e) => loadPrescriptionDetail(e, pl)}>
                                                                     <Typography>Đơn thuốc: {pl.prescriptionId}</Typography>
                                                                     <Typography>Chuẩn đoán: {pl.diagnosis}</Typography>
                                                                     {(pl.medicinePaymentStatusId.medicinePaymentStatusId === 2 && pl.servicePaymentStatusId.servicePaymentStatusId === 2) ?
@@ -304,7 +306,6 @@ const History = () => {
                                                                         </> : <>
                                                                             <Typography><Badge bg="danger">Chưa thanh toán</Badge></Typography>
                                                                         </>}
-
                                                                 </AccordionSummary>
                                                                 <AccordionDetails className="Prescription_Detail">
                                                                     <div className="Prescription_Detail_Inner">
@@ -358,7 +359,6 @@ const History = () => {
                                                                                 {/* {Object.values(prescriptionDetail).forEach((presd) => {
                                                                                 tempTotal += presd.quantity * presd.unitPrice;
                                                                             })} */}
-
                                                                                 {Object.values(prescriptionDetail).map(presd => {
                                                                                     tempTotal += presd.quantity * presd.unitPrice
                                                                                     return <>
@@ -368,9 +368,7 @@ const History = () => {
                                                                                             <td>{presd.usageInstruction}</td>
                                                                                             <td>{presd.quantity}</td>
                                                                                             <td>{presd.unitPrice} VNĐ</td>
-                                                                                            <td>
-                                                                                                {presd.quantity * presd.unitPrice} VNĐ
-                                                                                            </td>
+                                                                                            <td>{presd.quantity * presd.unitPrice} VNĐ</td>
                                                                                         </tr>
                                                                                     </>
                                                                                     // { tempTotal += presd.quantity * presd.unitPrice } {/* Cập nhật giá trị tempTotal */ }
@@ -390,14 +388,9 @@ const History = () => {
                                                             </Accordion>
                                                         </>
                                                     })}
-                                                    <div className="Page_Nav">
-                                                        {prescriptionPages.map((page) => (
-                                                            <button id={`${page}`} key={page} onClick={() => handlePrescriptionPageChange(page)}
-                                                                className={page === selectedPage ? 'active' : ''}>
-                                                                {page}
-                                                            </button>
-                                                        ))}
-                                                    </div>
+                                                    <Pagination pages={prescriptionPages}
+                                                        selectedPage={selectedPage}
+                                                        handlePageChange={handlePrescriptionPageChange} />
                                                 </>
                                             }
                                         </div>

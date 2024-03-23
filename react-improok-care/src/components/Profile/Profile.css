@@ -86,6 +86,12 @@ div.Profile_Birthday {
     margin-bottom: 1.25rem;
 }
 
+div.Profile_Birthday>input {
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    padding: 0.25rem;
+    width: 100%;
+}
+
 div.Profile_Gender_Tick {
     display: flex;
     gap: 5rem;
@@ -144,4 +150,8 @@ div.Update_Button button:hover {
 
 div.Update_Button button:focus-visible {
     outline-offset: 1px;
+}
+
+div.Profile_Right_Header>h3 {
+    color: #183e9f;
 }

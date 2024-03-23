@@ -12,33 +12,6 @@ div.Prescription_Left {
     width: 20%;
 }
 
-div.Prescription_Left_Content>ul {
-    display: grid;
-    list-style: none;
-    /* background-color: lightblue; */
-    background-color: #CCFFFF;
-}
-
-div.Prescription_Left_Content>ul>li {
-    display: flex;
-    height: 3rem;
-    align-items: center;
-    cursor: pointer;
-    gap: 0.75rem;
-}
-
-div.Prescription_Left_Content>ul>li:hover {
-    border-color: rgb(26 118 227);
-    cursor: pointer;
-    border-right-width: 4px;
-    border-radius: 3px;
-}
-
-div.Prescription_Left_Content>ul>li a {
-    text-decoration: none;
-    color: black;
-}
-
 div.Prescription_Right {
     width: 70%;
 }
@@ -49,8 +22,12 @@ div.Prescription_Right_Body_1 {
     gap: 2rem;
 }
 
-div.Prescription_Right_Body_1 div {
-    width: 30%;
+div.Prescription_Right_Body_1 > div {
+    width: 48%;
+    display: flex;
+    align=items: center;
+    justify-content: center;
+    gap: 2rem;
 }
 
 div.Medicine_Search_Input {
@@ -80,4 +57,8 @@ button.Medicine_Search_Butt {
 
 div.Prescription_Detail_Search_Medicine {
     margin-bottom: 1rem;
+}
+
+div.Prescription_Right_Header > h2 {
+    color: #183e9f;
 }

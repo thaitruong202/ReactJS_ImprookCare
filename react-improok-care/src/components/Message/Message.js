@@ -17,7 +17,7 @@ import UserMenu from "../../layout/UserMenu/UserMenu";
 var stompClient = null;
 
 const Message = () => {
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const [loading, setLoading] = useState(true);
     const [profileDoctor, setProfileDoctor] = useState([]);
     const [doctorName, setDoctorName] = useState('');

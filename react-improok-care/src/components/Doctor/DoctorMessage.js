@@ -271,7 +271,7 @@ const DoctorMessage = () => {
                 <div className="Doctor_Message_Right">
                     <>
                         <section>
-                            <div className="Doctor_Message_Right_Header"><h3 className="text-center text-success mb-4">Tin nhắn</h3></div>
+                            <div className="Doctor_Message_Right_Header"><h2 className="text-center mb-4">Tin nhắn</h2></div>
                             <div className="Doctor_Message_Right_Content">
                                 {profileDoctor === null ? <>
                                     <div className="Doctor_Message_Null">
@@ -283,7 +283,7 @@ const DoctorMessage = () => {
                                         <div>
                                             {userSendMessageToDoctor.length === 0 ? <>
                                                 <div className="Doctor_Message_Null">
-                                                    <span className="mb-4">Chưa có tin nhắn nào</span>
+                                                    <h5 className="mb-4">Chưa có tin nhắn nào</h5>
                                                     <img src={message} alt="Not found" width={'20%'} />
                                                 </div>
                                             </> :
