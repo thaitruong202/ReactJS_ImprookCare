@@ -11,15 +11,16 @@ import GoogleMapAPI from "../../utils/GoogleMapAPI";
 import { Button, Form, Image, ListGroup } from "react-bootstrap";
 import Moment from "react-moment";
 import { Rating, Typography } from "@mui/material";
-import { Chat, CloseOutlined } from "@mui/icons-material";
+import { Chat } from "@mui/icons-material";
 import { toast } from "react-toastify";
 // import ChatRoom from "../../utils/ChatRoom";
 // import Message from "./Message";
-import { MessageBox } from "react-chat-elements";
+// import { MessageBox } from "react-chat-elements";
 import 'react-chat-elements/dist/main.css'
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
 import MessageChat from "./MessageChat";
+import Pagination from "../../utils/Pagination"
 
 var stompClient = null;
 
@@ -27,7 +28,7 @@ const BookingDoctor = () => {
     const { profileDoctorId } = useParams();
     const [doctorDetail, setDoctorDetail] = useState('');
     const [loading, setLoading] = useState(false);
-    const [current_user, dispatch] = useContext(UserContext)
+    const [current_user,] = useContext(UserContext)
     const [comment, setComment] = useState([]);
     const [content, setContent] = useState(null);
     const [rating, setRating] = useState(1);
@@ -55,7 +56,7 @@ const BookingDoctor = () => {
     const [dateSort, setDateSort] = useState(null);
     const [ratingSort, setRatingSort] = useState(null);
 
-    const [messageContent, setMessageContent] = useState(null);
+    // const [messageContent, setMessageContent] = useState(null);
 
     const avatar = useRef();
     const updateAvatar = useRef();
@@ -127,17 +128,17 @@ const BookingDoctor = () => {
     //     console.log(res.data.content);
     // }
 
-    const updateComment = async (evt, c) => {
-        evt.preventDefault();
+    const updateComment = async (e, c) => {
+        e.preventDefault();
 
         const process = async () => {
             try {
-                console.log(c.commentId, current_user.userId, content, rating)
+                console.log(c.commentId, current_user?.userId, c.content, c.rating)
                 let form = new FormData();
                 form.append("commentId", c.commentId)
-                form.append("userId", current_user.userId);
-                form.append("content", updateContent);
-                form.append("rating", rating);
+                form.append("userId", current_user?.userId);
+                form.append("content", updateContent !== null ? updateContent : c.content);
+                form.append("rating", updateRating !== null ? updateRating : c.rating);
 
                 if (avatar.current.files[0] !== undefined)
                     form.append("avatar", avatar.current.files[0]);
@@ -145,7 +146,7 @@ const BookingDoctor = () => {
                     form.append("avatar", new Blob());
 
                 // console.log(c.commentId, c.userId.userId, current_user.userId, content, rating)
-                console.log("userId đang đăng nhập", current_user.userId);
+                console.log("userId đang đăng nhập", current_user?.userId);
                 console.log("user của comment", c.userId.userId);
 
                 setLoading(true);
@@ -255,7 +256,7 @@ const BookingDoctor = () => {
         } else {
             form.append("avatar", new Blob());
         }
-        console.log(doctorDetail.profileDoctorId, current_user.userId, content, rating, avatar);
+        console.log(doctorDetail.profileDoctorId, current_user?.userId, content, rating, avatar);
         try {
             let res = await authApi().post(endpoints['add-comment'], form, {
                 headers: {
@@ -292,60 +293,60 @@ const BookingDoctor = () => {
         process();
     }
 
-    const addMessage = async (evt) => {
-        evt.preventDefault();
-        setLoading(true);
+    // const addMessage = async (evt) => {
+    //     evt.preventDefault();
+    //     setLoading(true);
 
-        let form = new FormData();
-        form.append("profileDoctorId", doctorDetail.profileDoctorId);
-        form.append("userId", current_user.userId);
-        form.append("senderId", current_user.userId);
-        form.append("messageContent", messageContent);
+    //     let form = new FormData();
+    //     form.append("profileDoctorId", doctorDetail.profileDoctorId);
+    //     form.append("userId", current_user.userId);
+    //     form.append("senderId", current_user.userId);
+    //     form.append("messageContent", messageContent);
 
-        if (avatar.current.files[0] !== undefined && avatar !== null) {
-            form.append("avatar", avatar.current.files[0]);
-        } else {
-            form.append("avatar", new Blob());
-        }
-        try {
-            let res = await authApi().post(endpoints['add-message'], form, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+    //     if (avatar.current.files[0] !== undefined && avatar !== null) {
+    //         form.append("avatar", avatar.current.files[0]);
+    //     } else {
+    //         form.append("avatar", new Blob());
+    //     }
+    //     try {
+    //         let res = await authApi().post(endpoints['add-message'], form, {
+    //             headers: {
+    //                 "Content-Type": "multipart/form-data",
+    //             },
+    //         });
 
-            var myMess = {
-                "profileDoctorId": doctorDetail.profileDoctorId,
-                "userId": current_user.userId,
-                "senderId": current_user.userId,
-                "messageContent": messageContent
-            }
+    //         var myMess = {
+    //             "profileDoctorId": doctorDetail.profileDoctorId,
+    //             "userId": current_user.userId,
+    //             "senderId": current_user.userId,
+    //             "messageContent": messageContent
+    //         }
 
-            // listMessage.push(myMess);
-            // setListMessage(listMessage);
-            setListMessage([...listMessage, myMess]);
-            // setListMessage(current => {
-            //     return {...current, myMess}
-            // })
+    //         // listMessage.push(myMess);
+    //         // setListMessage(listMessage);
+    //         setListMessage([...listMessage, myMess]);
+    //         // setListMessage(current => {
+    //         //     return {...current, myMess}
+    //         // })
 
-            console.log("List sau khi gửi");
-            console.log(listMessage);
+    //         console.log("List sau khi gửi");
+    //         console.log(listMessage);
 
-            if (stompClient) {
-                console.log("OK STOMP")
-                stompClient.send("/app/private-message", {}, JSON.stringify(myMess));
-            }
-            else
-                console.log("Chưa có kết nối")
-            console.log(res.data);
-            setMessageContent('');
-            // viewUserMessage();
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-        }
-    };
+    //         if (stompClient) {
+    //             console.log("OK STOMP")
+    //             stompClient.send("/app/private-message", {}, JSON.stringify(myMess));
+    //         }
+    //         else
+    //             console.log("Chưa có kết nối")
+    //         console.log(res.data);
+    //         setMessageContent('');
+    //         // viewUserMessage();
+    //         setLoading(false);
+    //     } catch (error) {
+    //         setLoading(false);
+    //         console.log(error);
+    //     }
+    // };
 
     // const handleSortDateChange = (e) => {
     //     const selectedSortDate = e.target.value;
@@ -502,7 +503,7 @@ const BookingDoctor = () => {
                                                         {editingIndex === index ? (
                                                             <>
                                                                 <span>Đánh giá</span>
-                                                                <Rating value={rating} onChange={(event, newValue) => { setRating(newValue) }} />
+                                                                <Rating value={c.rating} onChange={(event, newValue) => { setUpdateRating(newValue) }} />
                                                             </>
                                                         ) :
                                                             (<>
@@ -517,7 +518,7 @@ const BookingDoctor = () => {
                                                                 <Form.Control className="mt-2" accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
                                                             </>
                                                         ) : (<>
-                                                            <Image src={c.avatar} style={{ width: "10%" }} />
+                                                            <Image src={c.avatar} style={{ width: "20%" }} />
                                                         </>)}
                                                     </div>
                                                     <div className="Comment_Content">
@@ -551,14 +552,17 @@ const BookingDoctor = () => {
                                 </ListGroup>
                             </div>
                         </div>
-                        <div className="Page_Nav">
+                        {/* <div className="Page_Nav">
                             {commentPages.map((page) => (
                                 <button id={`${page}`} key={page} onClick={() => handleCommentPageChange(page)}
                                     className={page === selectedPage ? 'active' : ''}>
                                     {page}
                                 </button>
                             ))}
-                        </div>
+                        </div> */}
+                        <Pagination pages={commentPages}
+                            selectedPage={selectedPage}
+                            handlePageChange={handleCommentPageChange} />
                     </div>
                 </div>
             </div>

@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import profile404 from "../../assets/images/profile.png"
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./VideoCall.css"
+import { UserContext } from "../../App";
 
 const VideoCall = () => {
+    const [current_user,] = useContext(UserContext);
     const selfViewRef = useRef(null);
     const remoteViewRef = useRef(null);
     const audioSelectRef = useRef(null);
@@ -218,12 +219,15 @@ const VideoCall = () => {
                 <div className="video_call_content">
                     <div className="video">
                         <video id="selfView" autoPlay ref={selfViewRef} muted={!isMicrophoneOn}></video>
-                        <img id="selfImage" src={profile404} alt="User" style={{ display: 'none', width: '20%' }} />
+                        <img id="selfImage" src={current_user?.avatar} alt="User" style={{ display: 'none', width: '50%' }} />
                         <video id="remoteView" autoPlay ref={remoteViewRef}></video>
                     </div>
                     <div className="controls">
                         <button onClick={toggleCamera}>
                             {isCameraOn ? "Tắt Camera" : "Bật Camera"}
+                        </button>
+                        <button onClick={handleToggleMicrophone}>
+                            {isMicrophoneOn ? "Tắt Micro" : "Bật Micro"}
                         </button>
                         <button onClick={handleToggleMicrophone}>
                             {isMicrophoneOn ? "Tắt Micro" : "Bật Micro"}

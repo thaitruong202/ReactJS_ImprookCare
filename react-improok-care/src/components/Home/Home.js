@@ -73,8 +73,7 @@ const Home = () => {
                             responsive={responsive}
                             sliderClass="Service_Carousel"
                             itemClass="custom-item"
-                            centerMode={true}
-                        >
+                            centerMode={true}>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
                                 <span>Đặt khám bác sĩ</span>
@@ -110,8 +109,7 @@ const Home = () => {
                             responsive={responsive}
                             sliderClass="Doctor_Carousel"
                             itemClass="custom-item"
-                            centerMode={true}
-                        >
+                            centerMode={true}>
                             {Object.values(listDoctor).map(ld => {
                                 let url = `/doctor/${ld.profileDoctorId}`
                                 return (
@@ -134,8 +132,7 @@ const Home = () => {
                             responsive={responsive}
                             sliderClass="Service_Carousel"
                             itemClass="custom-item"
-                            centerMode={true}
-                        >
+                            centerMode={true}>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
                                 <span>Khoa thần kinh</span>
@@ -239,7 +236,7 @@ const Home = () => {
                                 </li>
                                 <li>
                                     <div><FaEye className="stats_icon" /></div>
-                                    <span>3200+ lượt truy cập</span>
+                                    <span>3.2K+ lượt truy cập</span>
                                 </li>
                             </ul>
                         </div>

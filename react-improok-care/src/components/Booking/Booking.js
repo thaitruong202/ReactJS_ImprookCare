@@ -141,7 +141,7 @@ const Booking = () => {
                 <div className="Booking_Content_4">
                     <div className="Booking_Content_4_Header">
                         <h3>An tâm tìm và đặt bác sĩ</h3>
-                        <h5>Hơn 500 bác sĩ liên kết chính thức với I'MPROOKCARE</h5>
+                        <h5>Hơn 500 bác sĩ liên kết chính thức với I'MPROOK CARE</h5>
                     </div>
                     <div className="Booking_Content_4_Content">
                         <div className="Booking_Content_4_LeftContent">
@@ -152,7 +152,7 @@ const Booking = () => {
                                 <div className="Separate"></div>
                                 <div onClick={checkImageClick} style={{ padding: '1.5rem' }}>
                                     <h5 style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>Đội ngũ bác sĩ</h5>
-                                    <h6 style={{ fontWeight: '400' }}>Tất cả các bác sĩ đều liên kết chính thức với IMPROOKCARE.</h6>
+                                    <h6 style={{ fontWeight: '400' }}>Tất cả các bác sĩ đều liên kết chính thức với I'MPROOK CARE.</h6>
                                 </div>
                             </div>
                             <hr />
