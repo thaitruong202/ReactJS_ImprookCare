@@ -58,7 +58,7 @@ const Home = () => {
                             <h5>Đặt khám với hơn 500 bác sĩ đã kết nối chính thức với I'MPROOK CARE để có số thứ tự và khung giờ khám trước</h5>
                         </div>
                         <div className="Home_Content_1_Content">
-                            <input type="text" placeholder="Nhập tên bác sĩ...." />
+                            <input type="text" placeholder="Nhập tên bác sĩ,..." />
                             <button><FcSearch /></button>
                         </div>
                     </div>
@@ -167,16 +167,24 @@ const Home = () => {
                                 <div>
                                     <div>
                                         <img src={doctor} alt="Doctor" />
-                                        <div className="brand_name">I'MPROOK</div>
-                                        <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
-                                        <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức khai trương thêm mấy chục chi nhánh nữa</p></div>
+                                        <div className="brand_date">
+                                            <div className="brand_name">I'MPROOK</div>
+                                            <div className="date_news">22 Mar 2024</div>
+                                        </div>
+                                        <div className="separate"></div>
+                                        <div><span>Kỷ niệm 4 năm thành lập: Công ty TNHH I'MPROOK khởi động giải chạy trực tuyến và hỗ trợ khám, tầm soát miễn phí cho cộng đồng</span></div>
+                                        <div><p>Thành phố Hồ Chí Minh, ngày 22 tháng 3 năm 2024: Hướng đến kỷ niệm 4 năm thành lập (22/03/2020 – 22/03/2024), Công ty TNHH I'MPROOK chính thức khởi động giải chạy trực tuyến với chủ đề “Sức khỏe Hoàn Hảo”. Đồng thời, nhằm góp phần mang đến cơ hội nâng cao sức khỏe cho cộng đồng, I'MPROOK hỗ trợ khám và tầm soát miễn phí tại toàn bộ hệ thống trên cả nước.</p></div>
                                     </div>
                                     <button>Đọc thêm</button>
                                 </div>
                                 <div>
                                     <div>
                                         <img src={doctor} alt="Doctor" />
-                                        <div className="brand_name">I'MPROOK</div>
+                                        <div className="brand_date">
+                                            <div className="brand_name">I'MPROOK</div>
+                                            <div className="date_news">28 Mar 2024</div>
+                                        </div>
+                                        <div className="separate"></div>
                                         <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
                                         <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức bla bla</p></div>
                                     </div>
@@ -185,7 +193,11 @@ const Home = () => {
                                 <div>
                                     <div>
                                         <img src={doctor} alt="Doctor" />
-                                        <div className="brand_name">I'MPROOK</div>
+                                        <div className="brand_date">
+                                            <div className="brand_name">I'MPROOK</div>
+                                            <div className="date_news">29 Mar 2024</div>
+                                        </div>
+                                        <div className="separate"></div>
                                         <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
                                         <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức khai trương thêm mấy chục chi nhánh nữa</p></div>
                                     </div>

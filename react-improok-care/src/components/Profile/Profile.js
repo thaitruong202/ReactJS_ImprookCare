@@ -165,7 +165,7 @@ const Profile = () => {
                     "personalAddress": personalAddress === undefined ? "" : personalAddress,
                     "email": email,
                     "relationship": relationship === undefined ? 'Khác' : relationship,
-                    "userId": current_user.userId
+                    "userId": current_user?.userId
                 });
                 console.log(res.data);
                 toast.success(res.data);

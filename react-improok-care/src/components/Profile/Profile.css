@@ -84,6 +84,7 @@ div.Profile_Birthday {
     display: flex;
     gap: 3rem;
     margin-bottom: 1.25rem;
+    align-items: center;
 }
 
 div.Profile_Birthday>input {

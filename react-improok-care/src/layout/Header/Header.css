@@ -247,3 +247,20 @@ ul.Menu-bar li:hover a {
 ul.Menu-bar li a:hover {
     color: darkblue;
 }
+
+a.dropdown-item>a{
+    color: black;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    gap: .75rem;
+}
+
+a.dropdown-item:active{
+    background: #183e9f;
+}
+
+a.dropdown-item>a:active{
+    color: white;
+}

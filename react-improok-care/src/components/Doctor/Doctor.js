@@ -194,7 +194,7 @@ const Doctor = () => {
                                         {current_avatar === null ? <>
                                             <Image className="user_Avatar" src={avatar_user} style={{ width: "15%" }} alt="Not Found" rounded />
                                         </> : <>
-                                            <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "10%" }} alt="Not Found" rounded />
+                                            <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "15%" }} alt="Not Found" rounded />
                                         </>}
                                         <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} onChange={(e) => updateAvatar(e.target.files)} type="file" ref={avatar} />
                                     </div>

@@ -66,19 +66,19 @@ const Header = () => {
                             <Dropdown style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', alignItems: 'center' }}>
                                 <Image src={user?.avatar} style={{ width: "13%" }} alt="Avatar" roundedCircle />
                                 <NavDropdown title={`Chào, ${user.lastname} ${user.firstname}!`} id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/improok" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaHome />Về trang chủ</NavDropdown.Item>
-                                    <NavDropdown.Item href="/improok/personal" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaInfoCircle />Thông tin cá nhân</NavDropdown.Item>
-                                    <NavDropdown.Item href="/improok/history" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><FaHistory />Lịch sử khám bệnh</NavDropdown.Item>
-                                    <NavDropdown.Item href="/improok/changepassword" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdSecurity />Thay đổi mật khẩu</NavDropdown.Item>
+                                    <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/"><FaHome />Về trang chủ</Link></NavDropdown.Item>
+                                    <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/personal"><FaInfoCircle />Thông tin cá nhân</Link></NavDropdown.Item>
+                                    <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/history"><FaHistory />Lịch sử khám bệnh</Link></NavDropdown.Item>
+                                    <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/changepassword"><MdSecurity />Thay đổi mật khẩu</Link></NavDropdown.Item>
                                     {user.roleId.roleId === 1 ?
                                         <>
-                                            <NavDropdown.Item href="/improok/admin" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdAdminPanelSettings />Quản trị</NavDropdown.Item>
+                                            <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/admin"><MdAdminPanelSettings />Quản trị</Link></NavDropdown.Item>
                                             {/* <button class="Admin"><Link to="/admin">Quản trị</Link></button> */}
                                         </> :
                                         <>
                                             {user.roleId.roleId === 2 ?
                                                 <>
-                                                    <NavDropdown.Item href="/improok/doctor" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdAccountCircle />Bác sĩ</NavDropdown.Item>
+                                                    <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/doctor"><MdAccountCircle />Bác sĩ</Link></NavDropdown.Item>
                                                     {/* <button class="Doctor"><Link to="/doctor">Bác sĩ</Link></button> */}
                                                 </> : <></>}
                                         </>

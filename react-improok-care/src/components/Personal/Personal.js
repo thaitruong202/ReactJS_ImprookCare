@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { UserContext } from "../../App";
 import "./Personal.css";
 import { Form, Image } from "react-bootstrap";
@@ -6,7 +6,7 @@ import { authApi, endpoints } from "../../configs/Apis";
 import cookie from "react-cookies";
 import { toast } from "react-toastify";
 import avatar_user from "../../assets/images/user.png"
-import Moment from "react-moment";
+// import Moment from "react-moment";
 import UserMenu from "../../layout/UserMenu/UserMenu";
 
 const Personal = () => {
@@ -126,8 +126,8 @@ const Personal = () => {
                     setLoading(false);
                 }
                 setCheckPersonalInfo(!checkPersonalInfo);
-            } catch (ex) {
-                console.log(ex)
+            } catch (error) {
+                console.log(error)
             }
         }
         process();
@@ -175,7 +175,7 @@ const Personal = () => {
                                         {current_avatar === null ? <>
                                             <Image className="user_Avatar" src={avatar_user} style={{ width: "15%" }} alt="Not Found" rounded />
                                         </> : <>
-                                            <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "10%" }} alt="Avatar" rounded />
+                                            <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "15%" }} alt="Avatar" rounded />
                                         </>}
                                         <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} onChange={(e) => updateAvatar(e.target.files)} type="file" ref={avatar} />
                                     </div>
@@ -211,7 +211,7 @@ const Personal = () => {
                             </section>
                         </> : <>
                             <section>
-                                <div className="PersonalPage_Right_Header"><h2 className="text-center">Thông tin cá nhân của {current_user.firstname}</h2></div>
+                                <div className="PersonalPage_Right_Header"><h2 className="text-center">Thông tin cá nhân của {current_user?.firstname}</h2></div>
                                 <div className="PersonalPage_Right_Content">
                                     <div className="Personal_Avatar">
                                         <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "15%" }} alt="Not Found" rounded />

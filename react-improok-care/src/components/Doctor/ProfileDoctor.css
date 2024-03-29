@@ -39,6 +39,7 @@ div.Profile_Doctor_Position {
     display: flex;
     gap: 3rem;
     margin-bottom: 1.25rem;
+    align-items: center;
 }
 
 div.Profile_Doctor_Gender_Tick {

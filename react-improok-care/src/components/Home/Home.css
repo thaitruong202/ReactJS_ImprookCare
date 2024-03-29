@@ -402,3 +402,16 @@ div.Home_News>div {
     text-overflow: ellipsis;
 }
 
+div.separate {
+    width: 100%;
+    height: 0.08rem;
+    /* background-color: #91a6ff; */
+    background: #183e9f;
+}
+
+div.brand_date {
+    display: flex;
+    justify-content: space-between;
+    color: #183e9f;
+}
+

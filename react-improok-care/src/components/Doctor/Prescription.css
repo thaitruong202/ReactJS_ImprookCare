@@ -62,3 +62,14 @@ div.Prescription_Detail_Search_Medicine {
 div.Prescription_Right_Header > h2 {
     color: #183e9f;
 }
+
+div.Patient_Name, 
+div.Doctor_Name, 
+div.Create_Date, 
+div.Booking_Price, 
+div.Symptom, 
+div.Diagnosis {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}

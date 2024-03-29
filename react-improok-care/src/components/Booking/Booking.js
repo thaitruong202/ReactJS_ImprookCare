@@ -87,7 +87,7 @@ const Booking = () => {
                         <h5>Đặt khám với hơn 500 bác sĩ đã kết nối chính thức với I'MPROOK CARE để có số thứ tự và khung giờ khám trước</h5>
                     </div>
                     <div className="Booking_Content_1_Content">
-                        <input type="text" placeholder="Nhập tên bác sĩ...." />
+                        <input type="text" placeholder="Nhập tên bác sĩ,..." />
                         <button><FcSearch /></button>
                     </div>
                 </div>
