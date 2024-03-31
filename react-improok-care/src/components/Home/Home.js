@@ -166,40 +166,40 @@ const Home = () => {
                             <div className="Home_News_Content">
                                 <div>
                                     <div>
-                                        <img src={doctor} alt="Doctor" />
+                                        <div><img src="https://hoanmy.com/wp-content/uploads/2024/01/AdobeStock_181413640-scaled.jpeg" alt="Doctor" /></div>
                                         <div className="brand_date">
                                             <div className="brand_name">I'MPROOK</div>
                                             <div className="date_news">22 Mar 2024</div>
                                         </div>
                                         <div className="separate"></div>
-                                        <div><span>Kỷ niệm 4 năm thành lập: Công ty TNHH I'MPROOK khởi động giải chạy trực tuyến và hỗ trợ khám, tầm soát miễn phí cho cộng đồng</span></div>
-                                        <div><p>Thành phố Hồ Chí Minh, ngày 22 tháng 3 năm 2024: Hướng đến kỷ niệm 4 năm thành lập (22/03/2020 – 22/03/2024), Công ty TNHH I'MPROOK chính thức khởi động giải chạy trực tuyến với chủ đề “Sức khỏe Hoàn Hảo”. Đồng thời, nhằm góp phần mang đến cơ hội nâng cao sức khỏe cho cộng đồng, I'MPROOK hỗ trợ khám và tầm soát miễn phí tại toàn bộ hệ thống trên cả nước.</p></div>
+                                        <div><span>Những biến chứng nguy hiểm của đái tháo đường và cách phòng ngừa</span></div>
+                                        <div><p>Thời gian gần đây, tỷ lệ người bệnh đái tháo đường đang gia tăng khá cao. Theo số liệu từ Hiệp hội Đái tháo đường Thế giới (International Diabetes Federation – IDF), vào năm 2019, thế giới có khoảng 463 triệu người mắc phải bệnh lý này. Trong số đó, ước tính hơn 4 triệu người liên quan đã tử vong.</p></div>
                                     </div>
                                     <button>Đọc thêm</button>
                                 </div>
                                 <div>
                                     <div>
-                                        <img src={doctor} alt="Doctor" />
+                                        <div><img src="https://hoanmy.com/wp-content/uploads/2024/01/Bac-si-thuc-hien-Sinh-thiet-bang-kim-duoi-huong-dan-cua-CT-min.png" alt="Doctor" /></div>
                                         <div className="brand_date">
                                             <div className="brand_name">I'MPROOK</div>
                                             <div className="date_news">28 Mar 2024</div>
                                         </div>
                                         <div className="separate"></div>
-                                        <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
-                                        <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức bla bla</p></div>
+                                        <div><span>Bệnh ung thư có thể chữa khỏi hoàn toàn nếu phát hiện sớm</span></div>
+                                        <div><p>“Ung thư là căn bệnh đồng nghĩa với cái chết” – đó là suy nghĩ của nhiều người khi nhắc đến bệnh ung thư. Tuy nhiên, trên thực tế, có khoảng 80% người bệnh ung thư có thể hoàn toàn khỏi bệnh và không tái phát trong vòng 5 năm nếu phát hiện sớm và điều trị kịp thời. Hãy hiểu đúng về ung thư để chủ động đẩy lùi bệnh.</p></div>
                                     </div>
                                     <button>Đọc thêm</button>
                                 </div>
                                 <div>
                                     <div>
-                                        <img src={doctor} alt="Doctor" />
+                                        <div><img src="https://hoanmy.com/wp-content/uploads/2024/01/AdobeStock_590426101-scaled.jpeg" alt="Doctor" /></div>
                                         <div className="brand_date">
                                             <div className="brand_name">I'MPROOK</div>
                                             <div className="date_news">29 Mar 2024</div>
                                         </div>
                                         <div className="separate"></div>
-                                        <div><span>Bản tin y tế hàng ngày đài truyền hình quốc gia ngộ ha thuyết minh bởi Sonder Nguyễn lạ lùng dị ăn gì mà đòi ăn quài</span></div>
-                                        <div><p>Thành phố Hồ Chí Minh, ngày 10 tháng 3 năm 2024: Hướng đến kỷ niệm 27 năm thành lập (10/03/1997 – 10/03/2024), Tập đoàn Y khoa Hoàn Mỹ chính thức khai trương thêm mấy chục chi nhánh nữa</p></div>
+                                        <div><span>Rối loạn tiền đình và những phương pháp điều trị hiệu quả</span></div>
+                                        <div><p>Rối loạn tiền đình là một trong những bệnh lý phổ biến hiện nay. Nhiều người thường bị chóng mặt, đau đầu, xoay tròn và mất thăng bằng… mà không hề biết đây là dấu hiệu của rối loạn tiền đình. Tình trạng này gây khó khăn khi sinh hoạt, tăng nguy cơ té ngã dẫn đến chấn thương và nhiều biến chứng nguy hiểm khác. Đó chính là lý do mà chúng ta cần tìm hiểu kỹ về căn bệnh này để có thể kịp thời chữa trị.</p></div>
                                     </div>
                                     <button>Đọc thêm</button>
                                 </div>

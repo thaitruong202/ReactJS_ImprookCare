@@ -64,7 +64,7 @@ const Header = () => {
                         <>
                             {/* <span class="User-profile"><a href="/">Chào {user.lastname} {user.firstname}</a></span> */}
                             <Dropdown style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', alignItems: 'center' }}>
-                                <Image src={user?.avatar} style={{ width: "13%" }} alt="Avatar" roundedCircle />
+                                <div className="avatar_container"><Image src={user?.avatar} alt="Avatar" roundedCircle /></div>
                                 <NavDropdown title={`Chào, ${user.lastname} ${user.firstname}!`} id="basic-nav-dropdown">
                                     <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/"><FaHome />Về trang chủ</Link></NavDropdown.Item>
                                     <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><Link to="/personal"><FaInfoCircle />Thông tin cá nhân</Link></NavDropdown.Item>

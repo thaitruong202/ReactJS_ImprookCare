@@ -1126,8 +1126,8 @@ const Admin = () => {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
+                                        {/* <th>#</th> */}
                                         <th>Ảnh đại diện</th>
-                                        <th>#</th>
                                         <th>Họ và tên đệm</th>
                                         <th>Tên</th>
                                         <th>Tài khoản/Số điện thoại</th>
@@ -1139,13 +1139,13 @@ const Admin = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {Object.values(userList).map(u => {
+                                    {Object.values(userList).map((u, index) => {
                                         const dateTimeString = u.birthday;
                                         const formattedDate = moment(dateTimeString).format('DD-MM-YYYY');
                                         return <>
                                             <tr key={u.userId}>
-                                                <td style={{ width: '6rem', height: '6rem', borderRadius: "50%", overflow: 'hidden' }}><img src={u.avatar} alt="avatar" width={'100%'} height={'100%'} style={{ overFit: 'cover' }} /></td>
-                                                <td>{u.userId}</td>
+                                                {/* <td>{index + 1}</td> */}
+                                                <td><div style={{ width: "90px", height: "90px", overflow: 'hidden' }}><img src={u.avatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "45px" }} /></div></td>
                                                 <td>{u.lastname}</td>
                                                 <td>{u.firstname}</td>
                                                 <td>{u.username}</td>
@@ -1273,7 +1273,7 @@ const Admin = () => {
                                     <Form.Label style={{ width: "16%" }}>Ảnh đại diện</Form.Label>
                                     <div className="Update_Avatar_Choice">
                                         <div>
-                                            {selectedImage ? <img src={selectedImage} alt="Selected" width={"50%"} /> : <img src={userUpdate.avatar} alt="Selected" width="50%" />}
+                                            {selectedImage ? <img src={selectedImage} alt="Selected" width={"100%"} /> : <img src={userUpdate.avatar} alt="Selected" width="100%" />}
                                         </div>
                                         <Form.Control type="File" ref={avatar} onChange={handleImageChange} width={'50%'} />
                                     </div>
@@ -1328,7 +1328,7 @@ const Admin = () => {
                                 <thead>
                                     <tr>
                                         <th>Ảnh đại diện</th>
-                                        <th>#</th>
+                                        {/* <th>#</th> */}
                                         <th>Tên thuốc</th>
                                         <th>Mô tả</th>
                                         <th>Thành phần</th>
@@ -1342,8 +1342,8 @@ const Admin = () => {
                                     {Object.values(medicineList).map(m => {
                                         return <>
                                             <tr key={m.medicineId}>
-                                                <td style={{ width: '6rem', height: '6rem', borderRadius: "50%", overflow: 'hidden' }}><img src={m.avatar} alt="avatar" width={'100%'} height={'100%'} style={{ overFit: 'cover' }} /></td>
-                                                <td>{m.medicineId}</td>
+                                                <td><div style={{ width: "90px", height: "90px", overflow: 'hidden' }}><img src={m.avatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} /></div></td>
+                                                {/* <td>{m.medicineId}</td> */}
                                                 <td>{m.medicineName}</td>
                                                 <td>{m.description}</td>
                                                 <td>{m.ingredients}</td>
@@ -1405,7 +1405,7 @@ const Admin = () => {
                                             <td style={{ width: '20%' }}>{c.categoryId}</td>
                                             <td style={{ width: '40%' }}>
                                                 {editingIndex === index ? (
-                                                    <input
+                                                    <input className="category_name"
                                                         type="text"
                                                         defaultValue={c.categoryName}
                                                         onChange={(e) => setEditCategoryName(e.target.value)}
@@ -1545,12 +1545,12 @@ const Admin = () => {
                                     <Form.Label style={{ width: "16%" }}>Ảnh đại diện</Form.Label>
                                     <div className="Avatar_Choice">
                                         {selectedImage ? (
-                                            <div>
-                                                <img src={selectedImage} alt="Selected" width="100%" />
+                                            <div style={{ width: "140px", height: "140px", overflow: 'hidden', borderRadius: "70px" }}>
+                                                <img src={selectedImage} alt="Selected" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                                             </div>
                                         ) : (
-                                            <div>
-                                                <img src={newMedicine.avatar} alt="Selected" width="100%" />
+                                            <div style={{ width: "140px", height: "140px", overflow: 'hidden', borderRadius: "70px" }}>
+                                                <img src={newMedicine.avatar} alt="Selected" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                                             </div>
                                         )}
                                         <Form.Control type="File" ref={avatar} onChange={handleImageChange} width={'50%'} />

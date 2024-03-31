@@ -302,7 +302,7 @@ div.Home_News_Content>div{
 div.Home_News_Content>div>div{
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 1rem;
 }
 
 div.Home_News_Content>div>button{
@@ -314,7 +314,7 @@ div.Home_News_Content>div>button{
     background-color: #183e9f;
     color: #fff !important;
     border: 1px solid #000;
-    border-radius: 4px;
+    border-radius: 20px;
     cursor: pointer;
     display: inline-flex;
     flex-shrink: 0;
@@ -335,9 +335,23 @@ div.Home_News_Content>div>button{
     font-weight: bold;
 }
 
-div.Home_News_Content>div>div>img{
+div.Home_News_Content>div>div>div{
+    width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+div.Home_News_Content>div>div>div>img{
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
+    border-radius: 5px;
+    transition: 0.3s linear all;
+}
+
+div.Home_News_Content>div>div>div>img:hover{
+    transform: scale(1.2);
 }
 
 div.Home_News_Content>div>button:hover{
