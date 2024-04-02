@@ -16,6 +16,16 @@ div.Doctor_Message_Middle {
     width: 22%;
 }
 
+div.Doctor_Message_Middle_Header {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.Doctor_Message_Middle_Header button {
+    width: 15%;
+    margin-bottom: 0.75rem;
+}
+
 div.Doctor_Message_Middle_Info>input {
     width: 100%;
     border-radius: 5rem;

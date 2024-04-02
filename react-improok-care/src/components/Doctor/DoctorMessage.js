@@ -2,9 +2,8 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./DoctorMessage.css";
-import { Form } from "react-bootstrap";
+import { Button, Form, Image } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
-// import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import printer from "../../assets/images/printer.png"
 import profileicon from "../../assets/images/profile-icon.png"
 import profile404 from "../../assets/images/profile.png"
@@ -16,10 +15,112 @@ import 'react-chat-elements/dist/main.css';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
+
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Avatar from '@mui/material/Avatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import PersonIcon from '@mui/icons-material/Person';
+import AddIcon from '@mui/icons-material/Add';
+import { blue } from '@mui/material/colors';
 var stompClient = null;
 
-const DoctorMessage = () => {
+function SimpleDialog(props) {
+    const { onClose, selectedValue, open, onButtonClick } = props;
     const [current_user, dispatch] = useContext(UserContext);
+    const [profileDoctor, setProfileDoctor] = useState([]);
+    const [userSendMessageToDoctor, setUserSendMessageToDoctor] = useState([]);
+    const [selectedProfile, setSelectedProfile] = useState();
+    const [listMessage, setListMessage] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const handleClose = () => {
+        onClose(selectedValue);
+    };
+
+    const handleListItemClick = (value) => {
+        onClose(value);
+    };
+
+    const loadProfileDoctor = async () => {
+        try {
+            let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId))
+            setProfileDoctor(res.data);
+            console.log(res.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        loadProfileDoctor();
+    }, [current_user?.userId])
+
+    const viewDoctorMessage = (userId) => {
+        const process = async () => {
+            try {
+                setLoading(true);
+                const res = await authApi().get(endpoints['get-message-for-all-view'](selectedProfile, userId));
+                setListMessage(res.data);
+                console.log(res.data);
+                console.log(listMessage);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        process();
+    }
+
+    return (
+        <Dialog onClose={handleClose} open={open}>
+            <DialogTitle>Set backup account</DialogTitle>
+            <List sx={{ pt: 0 }}>
+                {profileDoctor.map((pd) => (
+                    <ListItem disableGutters key={pd.profileDoctorId}>
+                        <ListItemButton
+                            onClick={() => { onButtonClick(pd); handleListItemClick(pd.profileDoctorId) }}>
+                            <ListItemAvatar>
+                                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+                                    <img src={pd.userId.avatar} alt="PD" />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={pd.name} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+                {/* <ListItem disableGutters>
+                    <ListItemButton
+                        autoFocus
+                        onClick={() => handleListItemClick('addAccount')}
+                    >
+                        <ListItemAvatar>
+                            <Avatar>
+                                <AddIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Add account" />
+                    </ListItemButton>
+                </ListItem> */}
+            </List>
+        </Dialog>
+    );
+}
+
+SimpleDialog.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+};
+
+const DoctorMessage = () => {
+    const [current_user,] = useContext(UserContext);
     const [loading, setLoading] = useState(true);
     const [profileDoctor, setProfileDoctor] = useState([]);
 
@@ -80,7 +181,7 @@ const DoctorMessage = () => {
 
     const loadProfileDoctor = async () => {
         try {
-            let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user.userId))
+            let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId))
             setProfileDoctor(res.data);
             console.log(res.data);
         } catch (error) {
@@ -90,7 +191,7 @@ const DoctorMessage = () => {
 
     useEffect(() => {
         loadProfileDoctor();
-    }, [current_user.userId])
+    }, [current_user?.userId])
 
     const getUserSendMessageToDoctor = async (pd) => {
         // setSelectedProfile(pd.profileDoctorId);
@@ -227,6 +328,18 @@ const DoctorMessage = () => {
     if (current_user === null)
         <Navigate to="/" />
 
+    const [open, setOpen] = useState(false);
+    const [selectedValue, setSelectedValue] = useState(1);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+        setSelectedValue(value);
+    };
+
     return <>
         <div className="Doctor_Message_Wrapper">
             <div className="Doctor_Message">
@@ -238,6 +351,17 @@ const DoctorMessage = () => {
                 <div className="Doctor_Message_Middle">
                     <div className="Doctor_Message_Middle_Header">
                         <h3>Hồ sơ</h3>
+                        <button onClick={handleClickOpen}>
+                            <img src={current_user?.avatar} alt="avatar" style={{ width: "100%" }} />
+                        </button>
+                    </div>
+                    <div style={{ marginRight: "2rem" }}>
+                        <SimpleDialog
+                            selectedValue={selectedValue}
+                            open={open}
+                            onClose={handleClose}
+                            onButtonClick={getUserSendMessageToDoctor}
+                        />
                     </div>
                     <div className="Doctor_Message_Middle_Content">
                         <div className="Doctor_Message_Middle_Container">
@@ -255,7 +379,7 @@ const DoctorMessage = () => {
                                                 {Object.values(profileDoctor).map(pd => {
                                                     return <>
                                                         <div className="Profile_List_Detail" value={selectedProfile} onClick={() => getUserSendMessageToDoctor(pd)}>
-                                                            <img src={profileicon} alt="profileicon" width={'20%'} />
+                                                            <img src={pd.userId.avatar} alt="profileicon" width={'20%'} />
                                                             <li key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</li>
                                                         </div>
                                                     </>
