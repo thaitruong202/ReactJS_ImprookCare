@@ -192,9 +192,9 @@ const Doctor = () => {
                                 <div className="Doctor_Right_Content">
                                     <div className="Doctor_Avatar">
                                         {current_avatar === null ? <>
-                                            <Image className="user_Avatar" src={avatar_user} style={{ width: "15%" }} alt="Not Found" rounded />
+                                            <div className="user_Avatar"><Image src={avatar_user} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Not Found" rounded /></div>
                                         </> : <>
-                                            <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "15%" }} alt="Not Found" rounded />
+                                            <div className="user_Avatar"><Image src={current_user?.avatar} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Not Found" rounded /></div>
                                         </>}
                                         <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} onChange={(e) => updateAvatar(e.target.files)} type="file" ref={avatar} />
                                     </div>
@@ -232,7 +232,11 @@ const Doctor = () => {
                                 <div className="Doctor_Right_Header"><h2 className="text-center">Thông tin cá nhân của {current_user?.firstname}</h2></div>
                                 <div className="Doctor_Right_Content">
                                     <div className="Doctor_Avatar">
-                                        <div><Image className="user_Avatar" src={current_user?.avatar} style={{ width: "15%" }} alt="Not Found" rounded /></div>
+                                        {current_avatar === null ? <>
+                                            <div className="user_Avatar"><Image src={avatar_user} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Not Found" rounded /></div>
+                                        </> : <>
+                                            <div className="user_Avatar"><Image src={current_user?.avatar} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Not Found" rounded /></div>
+                                        </>}
                                         <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} type="file" ref={avatar} />
                                     </div>
                                     <div className="Doctor_LastName">

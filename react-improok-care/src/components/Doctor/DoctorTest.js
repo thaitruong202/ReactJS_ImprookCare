@@ -1,274 +1,313 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import "./DoctorTest.css";
 import { UserContext } from "../../App";
-import "./Doctor.css";
-import { Form, Image } from "react-bootstrap";
-import { authApi, endpoints } from "../../configs/Apis";
-import cookie from "react-cookies";
+import { useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
-import avatar_user from "../../assets/images/user.png"
-import Moment from "react-moment";
+import Spinner from "../../layout/Spinner";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const DoctorTest = () => {
-    const [current_user, dispatch] = useContext(UserContext);
-    var isDoctor = 0;
-    var isLogin = 0;
+    const [current_user,] = useContext(UserContext);
+    const nav = useNavigate();
+    const [minDate, setMinDate] = useState('');
+    const [timeDistance, setTimeDistance] = useState([]);
+    const [timeSlot, setTimeSlot] = useState([]);
+    const [profileDoctorByUserId, setProfileDoctorByUserId] = useState([]);
+    const [selectedProfileDoctorId, setSeletedProfileDoctorId] = useState();
+    const [selectedTimeDistanceId, setSelectedTimeDistanceId] = useState('1');
+    const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
+    const [timeSlotCheck, setTimeSlotCheck] = useState([]);
+    const [checkSchedule, setCheckSchedule] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const checkLogin = (current_user) => {
-        if (isLogin === 0) {
-            if (current_user === null) {
-                toast("Vui lòng đăng nhập!");
-                isLogin = 1;
-                nav('/login');
-            }
-        }
-    }
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [value, setValue] = useState(dayjs('2022-04-17T15:30'));
 
-    const doctorAuth = (current_user) => {
-        if (isDoctor === 0) {
-            if (current_user !== null && current_user?.roleId.roleId !== 2) {
-                toast.error("Bạn không có quyền truy cập!")
-                isDoctor = 1;
-                nav('/');
-            }
-        }
-    }
+    const handleTimeChange = (time) => {
+        setSelectedTime(time);
+    };
+
+    // const dateInput = document.getElementById('dateInput');
+    // const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
+
+    // const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+    useEffect(() => {
+        const today = new Date().toISOString().split("T")[0];
+        setMinDate(today);
+    }, []);
 
     useEffect(() => {
-        checkLogin(current_user)
-        doctorAuth(current_user)
-    }, [current_user])
+        setLoading(true);
+        const loadTimeDistance = async () => {
+            try {
+                let res = await Apis.get(endpoints['time-distance']);
+                setTimeDistance(res.data);
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-    const [current_avatar, setCurrent_avatar] = useState(current_user?.avatar);
-    const [current_birthday, setCurrent_birthday] = useState(current_user?.birthday);
-    const [birthday, setBirthday] = useState(null)
-    const [gender, setGender] = useState(null)
-    const avatar = useRef();
-    const nav = useNavigate();
-    const [loading, setLoading] = useState(true)
-    const [user, setUser] = useState({
-        "firstname": current_user?.firstname,
-        "lastname": current_user?.lastname,
-        "userId": current_user?.userId,
-        "birthday": current_user?.birthday,
-        "gender": current_user?.gender,
-        "avatar": current_user?.avatar
-    })
-    const [checkPersonalInfo, setCheckPersonalInfo] = useState(true)
-    const formattedBirthday = (
-        <Moment locale="vi" format="DD/MM/YYYY">
-            {current_user?.birthday}
-        </Moment>
-    );
+        const loadTimeSlot = async () => {
+            try {
+                let res = await Apis.get(endpoints['time-slot'](selectedTimeDistanceId));
+                setTimeSlot(res.data);
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-    const formattedDate = new Date(current_user?.birthday);
-    formattedDate.setHours(formattedDate.getHours() + 7);
-    const formattedDateTime = formattedDate.toISOString().substring(0, 10);
-    // console.log(typeof (current_birthday))
-    // console.log(typeof (current_user.birthday))
-    // const formattedDate = current_user.birthDate.toISOString();
-    // const formattedDate = new Date(current_birthday).toISOString();
+        loadTimeDistance();
+        loadTimeSlot();
+        setLoading(false);
+    }, [selectedTimeDistanceId, current_user?.userId])
 
-    const updateClick = () => {
-        setCheckPersonalInfo(!checkPersonalInfo);
-    }
+    useEffect(() => {
+        const loadProfileDoctorByUserId = async () => {
+            try {
+                let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId));
+                setProfileDoctorByUserId(res.data);
+                if (res.data.length === 0) {
+                    toast.info("Vui lòng tạo hồ sơ trước khi đăng ký lịch khám!");
+                    nav('/profiledoctor');
+                }
+                if (res.data[0] !== undefined) {
+                    setSeletedProfileDoctorId(res.data[0].profileDoctorId)
+                }
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        loadProfileDoctorByUserId();
+    }, [])
 
-    const updateUser = (evt) => {
+    // useEffect(() => {
+    //     const scheduledCheck = async () => {
+    //         try {
+    //             const dateInput = document.getElementById('dateInput');
+    //             const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
+
+    //             const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+    //             const registeredSlots = [];
+    //             for (let i = 0; i < timeSlot.length; i++) {
+    //                 const timeSlotId = timeSlot[i];
+
+    //                 let res = await Apis.post(endpoints['check-scheduled'], {
+    //                     "profileDoctorId": current_user.userId,
+    //                     "date": formattedDate,
+    //                     "timeSlotId": timeSlotId
+    //                 });
+
+    //                 if (res.data === "Lịch chữa bệnh đã đăng ký!") {
+    //                     registeredSlots.push({
+    //                         profileDoctorId: current_user.userId,
+    //                         date: formattedDate,
+    //                         timeSlotId: timeSlotId,
+    //                     });
+    //                 }
+    //                 setCheckSchedule(registeredSlots);
+    //                 console.log(registeredSlots);
+    //             }
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     scheduledCheck();
+    // }, [selectedProfileDoctorId, selectedTimeDistanceId])
+
+    const scheduleCheck = (evt, timeSlotId) => {
         evt.preventDefault();
 
         const process = async () => {
             try {
-                let form = new FormData();
-
-                console.log(user);
                 const dateInput = document.getElementById('dateInput');
                 const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
 
-                const birthDate = new Date(selectedDate).toISOString().split('T')[0];
+                const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+                console.log(selectedProfileDoctorId, formattedDate, timeSlotId)
+                let res = await Apis.post(endpoints['check-scheduled'], {
+                    "profileDoctorId": selectedProfileDoctorId,
+                    "date": formattedDate,
+                    "timeSlotId": timeSlotId
+                });
+                if (res.data === "Lịch chữa bệnh chưa đăng ký!") {
+                    const isSelected = selectedTimeSlots.includes(timeSlotId);
 
-                for (let field in user) {
-                    if (field !== "avatar" || field !== "gender" || field !== "birthday")
-                        form.append(field, user[field]);
+                    if (isSelected) {
+                        setSelectedTimeSlots(selectedTimeSlots.filter(id => id !== timeSlotId));
+                    } else {
+                        setSelectedTimeSlots([...selectedTimeSlots, timeSlotId]);
+                    }
                 }
-
-                if (avatar.current.files[0] !== undefined) {
-                    form.append("avatar", avatar.current.files[0]);
-                } else {
-                    form.append("avatar", new Blob());
+                else {
+                    toast(res.data)
                 }
-
-                form.delete("gender");
-                if (gender === false) {
-                    form.append("gender", false)
-                } else {
-                    form.append("gender", true)
-                }
-
-                form.delete("birthday");
-                form.append("birthday", birthDate);
-
-                setLoading(true);
-
-                try {
-                    console.log(user);
-                    let { data } = await authApi().post(endpoints['update-user'], form, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    });
-
-                    let update_User = await authApi().get(endpoints['current-user'])
-                    cookie.save('user', update_User.data);
-
-                    console.log(update_User.data);
-                    dispatch({
-                        "type": "login",
-                        "payload": update_User.data
-                    });
-
-                    toast.success("Cập nhật thành công!")
-
-                    setUser(update_User.data);
-                    setLoading(false);
-                } catch (err) {
-                    // if (err.request.responeText === "Cập nhật thành công!")
-                    //     setErr("Cập nhật thành công");
-                    // else if (err.request.responeText === "Số điện thoại đã được đăng ký!")
-                    //     setErr("Số điện thoại đã được đăng ký!");
-                    // else if (err.request.responeText === "Email đã được đăng ký!")
-                    //     setErr("Email đã được đăng ký!");
-                    // else
-                    //     setErr("Có lỗi xảy ra!")
-                    toast.error(err.request.responseText);
-                    // console.log(err.request.status);
-                    setLoading(false);
-                }
-                setCheckPersonalInfo(!checkPersonalInfo);
-            } catch (ex) {
-                console.log(ex)
+                setCheckSchedule(res.data);
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+                toast.error("Có lỗi xảy ra!")
             }
         }
         process();
     }
 
-    const updateAvatar = (avatar) => {
-        console.log(avatar[0]);
-        setCurrent_avatar(avatar[0]);
+    const timeDistanceChange = (e) => {
+        setSelectedTimeDistanceId(e.target.value);
+        setSelectedTimeSlots([]);
     }
 
-    // const updateBirthDate = (birthday) => {
-    //     setBirthday(formattedDate)
+    const profileDoctorChange = (e) => {
+        setSeletedProfileDoctorId(e.target.value);
+        setSelectedTimeSlots([]);
+    }
+
+    const scheduleDateChange = () => {
+        setSelectedTimeSlots([]);
+    }
+    // const timeSlotClickCheck = (timeSlotId) => {
+    //     const isSelected = selectedTimeSlots.includes(timeSlotId);
+
+    //     if (isSelected) {
+    //         setSelectedTimeSlots(selectedTimeSlots.filter(id => id !== timeSlotId));
+    //     } else {
+    //         setSelectedTimeSlots([...selectedTimeSlots, timeSlotId]);
+    //     }
     // }
 
-    const change = (evt, field) => {
-        // setUser({...user, [field]: evt.target.value})
-        setUser(current => {
-            return { ...current, [field]: evt.target.value }
-        })
+    const addSchedule = (evt) => {
+        evt.preventDefault();
+
+        const process = async () => {
+            try {
+                setLoading(true);
+                const dateInput = document.getElementById('dateInput');
+                const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
+
+                const formattedDate = new Date(selectedDate).toISOString().split('T')[0]; // Định dạng lại ngày thành "yyyy-MM-dd"
+
+                if (selectedTimeSlots.length === 0) {
+                    toast.warning("Vui lòng chọn ít nhất một khung giờ trước khi lưu.");
+                    setLoading(false);
+                    return;
+                }
+
+                for (let i = 0; i < selectedTimeSlots.length; i++) {
+
+                    const timeSlotId = selectedTimeSlots[i];
+                    let res = await authApi().post(endpoints['add-schedule'], {
+                        "profileDoctorId": selectedProfileDoctorId,
+                        "date": formattedDate,
+                        "timeSlotId": timeSlotId
+                    });
+                    console.log(res.data);
+                }
+                toast.success("Tạo lịch khám thành công!")
+                setLoading(false);
+
+            } catch (error) {
+                console.log(error);
+                toast.error("Có lỗi xảy ra!")
+            }
+        }
+        process();
     }
 
-    // const birthDateChange = (evt, field) => {
-    //     setUser(current => {
-    //         return { ...current, [field]: evt.target.value }
-    //     }
-    // };
-
-    // console.log(current_user)
+    console.log(selectedTimeSlots);
+    // console.log(current_user.userId);
 
     return <>
-        <div className="Doctor_Wrapper">
-            <div className="Doctor">
-                <div className="Doctor_Right">
-                    {checkPersonalInfo === true ?
-                        <>
-                            <section>
-                                <div className="Doctor_Right_Header"><h2 className="text-center text-success">Thông tin cá nhân của {current_user.firstname}</h2></div>
-                                <div className="Doctor_Right_Content">
-                                    <div className="Doctor_Avatar">
-                                        {current_avatar === null ? <>
-                                            <Image className="user_Avatar" src={avatar_user} style={{ width: "10%" }} alt="Not Found" rounded />
-                                        </> : <>
-                                            <Image className="user_Avatar" src={current_user.avatar} style={{ width: "10%" }} alt="Not Found" rounded />
-                                        </>}
-                                        <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} onChange={(e) => updateAvatar(e.target.files)} type="file" ref={avatar} />
-                                    </div>
-                                    <div className="Doctor_LastName">
-                                        <Form.Label style={{ width: "30%" }}>Họ và tên đệm</Form.Label>
-                                        <Form.Control value={current_user.lastname} type="text" disabled />
-                                    </div>
-                                    <div className="Doctor_FirstName">
-                                        <Form.Label style={{ width: "30%" }}>Tên</Form.Label>
-                                        <Form.Control value={current_user.firstname} type="text" disabled />
-                                    </div>
-                                    <div className="Doctor_Email">
-                                        <Form.Label style={{ width: "30%" }}>Email</Form.Label>
-                                        <Form.Control value={current_user.email} type="email" disabled />
-                                    </div>
-                                    <div className="Doctor_Gender">
-                                        <Form.Label style={{ width: "30%" }}>Giới tính</Form.Label>
-                                        <Form.Control value={current_user.gender === true ? "Nam" : "Nữ"} type="Text" disabled />
-                                    </div>
-                                    <div className="Doctor_Birthday">
-                                        <Form.Label style={{ width: "30%" }}>Ngày sinh</Form.Label>
-                                        {current_user.birthday === null ? <>
-                                            <Form.Control value="Thiết lập ngày sinh" type="Text" disabled />
-                                        </> : <>
-                                            <Form.Control value={formattedDateTime} type="Text" disabled />
-                                        </>}
-                                    </div>
-                                    <div className="Change_Button">
-                                        <button type="button" onClick={updateClick}>Thay đổi thông tin</button>
-                                    </div>
-                                </div>
-                            </section>
-                        </> : <>
-                            <section>
-                                <div className="Doctor_Right_Header"><h2 className="text-center text-success">Thông tin cá nhân của {current_user.firstname}</h2></div>
-                                <div className="Doctor_Right_Content">
-                                    <div className="Doctor_Avatar">
-                                        <div><Image className="user_Avatar" src={current_user.avatar} style={{ width: "35%" }} alt="Not Found" rounded /></div>
-                                        <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} type="file" ref={avatar} />
-                                    </div>
-                                    <div className="Doctor_LastName">
-                                        <Form.Label style={{ width: "30%" }}>Họ và tên đệm</Form.Label>
-                                        <Form.Control defaultValue={current_user.lastname} onChange={(e) => change(e, "lastname")} type="text" placeholder="Họ và tên đệm" required />
-                                    </div>
-                                    <div className="Doctor_FirstName">
-                                        <Form.Label style={{ width: "30%" }}>Tên</Form.Label>
-                                        <Form.Control defaultValue={current_user.firstname} onChange={(e) => change(e, "firstname")} type="text" placeholder="Tên" required />
-                                    </div>
-                                    <div className="Doctor_Email">
-                                        <Form.Label style={{ width: "30%" }}>Email</Form.Label>
-                                        <Form.Control defaultValue={current_user.email} type="email" placeholder="Email" required />
-                                    </div>
-                                    <div className="Doctor_Gender">
-                                        <Form.Label style={{ width: "22%" }}>Giới tính</Form.Label>
-                                        <div className="Doctor_Gender_Tick">
-                                            {current_user.gender === true ? <>
-                                                <Form.Check type="radio" label="Nam" name="radioOption" defaultChecked onChange={() => setGender(true)} />
-                                                <Form.Check type="radio" label="Nữ" name="radioOption" onChange={() => setGender(false)} />
-                                            </> : <>
-                                                <Form.Check type="radio" label="Nam" name="radioOption" onChange={() => setGender(true)} />
-                                                <Form.Check type="radio" label="Nữ" name="radioOption" defaultChecked onChange={() => setGender(false)} />
-                                            </>}
-                                        </div>
-                                    </div>
-                                    <div className="Doctor_Birthday">
-                                        <Form.Label style={{ width: "22%" }}>Ngày sinh</Form.Label>
-                                        <div className="Doctor_Birthday_Tick">
-                                            <input
-                                                type="date" defaultValue={formattedDateTime} id="dateInput"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="Update_Button">
-                                        <button type="button" onClick={updateClick}>Hủy</button>
-                                        <button type="button" onClick={updateUser}>Cập nhật thông tin</button>
-                                    </div>
-                                </div>
-                            </section>
-                        </>}
+        <div className="Schedule_Wrapper">
+            <div className="Schedule">
+                <div className="Schedule_Left">
+                    <div className="Schedule_Left_Content">
+                        <DoctorMenu />
+                    </div>
+                </div>
+                {/* <button onClick={scheduleCheck}>Xem</button> */}
+                <div className="Schedule_Right">
+                    <div className="Schedule_Right_Content">
+                        <h2 className="text-center">Đăng ký lịch khám bệnh</h2>
+                        <div className="Schedule_Option">
+                            <div className="Schedule_Date_Option">
+                                <Form.Label style={{ width: "30%" }}>Chọn ngày</Form.Label>
+                                <input type="date" defaultValue={minDate} onChange={() => scheduleDateChange()} id="dateInput" min={minDate} />
+                            </div>
+                            <div className="Schedule_Profile_Option">
+                                <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
+                                <select className="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)} onFocus={(e) => profileDoctorChange(e)}>
+                                    {Object.values(profileDoctorByUserId).map(pd => <option key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</option>)}
+                                </select>
+                            </div>
+                            <div className="Schedule_Distance_Option">
+                                <Form.Label className="label" style={{ width: "30%" }}>Chọn giãn cách</Form.Label>
+                                <select className="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
+                                    {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
+                                </select>
+                            </div>
+                            <div className="Schedule_Distance_Option">
+                                <Form.Label className="label" style={{ width: "30%" }}>Giờ bắt đầu</Form.Label>
+                                {/* <select className="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
+                                    {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
+                                </select> */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer components={['TimePicker', 'TimePicker']}>
+                                        <TimePicker
+                                            label="Uncontrolled picker"
+                                            defaultValue={dayjs('2022-04-17T15:30')}
+                                        />
+                                    </DemoContainer>
+                                </LocalizationProvider>
+                            </div>
+                            <div className="Schedule_Distance_Option">
+                                <Form.Label className="label" style={{ width: "30%" }}>Giờ kết thúc</Form.Label>
+                                {/* <select className="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
+                                    {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
+                                </select> */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer components={['TimePicker', 'TimePicker']}>
+                                        <TimePicker
+                                            label="Uncontrolled picker"
+                                            defaultValue={dayjs('2022-04-17T15:30')}
+                                        />
+                                    </DemoContainer>
+                                </LocalizationProvider>
+                            </div>
+                        </div>
+                        <div className="Schedule_Timeslot">
+                            <h4 className="text-center">Danh sách lịch khám đã đăng ký</h4>
+                            <div className="TimeSlot_Option">
+                                {loading === true ? <Spinner /> :
+                                    <>
+                                        {Object.values(timeSlot).map(ts => {
+                                            const timeBegin = new Date(ts.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                            const timeEnd = new Date(ts.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                            const isSelected = selectedTimeSlots.includes(ts.timeSlotId);
+                                            return (
+                                                <span key={ts.timeSlotId} value={ts.timeSlotId}
+                                                    style={{ marginRight: '10px', background: isSelected ? 'lightblue' : 'white' }}
+                                                    onClick={(e) => scheduleCheck(e, ts.timeSlotId)}>
+                                                    {timeBegin} - {timeEnd}
+                                                </span>
+                                            );
+                                        })}
+                                    </>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className="Create_Butt">
+                        <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
+                    </div>
                 </div>
             </div>
         </div>

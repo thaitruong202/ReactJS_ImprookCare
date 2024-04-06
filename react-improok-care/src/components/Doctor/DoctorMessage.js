@@ -95,7 +95,7 @@ function SimpleDialog(props) {
                         </ListItemButton>
                     </ListItem>
                 ))}
-                {/* <ListItem disableGutters>
+                <ListItem disableGutters>
                     <ListItemButton
                         autoFocus
                         onClick={() => handleListItemClick('addAccount')}
@@ -107,7 +107,7 @@ function SimpleDialog(props) {
                         </ListItemAvatar>
                         <ListItemText primary="Add account" />
                     </ListItemButton>
-                </ListItem> */}
+                </ListItem>
             </List>
         </Dialog>
     );
@@ -368,19 +368,19 @@ const DoctorMessage = () => {
                             <div className="Doctor_Message_Middle_Info">
                                 <input type="text" placeholder="Nhập tên hồ sơ cần tìm..."></input>
                                 <div className="Profile_List">
-                                    {profileDoctor.length === 0 ? <>
+                                    {userSendMessageToDoctor.length === 0 ? <>
                                         <div className="Profile_List_404">
                                             <img src={printer} alt="404" width={'20%'} />
-                                            <span>Không tìm thấy kết quả</span>
+                                            <span>Vui lòng chọn Profile để xem tin nhắn</span>
                                         </div>
                                     </> : <>
                                         <div className="Profile_List_Info">
                                             <ul>
-                                                {Object.values(profileDoctor).map(pd => {
+                                                {Object.values(userSendMessageToDoctor).map(pd => {
                                                     return <>
-                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={() => getUserSendMessageToDoctor(pd)}>
-                                                            <img src={pd.userId.avatar} alt="profileicon" width={'20%'} />
-                                                            <li key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</li>
+                                                        <div className="Profile_List_Detail" value={selectedProfile}>
+                                                            <div className="avatar_Cont"><img src={pd.avatar} alt="profileicon" /></div>
+                                                            <li key={pd.userId} value={pd.userId}>{pd.firstname} {pd.lastname}</li>
                                                         </div>
                                                     </>
                                                 })}

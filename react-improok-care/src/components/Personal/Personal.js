@@ -13,8 +13,8 @@ const Personal = () => {
     const [current_user, dispatch] = useContext(UserContext);
     const [current_avatar, setCurrent_avatar] = useState(current_user?.avatar);
     const [current_birthday, setCurrent_birthday] = useState('');
-    const [birthday, setBirthday] = useState(null)
-    const [gender, setGender] = useState(null)
+    const [birthday, setBirthday] = useState(null);
+    const [gender, setGender] = useState(null);
     const avatar = useRef();
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState({
@@ -214,8 +214,12 @@ const Personal = () => {
                                 <div className="PersonalPage_Right_Header"><h2 className="text-center">Thông tin cá nhân của {current_user?.firstname}</h2></div>
                                 <div className="PersonalPage_Right_Content">
                                     <div className="Personal_Avatar">
-                                        <Image className="user_Avatar" src={current_user?.avatar} style={{ width: "15%" }} alt="Not Found" rounded />
-                                        <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} type="file" ref={avatar} />
+                                        {current_avatar === null ? <>
+                                            <div className="user_Avatar"><Image src={avatar_user} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Not Found" rounded /></div>
+                                        </> : <>
+                                            <div className="user_Avatar"><Image src={current_user?.avatar} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Avatar" rounded /></div>
+                                        </>}
+                                        <Form.Control className="avatar_input" accept=".jpg, .jpeg, .png, .gif, .bmp" style={{ width: "10%", marginLeft: 'auto', marginRight: 'auto' }} onChange={(e) => updateAvatar(e.target.files)} type="file" ref={avatar} />
                                     </div>
                                     <div className="Personal_LastName">
                                         <Form.Label style={{ width: "30%" }}>Họ và tên đệm</Form.Label>
