@@ -33,7 +33,7 @@ const MessageChat = (props) => {
     }
 
     const onConnected = () => {
-        stompClient.subscribe('/user/' + current_user.userId + '/private', onPrivateMessage);
+        stompClient.subscribe('/user/' + current_user?.userId + '/private', onPrivateMessage);
         // stompClient.subscribe('/user/private', onPrivateMessage);
     }
 

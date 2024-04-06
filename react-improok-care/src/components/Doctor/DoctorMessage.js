@@ -33,9 +33,8 @@ var stompClient = null;
 
 function SimpleDialog(props) {
     const { onClose, selectedValue, open, onButtonClick } = props;
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const [profileDoctor, setProfileDoctor] = useState([]);
-    const [userSendMessageToDoctor, setUserSendMessageToDoctor] = useState([]);
     const [selectedProfile, setSelectedProfile] = useState();
     const [listMessage, setListMessage] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -61,22 +60,6 @@ function SimpleDialog(props) {
     useEffect(() => {
         loadProfileDoctor();
     }, [current_user?.userId])
-
-    const viewDoctorMessage = (userId) => {
-        const process = async () => {
-            try {
-                setLoading(true);
-                const res = await authApi().get(endpoints['get-message-for-all-view'](selectedProfile, userId));
-                setListMessage(res.data);
-                console.log(res.data);
-                console.log(listMessage);
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        process();
-    }
 
     return (
         <Dialog onClose={handleClose} open={open}>
@@ -130,6 +113,8 @@ const DoctorMessage = () => {
     const [selectedProfile, setSelectedProfile] = useState();
     const [userSendMessageToDoctor, setUserSendMessageToDoctor] = useState([]);
     const [listMessage, setListMessage] = useState([]);
+    const [selectedPatient, setSelectedPatient] = useState([]);
+    const [patientName, setPatientName] = useState('');
 
     const [messageContent, setMessageContent] = useState(null);
 
@@ -244,6 +229,7 @@ const DoctorMessage = () => {
     // }
 
     const viewDoctorMessage = (userId) => {
+        setSelectedPatient(userId);
         const process = async () => {
             try {
                 setLoading(true);
@@ -376,11 +362,11 @@ const DoctorMessage = () => {
                                     </> : <>
                                         <div className="Profile_List_Info">
                                             <ul>
-                                                {Object.values(userSendMessageToDoctor).map(pd => {
+                                                {Object.values(userSendMessageToDoctor).map(usmtd => {
                                                     return <>
-                                                        <div className="Profile_List_Detail" value={selectedProfile}>
-                                                            <div className="avatar_Cont"><img src={pd.avatar} alt="profileicon" /></div>
-                                                            <li key={pd.userId} value={pd.userId}>{pd.firstname} {pd.lastname}</li>
+                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={() => { viewDoctorMessage(usmtd.userId); setPatientName(`${usmtd.firstname} ${usmtd.lastname}`) }}>
+                                                            <div className="avatar_Cont"><img src={usmtd.avatar} alt="profileicon" /></div>
+                                                            <li key={usmtd.userId} value={usmtd.userId}>{usmtd.firstname} {usmtd.lastname}</li>
                                                         </div>
                                                     </>
                                                 })}
@@ -412,7 +398,7 @@ const DoctorMessage = () => {
                                                 </div>
                                             </> :
                                                 <>
-                                                    {userSendMessageToDoctor.map(usmtd => {
+                                                    {/* {userSendMessageToDoctor.map(usmtd => {
                                                         return <>
                                                             <Accordion>
                                                                 <AccordionSummary
@@ -420,7 +406,6 @@ const DoctorMessage = () => {
                                                                     aria-controls="panel1a-content"
                                                                     id="panel1a-header"
                                                                     className="Prescription_Item"
-                                                                    onClick={() => viewDoctorMessage(usmtd.userId)}
                                                                 >
                                                                     <Typography>Bệnh nhân: {usmtd.firstname} {usmtd.lastname}</Typography>
                                                                 </AccordionSummary>
@@ -464,7 +449,42 @@ const DoctorMessage = () => {
                                                                 </AccordionDetails>
                                                             </Accordion>
                                                         </>
-                                                    })}
+                                                    })} */}
+                                                    <div>
+                                                        <h4 className="text-center mb-3 mt-3">{patientName}</h4>
+                                                        <div className="Message_Content">
+                                                            {Object.values(listMessage).map((mes) => {
+                                                                return <>
+                                                                    {selectedProfile === mes.senderId ?
+                                                                        <MessageBox
+                                                                            key={mes.messageId}
+                                                                            position={'right'}
+                                                                            type={'text'}
+                                                                            avatar={null}
+                                                                            status={null}
+                                                                            text={mes.messageContent}
+                                                                            date={mes.createdDate}
+                                                                        /> :
+                                                                        <MessageBox
+                                                                            key={mes.messageId}
+                                                                            position={'left'}
+                                                                            type={'text'}
+                                                                            avatar={null}
+                                                                            status={null}
+                                                                            text={mes.messageContent}
+                                                                            date={mes.createdDate} />
+                                                                    }
+                                                                </>
+                                                            })}
+                                                        </div>
+                                                        <div className="Send_Message">
+                                                            <Form.Control className="mt-2" style={{ width: '100%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                                                            <div>
+                                                                <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
+                                                                {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     {/* <div className="Page_Nav">
                                                         {prescriptionPages.map((page) => (
                                                             <button id={`${page}`} key={page} onClick={() => handlePrescriptionPageChange(page)}

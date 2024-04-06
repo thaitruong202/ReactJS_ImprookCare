@@ -44,7 +44,7 @@ const Message = () => {
     }
 
     const onConnected = () => {
-        stompClient.subscribe('/user/' + selectedProfile + '/private', onPrivateMessage);
+        stompClient.subscribe('/user/' + current_user?.userId + '/private', onPrivateMessage);
         // stompClient.subscribe('/user/private', onPrivateMessage);
     }
 
