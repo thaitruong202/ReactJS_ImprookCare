@@ -37,8 +37,8 @@ const DoctorMenu = () => {
                 </NavLink>
                 <NavLink
                     activeClassName="active"
-                    onClick={() => handleItemClick("schedule", "/schedule")}
-                    to="/schedule"
+                    onClick={() => handleItemClick("customschedule", "/customschedule")}
+                    to="/customschedule"
                 >
                     <MdEditCalendar className="icon" />
                     <span className="text">Đăng ký lịch khám</span>

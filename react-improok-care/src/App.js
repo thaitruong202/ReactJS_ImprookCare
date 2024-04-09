@@ -31,9 +31,10 @@ import PaymentResult from "./components/Payment/PaymentResult";
 import BookingManagement from "./components/Doctor/BookingManagement";
 import Prescription from "./components/Doctor/Prescription";
 import Schedule from "./components/Doctor/Schedule";
+import CustomSchedule from "./components/Doctor/CustomSchedule";
 import VideoCall from "./components/VideoCall/VideoCall";
-import DoctorSys from "./components/Doctor/DoctorSys";
-import DoctorTest from "./components/Doctor/DoctorTest"
+// import DoctorSys from "./components/Doctor/DoctorSys";
+// import DoctorTest from "./components/Doctor/DoctorTest"
 import NewBooking from "./components/Doctor/NewBooking";
 import AcceptBooking from "./components/Doctor/AcceptBooking";
 import DeclineBooking from "./components/Doctor/DeclineBooking";
@@ -76,6 +77,7 @@ const App = () => {
             <Route path='/prescription' element={<Prescription />} />
             <Route path='/schedule' element={<Schedule />} />
             <Route path='/videocall' element={<VideoCall />} />
+            <Route path='/customschedule' element={<CustomSchedule />} />
             <Route path='/bookingmanagement' element={<BookingManagement />}>
               <Route path='newbooking' element={<NewBooking />} />
               <Route path='acceptbooking' element={<AcceptBooking />} />
