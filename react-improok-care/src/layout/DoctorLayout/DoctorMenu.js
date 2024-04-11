@@ -37,11 +37,19 @@ const DoctorMenu = () => {
                 </NavLink>
                 <NavLink
                     activeClassName="active"
+                    onClick={() => handleItemClick("schedule", "/schedule")}
+                    to="/schedule"
+                >
+                    <MdEditCalendar className="icon" />
+                    <span className="text">Đăng ký lịch khám</span>
+                </NavLink>
+                <NavLink
+                    activeClassName="active"
                     onClick={() => handleItemClick("customschedule", "/customschedule")}
                     to="/customschedule"
                 >
                     <MdEditCalendar className="icon" />
-                    <span className="text">Đăng ký lịch khám</span>
+                    <span className="text">Lịch khám tùy chỉnh</span>
                 </NavLink>
                 <NavLink
                     activeClassName="active"

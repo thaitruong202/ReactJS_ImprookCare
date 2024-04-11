@@ -5,34 +5,33 @@ import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
-import Spinner from "../../layout/Spinner";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 // import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import TimePicker from 'react-time-picker';
-import 'react-clock/dist/Clock.css';
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import DateTimePicker from 'react-datetime-picker';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { DndProvider, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+// import { DndProvider } from 'react-dnd';
+// import { HTML5Backend } from 'react-dnd-html5-backend';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const CustomSchedule = () => {
     const [current_user,] = useContext(UserContext);
     const nav = useNavigate();
     const [minDate, setMinDate] = useState('');
-    const [timeDistance, setTimeDistance] = useState([]);
-    const [timeSlot, setTimeSlot] = useState([]);
     const [profileDoctorByUserId, setProfileDoctorByUserId] = useState([]);
     const [selectedProfileDoctorId, setSeletedProfileDoctorId] = useState();
     const [selectedTimeDistanceId, setSelectedTimeDistanceId] = useState('1');
     const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
-    // const [timeSlotCheck, setTimeSlotCheck] = useState([]);
-    const [checkSchedule, setCheckSchedule] = useState([]);
     const [loading, setLoading] = useState(false);
     const [scheduleDate, setScheduleDate] = useState(new Date().toISOString().split("T")[0]);
+
+    const [selectedEvent, setSelectedEvent] = useState(null)
 
     useEffect(() => {
         setLoading(true)
@@ -50,15 +49,6 @@ const CustomSchedule = () => {
                     setSeletedProfileDoctorId(res.data[0].profileDoctorId)
                 }
                 console.log(res.data);
-                let ses = await Apis.get(endpoints['time-distance']);
-                setTimeDistance(ses.data);
-                console.log(ses.data);
-                let e = `${endpoints['check-timeslot-register'](selectedTimeDistanceId)}`
-                e += `?profileDoctorId=${res.data[0].profileDoctorId}&date=${scheduleDate}`
-                console.log(e)
-                let tes = await authApi().get(e)
-                setTimeSlot(tes.data);
-                console.log(tes.data);
             } catch (error) {
                 console.log(error);
             }
@@ -67,48 +57,6 @@ const CustomSchedule = () => {
         setLoading(false)
         console.log(value, timeB, timeE, formattedTime)
     }, [selectedProfileDoctorId, selectedTimeDistanceId, scheduleDate]);
-
-    const scheduleCheck = (evt, timeSlotId) => {
-        evt.preventDefault();
-
-        const process = async () => {
-            try {
-                const dateInput = document.getElementById('dateInput');
-                const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
-
-                const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
-                console.log(selectedProfileDoctorId, formattedDate, timeSlotId)
-                let res = await Apis.post(endpoints['check-scheduled'], {
-                    "profileDoctorId": selectedProfileDoctorId,
-                    "date": formattedDate,
-                    "timeSlotId": timeSlotId
-                });
-                if (res.data === "Lịch chữa bệnh chưa đăng ký!") {
-                    const isSelected = selectedTimeSlots.includes(timeSlotId);
-
-                    if (isSelected) {
-                        setSelectedTimeSlots(selectedTimeSlots.filter(id => id !== timeSlotId));
-                    } else {
-                        setSelectedTimeSlots([...selectedTimeSlots, timeSlotId]);
-                    }
-                }
-                // else {
-                //     toast(res.data)
-                // }
-                setCheckSchedule(res.data);
-                console.log(res.data);
-            } catch (error) {
-                console.log(error);
-                toast.error("Có lỗi xảy ra!")
-            }
-        }
-        process();
-    }
-
-    const timeDistanceChange = (e) => {
-        setSelectedTimeDistanceId(e.target.value);
-        setSelectedTimeSlots([]);
-    }
 
     const profileDoctorChange = (e) => {
         setSeletedProfileDoctorId(e.target.value);
@@ -159,7 +107,6 @@ const CustomSchedule = () => {
     }
 
     console.log(selectedTimeSlots);
-    // console.log(current_user.userId);
 
     const [value, setValue] = useState(new Date());
 
@@ -181,7 +128,8 @@ const CustomSchedule = () => {
     const [timeB, setTimeB] = useState(new Date());
 
     const onTimeBChange = (newValue) => {
-        setTimeB(newValue);
+        // setTimeB(newValue);
+        setSelectedDate(newValue);
     };
 
     const [timeE, setTimeE] = useState(new Date());
@@ -211,25 +159,62 @@ const CustomSchedule = () => {
 
     const [events, setEvents] = useState([]); // Khởi tạo state để lưu trữ danh sách sự kiện
 
-    const handleDrop = (event) => {
-        // Xử lý sự kiện khi người dùng thả timeslot để tạo sự kiện mới
-        const { start, end } = event; // Thời gian bắt đầu và kết thúc của timeslot
-        const newEvent = {
-            start,
-            end,
-            title: 'Sự kiện mới',
-        };
-        setEvents([...events, newEvent]); // Thêm sự kiện mới vào danh sách sự kiện
-    };
+    const [showModal, setShowModal] = useState(false)
+    const [selectedDate, setSelectedDate] = useState(null)
 
-    const TimeSlotWrapper = ({ children }) => {
-        const [, drop] = useDrop({
-            accept: 'event',
-            drop: handleDrop,
-        });
+    const handleSelectSlot = (slotInfo) => {
+        setShowModal(true)
+        setSelectedDate(moment(slotInfo.start).toDate())
+        setTimeE(moment(slotInfo.start).add(1, 'hours').toDate())
+        setSelectedEvent(null)
+        console.log(slotInfo.start)
+        console.log(slotInfo.slots)
+    }
 
-        return <div ref={drop}>{children}</div>;
-    };
+    const handleSelectEvent = (event) => {
+        setShowModal(true)
+        setSelectedEvent(event)
+        setNote(event.title)
+    }
+
+    const saveEvent = async () => {
+        if (note && selectedDate) {
+            if (selectedEvent) {
+                const updatedEvent = {
+                    ...selectedEvent, title: note, start: selectedDate,
+                    end: timeE
+                };
+                const updatedEvents = events.map((event) =>
+                    event === selectedEvent ? updatedEvent : event
+                );
+                setEvents(updatedEvents);
+            }
+            else {
+                const newEvent = {
+                    title: note,
+                    start: selectedDate,
+                    end: timeE
+                }
+                console.log(newEvent)
+                console.log()
+                setEvents([...events, newEvent])
+                console.log(selectedDate, timeE)
+                console.log(moment(selectedDate).format("YYYY-MM-DD HH:mm:ss"), moment(timeE).format("YYYY-MM-DD HH:mm:ss"))
+                let res = await authApi().post(endpoints['add-timeslot'], {
+                    // "timeBegin": "2024-09-10 16:00:00",
+                    // "timeEnd": "2024-09-10 17:00:00",
+                    "timeBegin": moment(selectedDate).format("YYYY-MM-DD HH:mm:ss"),
+                    "timeEnd": moment(timeE).format("YYYY-MM-DD HH:mm:ss"),
+                    "note": note,
+                    "profileDoctorId": selectedProfileDoctorId
+                })
+                console.log(res.data)
+                setShowModal(false)
+                setNote('')
+                setSelectedEvent(null);
+            }
+        }
+    }
 
     return <>
         <div className="Schedule_Wrapper">
@@ -239,83 +224,98 @@ const CustomSchedule = () => {
                         <DoctorMenu />
                     </div>
                 </div>
-                {/* <button onClick={scheduleCheck}>Xem</button> */}
                 <div className="Schedule_Right">
                     <div className="Schedule_Right_Content">
                         <h2 className="text-center">Đăng ký lịch khám bệnh</h2>
                         <div>
                             {/* <Calendar onChange={onChange} value={value} /> */}
-                            <DndProvider backend={HTML5Backend}>
-                                <Calendar
-                                    localizer={localizer}
-                                    events={myEventsList}
-                                    startAccessor="start"
-                                    endAccessor="end"
-                                    style={{ height: 500 }}
-                                    formats={formats}
-                                    defaultView="week"
-                                    views={["month", "week", "day"]}
-                                    components={{
-                                        timeSlotWrapper: TimeSlotWrapper,
-                                    }}
-                                />
-                            </DndProvider>
-                        </div>
-                        <div className="Schedule_Option">
-                            <div className="Schedule_Profile_Option">
-                                <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
-                                <select className="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)} onFocus={(e) => profileDoctorChange(e)}>
-                                    {Object.values(profileDoctorByUserId).map(pd => <option key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</option>)}
-                                </select>
-                            </div>
-                            <div className="Schedule_Profile_Option">
-                                <Form.Label style={{ width: "30%" }}>Thời gian bắt đầu</Form.Label>
-                                <TimePicker onChange={onTimeBChange} value={timeB} clearIcon={null} />
-                            </div>
-                            <div className="Schedule_Profile_Option">
-                                <Form.Label style={{ width: "30%" }}>Thời gian kết thúc</Form.Label>
-                                <TimePicker onChange={onTimeEChange} value={timeE} clearIcon={null} />
-                            </div>
-                            <div className="Schedule_Profile_Option">
-                                <Form.Label style={{ width: "30%" }}>Ghi chú</Form.Label>
-                                <Form.Control as="textarea" aria-label="With textarea" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Nhập nội dung ghi chú" />
-                            </div>
-                        </div>
-                        <div className="Schedule_Timeslot">
-                            <div className="TimeSlot_Option">
-                                {loading === true ? <Spinner /> :
-                                    <>
-                                        {/* {Object.values(timeSlot).map((ts, index) => {
-                                            const timeBegin = new Date(ts.timeSlot.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                                            const timeEnd = new Date(ts.timeSlot.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                                            const isSelected = selectedTimeSlots.includes(ts.timeSlot.timeSlotId);
-                                            return (
-                                                <span key={ts.timeSlot.timeSlotId} value={ts.timeSlot.timeSlotId}
-                                                    style={{
-                                                        marginRight: '10px', background: ts.isRegister === true ? 'lightblue' : isSelected ? 'yellow' : 'white',
-                                                        cursor: ts.isRegister === true ? 'not-allowed' : 'pointer'
-                                                    }}
-                                                    onClick={(e) => scheduleCheck(e, ts.timeSlot.timeSlotId)}>
-                                                    {timeBegin} - {timeEnd}
-                                                </span>
-                                            );
-                                        })} */}
-                                    </>
-                                }
-                            </div>
-                        </div>
-                        <div className="Create_Butt">
-                            <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
+                            {/* <DndProvider backend={HTML5Backend}> */}
+                            <Calendar
+                                localizer={localizer}
+                                events={events}
+                                startAccessor="start"
+                                endAccessor="end"
+                                style={{ height: 500 }}
+                                formats={formats}
+                                defaultView="day"
+                                views={["month", "week", "day", "agenda"]}
+                                selectable={true}
+                                onSelectSlot={handleSelectSlot}
+                                onSelectEvent={handleSelectEvent}
+                            />
+                            {/* </DndProvider> */}
+                            {showModal && (
+                                <div
+                                    className="modal show"
+                                    style={{ display: 'block', backgroundColor: 'rgba(0.0.0.0.5)', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, zIndex: 9999 }}
+                                >
+                                    <Modal.Dialog>
+                                        <Modal.Header closeButton onHide={() => {
+                                            setShowModal(false)
+                                            setSelectedEvent(null)
+                                            setNote('')
+                                        }}>
+                                            <Modal.Title>{selectedEvent ? 'Chỉnh sửa lịch khám' : 'Đăng ký lịch khám'}</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body className="Schedule_Option">
+                                            <div className="Schedule_Profile_Option">
+                                                <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
+                                                <select className="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)} onFocus={(e) => profileDoctorChange(e)}>
+                                                    {Object.values(profileDoctorByUserId).map(pd => <option key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</option>)}
+                                                </select>
+                                            </div>
+                                            <div className="Schedule_Profile_Option">
+                                                <Form.Label style={{ width: "30%" }}>Nội dung</Form.Label>
+                                                <Form.Control as="textarea" aria-label="With textarea" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Nhập nội dung ghi chú" />
+                                            </div>
+                                            <div className="Schedule_Profile_Option">
+                                                <Form.Label style={{ width: "30%" }}>Bắt đầu</Form.Label>
+                                                <DateTimePicker onChange={onTimeBChange} value={selectedDate} clearIcon={null} />
+                                            </div>
+                                            <div className="Schedule_Profile_Option">
+                                                <Form.Label style={{ width: "30%" }}>Thời gian kết thúc</Form.Label>
+                                                <DateTimePicker onChange={onTimeEChange} value={timeE} clearIcon={null} />
+                                            </div>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
+                                            <Button variant="primary" onClick={saveEvent}>Save changes</Button>
+                                        </Modal.Footer>
+                                    </Modal.Dialog>
+                                </div>
+                            )}
                         </div>
                     </div>
-                    <div className="custom_area">
-                        <h2 className="text-center">Đăng ký lịch khám bệnh tùy chỉnh</h2>
-                        <div>
+                    {/* <div className="Schedule_Option">
+                        <div className="Schedule_Profile_Option">
+                            <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
+                            <select className="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)} onFocus={(e) => profileDoctorChange(e)}>
+                                {Object.values(profileDoctorByUserId).map(pd => <option key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</option>)}
+                            </select>
+                        </div>
+                        <div className="Schedule_Profile_Option">
+                            <Form.Label style={{ width: "30%" }}>Thời gian bắt đầu</Form.Label>
+                            <DateTimePicker onChange={onTimeBChange} value={timeB} clearIcon={null} />
+                        </div>
+                        <div className="Schedule_Profile_Option">
+                            <Form.Label style={{ width: "30%" }}>Thời gian kết thúc</Form.Label>
+                            <DateTimePicker onChange={onTimeEChange} value={timeE} clearIcon={null} />
+                        </div>
+                        <div className="Schedule_Profile_Option">
+                            <Form.Label style={{ width: "30%" }}>Ghi chú</Form.Label>
+                            <Form.Control as="textarea" aria-label="With textarea" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Nhập nội dung ghi chú" />
+                        </div>
+                    </div> */}
+                    {/* <div className="Schedule_Timeslot">
+                        <div className="TimeSlot_Option">
                         </div>
                     </div>
+                    <div className="Create_Butt">
+                        <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
+                    </div> */}
                 </div>
             </div>
-        </div>
+        </div >
     </>
 }
 
