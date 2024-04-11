@@ -26,14 +26,14 @@ const CustomSchedule = () => {
     const [minDate, setMinDate] = useState('');
     const [profileDoctorByUserId, setProfileDoctorByUserId] = useState([]);
     const [selectedProfileDoctorId, setSeletedProfileDoctorId] = useState();
-    const [selectedTimeDistanceId, setSelectedTimeDistanceId] = useState('1');
     const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [scheduleDate, setScheduleDate] = useState(new Date().toISOString().split("T")[0]);
+    const [timeSlotId, setTimeSlotId] = useState(null);
 
     const [selectedEvent, setSelectedEvent] = useState(null)
 
     useEffect(() => {
+        setEvents([])
         setLoading(true)
         const today = new Date().toISOString().split("T")[0];
         setMinDate(today);
@@ -49,6 +49,16 @@ const CustomSchedule = () => {
                     setSeletedProfileDoctorId(res.data[0].profileDoctorId)
                 }
                 console.log(res.data);
+                let ses = await authApi().get(endpoints['load-custom-timeslot'](res.data[0].profileDoctorId))
+                console.log(ses.data)
+                const newEvents = ses.data.map((result) => ({
+                    id: result.timeSlotId,
+                    title: result.note,
+                    start: new Date(result.timeBegin),
+                    end: new Date(result.timeEnd),
+                }));
+                setEvents(newEvents);
+                console.log(events)
             } catch (error) {
                 console.log(error);
             }
@@ -56,62 +66,17 @@ const CustomSchedule = () => {
         loadAll()
         setLoading(false)
         console.log(value, timeB, timeE, formattedTime)
-    }, [selectedProfileDoctorId, selectedTimeDistanceId, scheduleDate]);
+    }, [selectedProfileDoctorId]);
 
     const profileDoctorChange = (e) => {
         setSeletedProfileDoctorId(e.target.value);
         setSelectedTimeSlots([]);
     }
 
-    const scheduleDateChange = (date) => {
-        console.log(date);
-        const newDate = new Date(date).toISOString().split("T")[0];
-        console.log(newDate);
-        setScheduleDate(newDate);
-    }
-
-    const addSchedule = (evt) => {
-        evt.preventDefault();
-
-        const process = async () => {
-            try {
-                setLoading(true);
-                const dateInput = document.getElementById('dateInput');
-                const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
-
-                const formattedDate = new Date(selectedDate).toISOString().split('T')[0]; // Định dạng lại ngày thành "yyyy-MM-dd"
-
-                if (selectedTimeSlots.length === 0) {
-                    toast.warning("Vui lòng chọn ít nhất một khung giờ trước khi lưu.");
-                    setLoading(false);
-                    return;
-                }
-
-                for (let i = 0; i < selectedTimeSlots.length; i++) {
-                    const timeSlotId = selectedTimeSlots[i];
-                    let res = await authApi().post(endpoints['add-schedule'], {
-                        "profileDoctorId": selectedProfileDoctorId,
-                        "date": formattedDate,
-                        "timeSlotId": timeSlotId
-                    });
-                    console.log(res.data);
-                }
-                toast.success("Tạo lịch khám thành công!")
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-                toast.error("Có lỗi xảy ra!")
-            }
-        }
-        process();
-    }
-
     console.log(selectedTimeSlots);
 
     const [value, setValue] = useState(new Date());
 
-    // const formattedTime = value.toISOString().replace("T", " ").substr(0, 19);
-    // const formattedTime = value.toLocaleString("en-US", { timeZone: "Asia/Bangkok", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
     const year = value.getFullYear();
     const month = String(value.getMonth() + 1).padStart(2, "0");
     const day = String(value.getDate()).padStart(2, "0");
@@ -120,10 +85,6 @@ const CustomSchedule = () => {
     const seconds = String(value.getSeconds()).padStart(2, "0");
 
     const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-    const onChange = (newValue) => {
-        setValue(newValue);
-    };
 
     const [timeB, setTimeB] = useState(new Date());
 
@@ -142,12 +103,6 @@ const CustomSchedule = () => {
 
     const localizer = momentLocalizer(moment)
 
-    const myEventsList = [{
-        start: moment().toDate(), // Lấy thời gian hiện tại
-        end: moment().add(1, 'hour').toDate(), // Thêm 1 giờ để lấy thời gian kết thúc
-        title: "Ngộ ha"
-    }];
-
     const formats = {
         timeGutterFormat: 'HH:mm', // Định dạng cho thời gian trong bảng điều khiển thời gian (time column)
         eventTimeRangeFormat: ({ start, end }) => {
@@ -157,7 +112,7 @@ const CustomSchedule = () => {
         },
     };
 
-    const [events, setEvents] = useState([]); // Khởi tạo state để lưu trữ danh sách sự kiện
+    const [events, setEvents] = useState([]);
 
     const [showModal, setShowModal] = useState(false)
     const [selectedDate, setSelectedDate] = useState(null)
@@ -175,19 +130,32 @@ const CustomSchedule = () => {
         setShowModal(true)
         setSelectedEvent(event)
         setNote(event.title)
+        setSelectedDate(event.start)
+        setTimeE(event.end)
+        setTimeSlotId(event.timeSlotId)
     }
 
     const saveEvent = async () => {
         if (note && selectedDate) {
             if (selectedEvent) {
                 const updatedEvent = {
-                    ...selectedEvent, title: note, start: selectedDate,
+                    ...selectedEvent,
+                    title: note,
+                    start: selectedDate,
                     end: timeE
                 };
                 const updatedEvents = events.map((event) =>
                     event === selectedEvent ? updatedEvent : event
                 );
                 setEvents(updatedEvents);
+                console.log(timeSlotId, selectedDate, timeE, note)
+                let res = await authApi().post(endpoints['edit-timeslot'], {
+                    "timeSlotId": timeSlotId,
+                    "timeBegin": selectedDate,
+                    "timeEnd": timeE,
+                    "note": note
+                })
+                console.log(res.data)
             }
             else {
                 const newEvent = {
@@ -227,6 +195,12 @@ const CustomSchedule = () => {
                 <div className="Schedule_Right">
                     <div className="Schedule_Right_Content">
                         <h2 className="text-center">Đăng ký lịch khám bệnh</h2>
+                        <div className="Schedule_Profile_Option">
+                            <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
+                            <select className="value" defaultValue={selectedProfileDoctorId} onChange={(e) => profileDoctorChange(e)} onFocus={(e) => profileDoctorChange(e)}>
+                                {Object.values(profileDoctorByUserId).map(pd => <option key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</option>)}
+                            </select>
+                        </div>
                         <div>
                             {/* <Calendar onChange={onChange} value={value} /> */}
                             {/* <DndProvider backend={HTML5Backend}> */}
