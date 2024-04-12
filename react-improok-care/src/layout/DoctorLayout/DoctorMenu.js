@@ -11,10 +11,10 @@ const DoctorMenu = () => {
     const [, dispatch] = useContext(UserContext);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const handleItemClick = (item, path) => {
-        setSelectedItem(item);
-        nav(path);
-    };
+  const handleItemClick = (item, path) => {
+    setSelectedItem(item);
+    nav(path);
+  };
 
     const logout = (item) => {
         setSelectedItem(item);

@@ -1,10 +1,10 @@
 div.DoctorMenu {
-    display: grid;
-    list-style: none;
-    /* background-color: #CCFFFF; */
-    /* background-color: lightblue; */
-    /* background-color: #F0F8FF; */
-    background: white;
+  display: grid;
+  list-style: none;
+  /* background-color: #CCFFFF; */
+  /* background-color: lightblue; */
+  /* background-color: #F0F8FF; */
+  background: white;
 }
 
 /* .DoctorMenu>div {
