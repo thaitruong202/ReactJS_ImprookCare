@@ -158,7 +158,7 @@ const ProfileDoctor = () => {
                     "wardName": wardname === undefined ? ward[0].name : wardname,
                     "workPlace": workPlace,
                     "position": position,
-                    "userId": current_user.userId,
+                    "userId": current_user?.userId,
                     "specialtyId": selectedSpecialty
                 });
                 console.log(res.data);

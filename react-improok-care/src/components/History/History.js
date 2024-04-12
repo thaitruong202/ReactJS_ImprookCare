@@ -183,7 +183,7 @@ const History = () => {
                 let res = await Apis.post(endpoints['vnpay-payment'], {
                     "amount": tempTotal,
                     "orderInfor": "2:-" + prescriptionId + "-Medicine Payment: " + profilePatientName + " đã thanh toán tiền thuốc cho đơn thuốc " + prescriptionId + " - ",
-                    "returnUrl": "http://localhost:3000/paymentResult"
+                    "returnUrl": "http://localhost:3000/improok/paymentResult"
                 });
                 window.location.href = res.data;
                 // toast.success(res.data);
@@ -208,7 +208,7 @@ const History = () => {
                 let res = await Apis.post(endpoints['vnpay-payment'], {
                     "amount": servicePrice,
                     "orderInfor": "1:-" + prescriptionId + "-Service Payment: " + profilePatientName + " đã thanh toán tiền khám cho đơn thuốc " + prescriptionId + " - ",
-                    "returnUrl": "http://localhost:3000/paymentResult"
+                    "returnUrl": "http://localhost:3000/improok/paymentResult"
                 });
                 window.location.href = res.data;
                 // toast.success(res.data);

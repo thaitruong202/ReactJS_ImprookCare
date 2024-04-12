@@ -57,7 +57,7 @@ function SimpleDialog(props) {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>Set backup account</DialogTitle>
+            <DialogTitle>Vui lòng chọn hồ sơ</DialogTitle>
             <List sx={{ pt: 0 }}>
                 {profileDoctor.map((pd) => (
                     <ListItem disableGutters key={pd.profileDoctorId}>
@@ -333,10 +333,11 @@ const DoctorMessage = () => {
                 </div>
                 <div className="Doctor_Message_Middle">
                     <div className="Doctor_Message_Middle_Header">
+                        <h5 style={{ width: "65%" }}>{profile}</h5>
                         <button onClick={handleClickOpen}>
-                            <img src={current_user?.avatar} alt="avatar" style={{ width: "100%" }} />
+                            {/* <img src={current_user?.avatar} alt="avatar" style={{ width: "100%" }} /> */}
+                            Chọn hồ sơ
                         </button>
-                        <h5>{profile}</h5>
                     </div>
                     <div style={{ marginRight: "2rem" }}>
                         <SimpleDialog
