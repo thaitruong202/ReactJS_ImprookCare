@@ -280,13 +280,6 @@ const CustomSchedule = () => {
                             <Form.Control as="textarea" aria-label="With textarea" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Nhập nội dung ghi chú" />
                         </div>
                     </div> */}
-                    {/* <div className="Schedule_Timeslot">
-                        <div className="TimeSlot_Option">
-                        </div>
-                    </div>
-                    <div className="Create_Butt">
-                        <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
-                    </div> */}
                 </div>
             </div>
         </div >

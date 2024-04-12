@@ -13,7 +13,7 @@ import AcceptBooking from "./AcceptBooking";
 const BookingManagement = () => {
     const [current_user,] = useContext(UserContext);
     const [profileDoctorByUserId, setProfileDoctorByUserId] = useState([]);
-    const [selectedProfileDoctorId, setSelectedProfileDoctorId] = useState('');
+    const [selectedProfileDoctorId, setSelectedProfileDoctorId] = useState("");
     const [minDate, setMinDate] = useState('');
     const nav = useNavigate();
     const [selectedOption, setSelectedOption] = useState('new');

@@ -6,7 +6,6 @@ import { Button, Form, Table } from "react-bootstrap";
 import cookie from "react-cookies"
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
-import { parse } from "date-fns";
 import { Autocomplete, Stack, TextField } from "@mui/material";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
@@ -156,27 +155,52 @@ const Prescription = () => {
     }, [])
 
 
-    const addMedicine = (medicineList) => {
-        let pres = cookie.load("pres") || null
-        if (pres === null)
-            pres = {}
+    // const addMedicine = (medicineList) => {
+    //     let pres = cookie.load("pres") || null
+    //     if (pres === null)
+    //         pres = {}
 
-        if (medicineList.medicineId in pres) {
-            pres[medicineList.medicineId]["quantity"] += 1
+    //     if (medicineList.medicineId in pres) {
+    //         pres[medicineList.medicineId]["quantity"] += 1
+    //     }
+    //     else {
+    //         pres[medicineList.medicineId] = {
+    //             "medicineId": medicineList.medicineId,
+    //             "medicineName": medicineList.medicineName,
+    //             "quantity": 1,
+    //             "unitPrice": medicineList.unitPrice,
+    //             "usageInstruction": medicineList.usageInstruction
+    //         }
+    //     }
+    //     cookie.save("pres", pres)
+    //     console.log(pres);
+    //     setPres(pres);
+    // }
+
+    const addMedicine = (selectedMedicine) => {
+        let pres = cookie.load("pres") || null;
+        if (pres === null) {
+            pres = {};
         }
-        else {
-            pres[medicineList.medicineId] = {
-                "medicineId": medicineList.medicineId,
-                "medicineName": medicineList.medicineName,
-                "quantity": 1,
-                "unitPrice": medicineList.unitPrice,
-                "usageInstruction": medicineList.usageInstruction
-            }
+
+        const medicineId = selectedMedicine.medicineId;
+        const medicineName = selectedMedicine.medicineName;
+
+        if (medicineId in pres) {
+            pres[medicineId].quantity += 1; // Tăng số lượng thuốc
+        } else {
+            pres[medicineId] = {
+                medicineId,
+                medicineName,
+                quantity: 1,
+                unitPrice: selectedMedicine.unitPrice,
+                usageInstruction: selectedMedicine.usageInstruction,
+            };
         }
-        cookie.save("pres", pres)
+        cookie.save("pres", pres);
         console.log(pres);
         setPres(pres);
-    }
+    };
 
     const handleMedicineSelect = (value) => {
         console.log(value);
@@ -432,11 +456,27 @@ const Prescription = () => {
                                                 return <>
                                                     <tr key={p.medicineId}>
                                                         <td>{p.medicineId}</td>
-                                                        <td>{p.medicineName}</td>
+                                                        <td style={{ width: "25%" }}>{p.medicineName}</td>
                                                         <td>
-                                                            <Form.Control type="number" value={pres[p.medicineId]["quantity"]}
-                                                                onChange={e => setPres({ ...pres, [p.medicineId]: { ...pres[p.medicineId], "quantity": parseInt(e.target.value) } })}
-                                                                min="0" max="50" />
+                                                            <Form.Control
+                                                                type="number"
+                                                                value={pres[p.medicineId].quantity}
+                                                                onChange={e => {
+                                                                    const medicineId = p.medicineId;
+                                                                    const updatedPres = {
+                                                                        ...pres,
+                                                                        [medicineId]: {
+                                                                            ...pres[medicineId],
+                                                                            quantity: parseInt(e.target.value),
+                                                                        },
+                                                                    };
+                                                                    setPres(updatedPres);
+                                                                    cookie.save("pres", updatedPres)
+                                                                    console.log(updatedPres);
+                                                                }}
+                                                                min="0"
+                                                                max="50"
+                                                            />
                                                         </td>
                                                         <td>{p.unitPrice} VNĐ</td>
                                                         <td>

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaCalendarCheck, FaInfoCircle, FaVideo } from "react-icons/fa";
+import { FaCalendarCheck, FaInfoCircle, FaVideo, FaCalendarPlus } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { MdEditCalendar, MdLogout, MdMessage } from "react-icons/md";
 import { useNavigate, NavLink } from "react-router-dom";
@@ -48,7 +48,7 @@ const DoctorMenu = () => {
                     onClick={() => handleItemClick("customschedule", "/customschedule")}
                     to="/customschedule"
                 >
-                    <MdEditCalendar className="icon" />
+                    <FaCalendarPlus className="icon" />
                     <span className="text">Lịch khám tùy chỉnh</span>
                 </NavLink>
                 <NavLink

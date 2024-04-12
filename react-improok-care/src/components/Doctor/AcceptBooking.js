@@ -7,7 +7,7 @@ import Apis, { authApi, endpoints } from "../../configs/Apis";
 
 const AcceptBooking = (props) => {
     const [allowBooking, setAllowBooking] = useState([]);
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const [booking, dispatchBooking] = useContext(BookingManagementContext)
     const [bookingInfo, setBookingInfo] = useState({
         bookingId: null,
@@ -76,7 +76,7 @@ const AcceptBooking = (props) => {
             setLoading(false);
             console.log("Đây là userInfo");
             console.log(res.data);
-            console.log(profileDoctor);
+            // console.log(profileDoctor);
         } catch (error) {
             console.log(error);
         }

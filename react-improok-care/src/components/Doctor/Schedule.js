@@ -235,7 +235,7 @@ const Schedule = () => {
             try {
                 setLoading(true);
                 const dateInput = document.getElementById('dateInput');
-                const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
+                const selectedDate = dateInput.value;
 
                 const formattedDate = new Date(selectedDate).toISOString().split('T')[0]; // Định dạng lại ngày thành "yyyy-MM-dd"
 
@@ -265,7 +265,6 @@ const Schedule = () => {
     }
 
     console.log(selectedTimeSlots);
-    // console.log(current_user.userId);
 
     return <>
         <div className="Schedule_Wrapper">
@@ -323,9 +322,6 @@ const Schedule = () => {
                         <div className="Create_Butt">
                             <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
                         </div>
-                    </div>
-                    <div>
-                        <h2 className="text-center">Đăng ký lịch khám bệnh tùy chỉnh</h2>
                     </div>
                 </div>
             </div>
