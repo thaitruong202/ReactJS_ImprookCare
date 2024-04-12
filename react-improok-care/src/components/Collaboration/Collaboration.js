@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Collaboration.css"
 import Apis, { endpoints } from "../../configs/Apis";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
-// import maledoctor from "../../assets/images/male-doctor.png"
-// import femaledoctor from "../../assets/images/female-doctor.png"
 import setting from "../../assets/images/settings.png"
 import timetable from "../../assets/images/timetable.png"
 import phonecall from "../../assets/images/phone-call.png"
@@ -148,9 +146,10 @@ const Collaboration = () => {
                                 <div className="Separate"></div>
                                 <div style={{ padding: '1.5rem' }}>
                                     <h5 style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>Đặt khám miễn phí</h5>
-                                    <h6 style={{ fontWeight: '400' }}>Bệnh nhân đặt khám miễn phí trên ứng dụng I'MPROOK CARE. Trả kết quả, đơn thuốc và nhắc tái khám.</h6>
+                                    <h6 style={{ fontWeight: '400' }}>Đặt khám miễn phí trên ứng dụng I'MPROOK CARE. Trả kết quả, đơn thuốc và nhắc tái khám.</h6>
                                 </div>
                             </div>
+                            <hr />
                         </div>
                     </div>
                 </div>

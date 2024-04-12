@@ -1,10 +1,10 @@
 import { FcSearch } from "react-icons/fc";
 import "./Home.css"
 import { Link } from "react-router-dom";
-import { FaBriefcaseMedical, FaEye, FaHandshake, FaHospital, FaStethoscope } from "react-icons/fa";
+import { FaBriefcaseMedical, FaEye, FaHandshake, FaHeartbeat, FaHospital, FaStethoscope } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { AiFillSecurityScan } from "react-icons/ai";
-import { MdAccessTimeFilled, MdPayments } from "react-icons/md";
+import { MdPayments } from "react-icons/md";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
 import doctor from "../../assets/images/stethoscope.png"
@@ -17,7 +17,6 @@ import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 const Home = () => {
     const responsive = {
         superLargeDesktop: {
-            // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
             items: 5
         },
@@ -59,7 +58,7 @@ const Home = () => {
                             <h5>Đặt khám với hơn 500 bác sĩ đã kết nối chính thức với I'MPROOK CARE để có số thứ tự và khung giờ khám trước</h5>
                         </div>
                         <div className="Home_Content_1_Content">
-                            <input type="text" placeholder="Nhập tên bác sĩ...." />
+                            <input type="text" placeholder="Nhập tên bác sĩ,..." />
                             <button><FcSearch /></button>
                         </div>
                     </div>
@@ -74,8 +73,7 @@ const Home = () => {
                             responsive={responsive}
                             sliderClass="Service_Carousel"
                             itemClass="custom-item"
-                            centerMode={true}
-                        >
+                            centerMode={true}>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
                                 <span>Đặt khám bác sĩ</span>
@@ -111,37 +109,12 @@ const Home = () => {
                             responsive={responsive}
                             sliderClass="Doctor_Carousel"
                             itemClass="custom-item"
-                            centerMode={true}
-                        >
-                            {/* <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div> */}
+                            centerMode={true}>
                             {Object.values(listDoctor).map(ld => {
                                 let url = `/doctor/${ld.profileDoctorId}`
                                 return (
                                     <div className="card">
-                                        <img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} style={{ width: '30%' }} alt="404" />
+                                        <div className="image-container"><img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} alt="404" /></div>
                                         <span style={{ fontSize: '1.2rem' }}><strong>{ld.name}</strong></span>
                                         <span>{ld.specialtyId.specialtyName}</span>
                                         <button className="Booking_Now"><Link to={url} style={{ color: 'white' }}>Đặt khám ngay</Link></button>
@@ -159,27 +132,26 @@ const Home = () => {
                             responsive={responsive}
                             sliderClass="Service_Carousel"
                             itemClass="custom-item"
-                            centerMode={true}
-                        >
+                            centerMode={true}>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa thần kinh</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa phụ sản</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa cơ - xương - khớp</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa nhi</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
+                                <span>Khoa răng - hàm - mặt</span>
                             </div>
                             <div className="card">
                                 <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
@@ -191,6 +163,47 @@ const Home = () => {
                         <div>
                             <h3>Tin tức</h3>
                             <div className="Split_Bar"></div>
+                            <div className="Home_News_Content">
+                                <div>
+                                    <div>
+                                        <div><img src="https://hoanmy.com/wp-content/uploads/2024/01/AdobeStock_181413640-scaled.jpeg" alt="Doctor" /></div>
+                                        <div className="brand_date">
+                                            <div className="brand_name">I'MPROOK</div>
+                                            <div className="date_news">22 Mar 2024</div>
+                                        </div>
+                                        <div className="separate"></div>
+                                        <div><span>Những biến chứng nguy hiểm của đái tháo đường và cách phòng ngừa</span></div>
+                                        <div><p>Thời gian gần đây, tỷ lệ người bệnh đái tháo đường đang gia tăng khá cao. Theo số liệu từ Hiệp hội Đái tháo đường Thế giới (International Diabetes Federation – IDF), vào năm 2019, thế giới có khoảng 463 triệu người mắc phải bệnh lý này. Trong số đó, ước tính hơn 4 triệu người liên quan đã tử vong.</p></div>
+                                    </div>
+                                    <button>Đọc thêm</button>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div><img src="https://hoanmy.com/wp-content/uploads/2024/01/Bac-si-thuc-hien-Sinh-thiet-bang-kim-duoi-huong-dan-cua-CT-min.png" alt="Doctor" /></div>
+                                        <div className="brand_date">
+                                            <div className="brand_name">I'MPROOK</div>
+                                            <div className="date_news">28 Mar 2024</div>
+                                        </div>
+                                        <div className="separate"></div>
+                                        <div><span>Bệnh ung thư có thể chữa khỏi hoàn toàn nếu phát hiện sớm</span></div>
+                                        <div><p>“Ung thư là căn bệnh đồng nghĩa với cái chết” – đó là suy nghĩ của nhiều người khi nhắc đến bệnh ung thư. Tuy nhiên, trên thực tế, có khoảng 80% người bệnh ung thư có thể hoàn toàn khỏi bệnh và không tái phát trong vòng 5 năm nếu phát hiện sớm và điều trị kịp thời. Hãy hiểu đúng về ung thư để chủ động đẩy lùi bệnh.</p></div>
+                                    </div>
+                                    <button>Đọc thêm</button>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div><img src="https://hoanmy.com/wp-content/uploads/2024/01/AdobeStock_590426101-scaled.jpeg" alt="Doctor" /></div>
+                                        <div className="brand_date">
+                                            <div className="brand_name">I'MPROOK</div>
+                                            <div className="date_news">29 Mar 2024</div>
+                                        </div>
+                                        <div className="separate"></div>
+                                        <div><span>Rối loạn tiền đình và những phương pháp điều trị hiệu quả</span></div>
+                                        <div><p>Rối loạn tiền đình là một trong những bệnh lý phổ biến hiện nay. Nhiều người thường bị chóng mặt, đau đầu, xoay tròn và mất thăng bằng… mà không hề biết đây là dấu hiệu của rối loạn tiền đình. Tình trạng này gây khó khăn khi sinh hoạt, tăng nguy cơ té ngã dẫn đến chấn thương và nhiều biến chứng nguy hiểm khác. Đó chính là lý do mà chúng ta cần tìm hiểu kỹ về căn bệnh này để có thể kịp thời chữa trị.</p></div>
+                                    </div>
+                                    <button>Đọc thêm</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="Home_Why">
@@ -199,20 +212,19 @@ const Home = () => {
                             <div className="Split_Bar"></div>
                             <ul>
                                 <li>
-                                    <div><FaUserDoctor /></div>
+                                    <div><FaUserDoctor className="why_icon" /></div>
                                     <span>Bác sĩ chuyên nghiệp</span>
+                                    <p>Hệ thống bệnh viện và phòng khám của chúng tôi sở hữu đội ngũ bác sĩ siêng năng và tận tụy, hết mình nâng cao sức khỏe cho cộng đồng Việt Nam.</p>
                                 </li>
                                 <li>
-                                    <div><FaBriefcaseMedical /></div>
-                                    <span>Dịch vụ đa dạng</span>
+                                    <div><FaBriefcaseMedical className="why_icon" /></div>
+                                    <span>Người bệnh là trung tâm</span>
+                                    <p>Cam kết đem lại sự xuất sắc trong chuyên môn y khoa, đồng thời cung cấp dịch vụ chăm sóc chất lượng cao, giá cả phải chăng, tập trung vào sức khỏe của người bệnh.</p>
                                 </li>
                                 <li>
-                                    <div><MdAccessTimeFilled /></div>
-                                    <span>Giờ giấc linh hoạt</span>
-                                </li>
-                                <li>
-                                    <div><MdPayments /></div>
-                                    <span>Thanh toán tiện lợi</span>
+                                    <div><FaHeartbeat className="why_icon" /></div>
+                                    <span>Chăm sóc tận tình</span>
+                                    <p>Các dịch vụ cấp cứu và điều trị 24/24 tại các bệnh viện đảm bảo người bệnh luôn luôm nhận được sự an tâm và các dịch vụ chăm sóc y tế kịp thời.</p>
                                 </li>
                             </ul>
                         </div>
@@ -223,20 +235,20 @@ const Home = () => {
                             <div className="Split_Bar"></div>
                             <ul>
                                 <li>
-                                    <div><FaStethoscope /></div>
+                                    <div><FaStethoscope className="stats_icon" /></div>
                                     <span>1.1M+ lượt khám</span>
                                 </li>
                                 <li>
-                                    <div><FaUserDoctor /></div>
+                                    <div><FaUserDoctor className="stats_icon" /></div>
                                     <span>500+ bác sĩ</span>
                                 </li>
                                 <li>
-                                    <div><FaHospital /></div>
+                                    <div><FaHospital className="stats_icon" /></div>
                                     <span>25+ bệnh viện</span>
                                 </li>
                                 <li>
-                                    <div><FaEye /></div>
-                                    <span>3200+ lượt truy cập</span>
+                                    <div><FaEye className="stats_icon" /></div>
+                                    <span>3.2K+ lượt truy cập</span>
                                 </li>
                             </ul>
                         </div>
@@ -273,7 +285,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams, Navigate } from "react-router-dom";
+import { useSearchParams, Navigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./Profile.css";
 import { Button, Form } from "react-bootstrap";
@@ -11,7 +11,7 @@ import profile404 from "../../assets/images/profile.png"
 import UserMenu from "../../layout/UserMenu/UserMenu";
 
 const Profile = () => {
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const [gender, setGender] = useState()
     const [loading, setLoading] = useState(true)
 
@@ -113,7 +113,7 @@ const Profile = () => {
 
     useEffect(() => {
         loadProfilePatient();
-    }, [current_user.userId])
+    }, [current_user?.userId])
 
     const viewProfilePatient = (evt, pp) => {
         evt.preventDefault();
@@ -165,7 +165,7 @@ const Profile = () => {
                     "personalAddress": personalAddress === undefined ? "" : personalAddress,
                     "email": email,
                     "relationship": relationship === undefined ? 'Khác' : relationship,
-                    "userId": current_user.userId
+                    "userId": current_user?.userId
                 });
                 console.log(res.data);
                 toast.success(res.data);
@@ -334,7 +334,7 @@ const Profile = () => {
                             {checkProfileInfo === true ?
                                 <>
                                     <section>
-                                        <div className="Profile_Right_Header"><h3 className="text-center text-success mb-4">Thông tin cá nhân</h3></div>
+                                        <div className="Profile_Right_Header"><h3 className="text-center mb-4">Thông tin cá nhân</h3></div>
                                         <div className="Profile_Right_Content">
                                             {profile === null ? <>
                                                 <div className="Profile_Null">
@@ -377,14 +377,9 @@ const Profile = () => {
                                                                 formattedBirthDate.setHours(formattedBirthDate.getHours() + 7);
                                                                 const formattedBirthDateTime = formattedBirthDate.toISOString().substring(0, 10);
                                                                 return (
-                                                                    <Form.Control
-                                                                        value={new Date(formattedBirthDateTime).toISOString().substring(0, 10)}
-                                                                        type="text"
-                                                                        disabled
-                                                                    />
+                                                                    <Form.Control value={new Date(formattedBirthDateTime).toISOString().substring(0, 10)} type="text" disabled />
                                                                 );
                                                             })()}
-
                                                         </>}
                                                     </div>
                                                     <div className="Change_Button">
@@ -396,7 +391,7 @@ const Profile = () => {
                                     </section>
                                 </> : <>
                                     <section>
-                                        <div className="Profile_Right_Header"><h3 className="text-center text-success mb-4">Thay đổi thông tin</h3></div>
+                                        <div className="Profile_Right_Header"><h3 className="text-center mb-4">Thay đổi thông tin</h3></div>
                                         <div className="Profile_Right_Content">
                                             <div className="Profile_Name">
                                                 <Form.Label style={{ width: "30%" }}>Họ và tên</Form.Label>
@@ -449,25 +444,19 @@ const Profile = () => {
                                                 </div>
                                             </div>
                                             <div className="Profile_Birthday">
-                                                <Form.Label style={{ width: "22%" }}>Ngày sinh</Form.Label>
-                                                <div className="Profile_Birthday_Tick">
-                                                    {profile.birthday === null ? <>
-                                                        <input
-                                                            type="date" id="dateInput" defaultValue={currentFormattedDate}
-                                                        />
-                                                    </> : <>
-                                                        {(() => {
-                                                            const formattedBirthDate = new Date(profile.birthday);
-                                                            formattedBirthDate.setHours(formattedBirthDate.getHours() + 7);
-                                                            const formattedBirthDateTime = formattedBirthDate.toISOString().substring(0, 10);
-                                                            return (
-                                                                <input
-                                                                    type="date" defaultValue={formattedBirthDateTime} id="dateInput"
-                                                                />
-                                                            );
-                                                        })()}
-                                                    </>}
-                                                </div>
+                                                <Form.Label style={{ width: "30%" }}>Ngày sinh</Form.Label>
+                                                {profile.birthday === null ? <>
+                                                    <input type="date" id="dateInput" defaultValue={currentFormattedDate} />
+                                                </> : <>
+                                                    {(() => {
+                                                        const formattedBirthDate = new Date(profile.birthday);
+                                                        formattedBirthDate.setHours(formattedBirthDate.getHours() + 7);
+                                                        const formattedBirthDateTime = formattedBirthDate.toISOString().substring(0, 10);
+                                                        return (
+                                                            <input type="date" defaultValue={formattedBirthDateTime} id="dateInput" />
+                                                        );
+                                                    })()}
+                                                </>}
                                             </div>
                                             <div className="Profile_Relationship">
                                                 <Form.Label style={{ width: "22%" }}>Mối quan hệ</Form.Label>
@@ -489,7 +478,7 @@ const Profile = () => {
                                 </>}
                         </> : <>
                             <section>
-                                <div className="Profile_Right_Header"><h3 className="text-left text-success mb-4">Thêm hồ sơ mới</h3></div>
+                                <div className="Profile_Right_Header"><h3 className="text-center mb-4">Thêm hồ sơ mới</h3></div>
                                 <div className="Profile_Right_Content">
                                     <Form onSubmit={addNewProfile}>
                                         <div className="Profile_Name">
@@ -536,12 +525,8 @@ const Profile = () => {
                                             </div>
                                         </div>
                                         <div className="Profile_Birthday">
-                                            <Form.Label style={{ width: "22%" }}>Ngày sinh</Form.Label>
-                                            <div className="Profile_Birthday_Tick">
-                                                <input
-                                                    type="date" id="birthdayInput" defaultValue={currentFormattedDate}
-                                                />
-                                            </div>
+                                            <Form.Label style={{ width: "30%" }}>Ngày sinh</Form.Label>
+                                            <input type="date" id="birthdayInput" defaultValue={currentFormattedDate} />
                                         </div>
                                         <div className="Profile_Relationship">
                                             <Form.Label style={{ width: "22%" }}>Mối quan hệ</Form.Label>

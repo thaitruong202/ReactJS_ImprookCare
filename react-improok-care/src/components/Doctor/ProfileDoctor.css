@@ -39,6 +39,7 @@ div.Profile_Doctor_Position {
     display: flex;
     gap: 3rem;
     margin-bottom: 1.25rem;
+    align-items: center;
 }
 
 div.Profile_Doctor_Gender_Tick {
@@ -99,4 +100,8 @@ div.Update_Button button:hover {
 
 div.Update_Button button:focus-visible {
     outline-offset: 1px;
+}
+
+div.Profile_Doctor_Right_Header>h2 {
+    color: #183e9f;
 }

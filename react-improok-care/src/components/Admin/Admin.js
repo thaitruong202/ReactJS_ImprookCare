@@ -21,7 +21,7 @@ import avatar_user from "../../assets/images/avatar-user.png"
 import medicine_image from "../../assets/images/medicine.png"
 import BarChart from "../../utils/Chart/BarChart";
 import PieChart from "../../utils/Chart/PieChart";
-
+import Pagination from "../../utils/Pagination"
 
 const Admin = () => {
     const [current_user,] = useContext(UserContext);
@@ -143,7 +143,6 @@ const Admin = () => {
 
     const tempStatsDataServicePriceUnpaid = [];
     const tempStatsLabelsServicePriceUnpaid = [];
-
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -1074,7 +1073,6 @@ const Admin = () => {
         }
     }
 
-
     let isLoad = 0;
 
     useEffect(() => {
@@ -1101,17 +1099,11 @@ const Admin = () => {
                             </div>
                         </div>
                         <div className="Stats_Revenue">
-                            {/* <div>
-                                <PolarChart labels={statsLabelsServicePriceAllPaid} titleLabel="Biểu đồ thống kê số tiền khám của bác sĩ" data={statsDataServicePriceAllPaid} />
-                            </div> */}
                             <div>
                                 <PieChart labels={statsLabelsMedicinePrescriptionAllPaid} titleLabel="Biểu đồ thống kê số tiền thuốc của bác sĩ" data={statsDataMedicinePrescriptionAllPaid} />
                             </div>
                         </div>
                     </div>
-                    {/* <div>
-                        <DoughnutChart labels={statsLabelsUserByBooking} titleLabel="Biểu đồ thống kê lượt Booking" data={statsDataUserByBooking} />
-                    </div> */}
                 </>
             case "alluser":
                 return <>
@@ -1134,8 +1126,8 @@ const Admin = () => {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
+                                        {/* <th>#</th> */}
                                         <th>Ảnh đại diện</th>
-                                        <th>#</th>
                                         <th>Họ và tên đệm</th>
                                         <th>Tên</th>
                                         <th>Tài khoản/Số điện thoại</th>
@@ -1147,13 +1139,13 @@ const Admin = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {Object.values(userList).map(u => {
+                                    {Object.values(userList).map((u, index) => {
                                         const dateTimeString = u.birthday;
                                         const formattedDate = moment(dateTimeString).format('DD-MM-YYYY');
                                         return <>
                                             <tr key={u.userId}>
-                                                <td style={{ width: '6rem', height: '6rem', borderRadius: "50%", overflow: 'hidden' }}><img src={u.avatar} alt="avatar" width={'100%'} height={'100%'} style={{ overFit: 'cover' }} /></td>
-                                                <td>{u.userId}</td>
+                                                {/* <td>{index + 1}</td> */}
+                                                <td><div style={{ width: "90px", height: "90px", overflow: 'hidden' }}><img src={u.avatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "45px" }} /></div></td>
                                                 <td>{u.lastname}</td>
                                                 <td>{u.firstname}</td>
                                                 <td>{u.username}</td>
@@ -1171,17 +1163,20 @@ const Admin = () => {
                                     })}
                                 </tbody>
                             </Table>
-                            <div className="Page_Nav">
+                            {/* <div className="Page_Nav">
                                 {pages.map((page) => (
                                     <button id={`${page}`} key={page} onClick={() => handlePageChange(page)}
                                         className={page === selectedPage ? 'active' : ''}>
                                         {page}
                                     </button>
                                 ))}
-                            </div>
-                            {/* <PageNavigation totalPages={totalPages} onClick={loadUserPage} /> */}
+                            </div> */}
+                            <Pagination pages={pages}
+                                selectedPage={selectedPage}
+                                handlePageChange={handlePageChange} />
                         </div>
                     </div>
+                    {/* <ListUser handleOptionClick={handleOptionClick} /> */}
                 </>
             case "adduser":
                 return <>
@@ -1278,7 +1273,7 @@ const Admin = () => {
                                     <Form.Label style={{ width: "16%" }}>Ảnh đại diện</Form.Label>
                                     <div className="Update_Avatar_Choice">
                                         <div>
-                                            {selectedImage ? <img src={selectedImage} alt="Selected" width={"60%"} /> : <img src={userUpdate.avatar} alt="Selected" width="60%" />}
+                                            {selectedImage ? <img src={selectedImage} alt="Selected" width={"100%"} /> : <img src={userUpdate.avatar} alt="Selected" width="100%" />}
                                         </div>
                                         <Form.Control type="File" ref={avatar} onChange={handleImageChange} width={'50%'} />
                                     </div>
@@ -1333,7 +1328,7 @@ const Admin = () => {
                                 <thead>
                                     <tr>
                                         <th>Ảnh đại diện</th>
-                                        <th>#</th>
+                                        {/* <th>#</th> */}
                                         <th>Tên thuốc</th>
                                         <th>Mô tả</th>
                                         <th>Thành phần</th>
@@ -1347,8 +1342,8 @@ const Admin = () => {
                                     {Object.values(medicineList).map(m => {
                                         return <>
                                             <tr key={m.medicineId}>
-                                                <td style={{ width: '6rem', height: '6rem', borderRadius: "50%", overflow: 'hidden' }}><img src={m.avatar} alt="avatar" width={'100%'} height={'100%'} style={{ overFit: 'cover' }} /></td>
-                                                <td>{m.medicineId}</td>
+                                                <td><div style={{ width: "90px", height: "90px", overflow: 'hidden' }}><img src={m.avatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} /></div></td>
+                                                {/* <td>{m.medicineId}</td> */}
                                                 <td>{m.medicineName}</td>
                                                 <td>{m.description}</td>
                                                 <td>{m.ingredients}</td>
@@ -1365,15 +1360,17 @@ const Admin = () => {
                                     })}
                                 </tbody>
                             </Table>
-                            <div className="Page_Nav">
+                            {/* <div className="Page_Nav">
                                 {medicinePages.map((page) => (
                                     <button id={`${page}`} key={page} onClick={() => handleMedicinePageChange(page)}
                                         className={page === selectedPage ? 'active' : ''}>
                                         {page}
                                     </button>
                                 ))}
-                            </div>
-                            {/* <PageNavigation totalPages={totalPages} onClick={loadUserPage} /> */}
+                            </div> */}
+                            <Pagination pages={medicinePages}
+                                selectedPage={selectedPage}
+                                handlePageChange={handleMedicinePageChange} />
                         </div>
                     </div>
                 </>
@@ -1408,7 +1405,7 @@ const Admin = () => {
                                             <td style={{ width: '20%' }}>{c.categoryId}</td>
                                             <td style={{ width: '40%' }}>
                                                 {editingIndex === index ? (
-                                                    <input
+                                                    <input className="category_name"
                                                         type="text"
                                                         defaultValue={c.categoryName}
                                                         onChange={(e) => setEditCategoryName(e.target.value)}
@@ -1438,15 +1435,17 @@ const Admin = () => {
                                     ))}
                                 </tbody>
                             </Table>
-                            <div className="Page_Nav">
+                            {/* <div className="Page_Nav">
                                 {categoryMedicinePages.map((page) => (
                                     <button id={`${page}`} key={page} onClick={() => handleCategoryMedicinePageChange(page)}
                                         className={page === selectedPage ? 'active' : ''}>
                                         {page}
                                     </button>
                                 ))}
-                            </div>
-                            {/* <PageNavigation totalPages={totalPages} onClick={loadUserPage} /> */}
+                            </div> */}
+                            <Pagination pages={categoryMedicinePages}
+                                selectedPage={selectedPage}
+                                handlePageChange={handleCategoryMedicinePageChange} />
                         </div>
                     </div>
                 </>
@@ -1546,12 +1545,12 @@ const Admin = () => {
                                     <Form.Label style={{ width: "16%" }}>Ảnh đại diện</Form.Label>
                                     <div className="Avatar_Choice">
                                         {selectedImage ? (
-                                            <div>
-                                                <img src={selectedImage} alt="Selected" width="100%" />
+                                            <div style={{ width: "140px", height: "140px", overflow: 'hidden', borderRadius: "70px" }}>
+                                                <img src={selectedImage} alt="Selected" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                                             </div>
                                         ) : (
-                                            <div>
-                                                <img src={newMedicine.avatar} alt="Selected" width="100%" />
+                                            <div style={{ width: "140px", height: "140px", overflow: 'hidden', borderRadius: "70px" }}>
+                                                <img src={newMedicine.avatar} alt="Selected" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                                             </div>
                                         )}
                                         <Form.Control type="File" ref={avatar} onChange={handleImageChange} width={'50%'} />
@@ -1617,14 +1616,17 @@ const Admin = () => {
                                                     })}
                                                 </tbody>
                                             </Table>
-                                            <div className="Page_Nav">
+                                            {/* <div className="Page_Nav">
                                                 {collabDoctorPages.map((page) => (
                                                     <button id={`${page}`} key={page} onClick={() => handleCollabDoctorPageChange(page)}
                                                         className={page === selectedPage ? 'active' : ''}>
                                                         {page}
                                                     </button>
                                                 ))}
-                                            </div>
+                                            </div> */}
+                                            <Pagination pages={collabDoctorPages}
+                                                selectedPage={selectedPage}
+                                                handlePageChange={handleCollabDoctorPageChange} />
                                         </div>
                                     </div>
                                 </>
@@ -1659,14 +1661,9 @@ const Admin = () => {
                                                     })}
                                                 </tbody>
                                             </Table>
-                                            <div className="Page_Nav">
-                                                {collabDoctorPages.map((page) => (
-                                                    <button id={`${page}`} key={page} onClick={() => handleCollabDoctorPageChange(page)}
-                                                        className={page === selectedPage ? 'active' : ''}>
-                                                        {page}
-                                                    </button>
-                                                ))}
-                                            </div>
+                                            <Pagination pages={collabDoctorPages}
+                                                selectedPage={selectedPage}
+                                                handlePageChange={handleCollabDoctorPageChange} />
                                         </div>
                                     </div>
                                 </>
@@ -1701,14 +1698,9 @@ const Admin = () => {
                                                     })}
                                                 </tbody>
                                             </Table>
-                                            <div className="Page_Nav">
-                                                {collabDoctorPages.map((page) => (
-                                                    <button id={`${page}`} key={page} onClick={() => handleCollabDoctorPageChange(page)}
-                                                        className={page === selectedPage ? 'active' : ''}>
-                                                        {page}
-                                                    </button>
-                                                ))}
-                                            </div>
+                                            <Pagination pages={collabDoctorPages}
+                                                selectedPage={selectedPage}
+                                                handlePageChange={handleCollabDoctorPageChange} />
                                         </div>
                                     </div>
                                 </>

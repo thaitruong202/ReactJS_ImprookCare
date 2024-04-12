@@ -24,6 +24,10 @@ div.Personal_Avatar {
 .user_Avatar {
     margin-left: auto;
     margin-right: auto;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 60px;
 }
 
 div.Personal_FirstName,
@@ -35,6 +39,7 @@ div.Personal_Birthday {
     display: flex;
     gap: 3rem;
     margin-bottom: 1.25rem;
+    align-items: center;
 }
 
 div.Personal_Gender_Tick {
@@ -43,8 +48,10 @@ div.Personal_Gender_Tick {
     height: 2.4rem;
 }
 
-div.Personal_Birthday_Tick {
+div.Personal_Birthday>input {
+    width: 100%;
     border: var(--bs-border-width) solid var(--bs-border-color);
+    padding: 0.25rem;
 }
 
 div.Change_Button {
@@ -90,4 +97,8 @@ div.Update_Button button:hover {
 
 div.Update_Button button:focus-visible {
     outline-offset: 1px;
+}
+
+div.PersonalPage_Right_Header>h2{
+    color: #183e9f;
 }

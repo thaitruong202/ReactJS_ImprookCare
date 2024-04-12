@@ -138,3 +138,7 @@ div.Payment_Button {
     margin: 0 2rem 2rem 2rem;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
 } */
+
+div.MedicalRecords_Right_Header>h3 {
+    color: #183e9f;
+}

@@ -12,7 +12,7 @@ import profile404 from "../../assets/images/profile.png"
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
 const ProfileDoctor = () => {
-    const [current_user, dispatch] = useContext(UserContext);
+    const [current_user,] = useContext(UserContext);
     const [loading, setLoading] = useState(true);
     const [profileDoctor, setProfileDoctor] = useState([]);
 
@@ -104,7 +104,7 @@ const ProfileDoctor = () => {
 
     const loadProfileDoctor = async () => {
         try {
-            let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user.userId))
+            let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId))
             setProfileDoctor(res.data);
             console.log(res.data);
         } catch (error) {
@@ -114,7 +114,7 @@ const ProfileDoctor = () => {
 
     useEffect(() => {
         loadProfileDoctor();
-    }, [current_user.userId])
+    }, [current_user?.userId])
 
     const viewProfileDoctor = (evt, pd) => {
         evt.preventDefault();
@@ -319,7 +319,7 @@ const ProfileDoctor = () => {
                             {checkProfileInfo === true ?
                                 <>
                                     <section>
-                                        <div className="Profile_Doctor_Right_Header"><h3 className="text-center text-success">Thông tin cá nhân của bác sĩ</h3></div>
+                                        <div className="Profile_Doctor_Right_Header"><h2 className="text-center mb-4">Thông tin cá nhân của bác sĩ</h2></div>
                                         <div className="Profile_Doctor_Right_Content">
                                             {profile === null ? <>
                                                 <div className="Profile_Null">
@@ -365,7 +365,7 @@ const ProfileDoctor = () => {
                                     </section>
                                 </> : <>
                                     <section>
-                                        <div className="Profile_Doctor_Right_Header"><h3 className="text-center text-success">Thay đổi thông tin</h3></div>
+                                        <div className="Profile_Doctor_Right_Header"><h2 className="text-center mb-4">Thay đổi thông tin</h2></div>
                                         <div className="Profile_Doctor_Right_Content">
                                             <div className="Profile_Doctor_Name">
                                                 <Form.Label style={{ width: "30%" }}>Tên</Form.Label>
@@ -428,7 +428,7 @@ const ProfileDoctor = () => {
                                 </>}
                         </> : <>
                             <section>
-                                <div className="Profile_Doctor_Right_Header"><h3 className="text-left text-success mb-4">Thêm hồ sơ mới</h3></div>
+                                <div className="Profile_Doctor_Right_Header"><h2 className="text-left mb-4">Thêm hồ sơ mới</h2></div>
                                 <div className="Profile_Doctor_Right_Content">
                                     <div className="Profile_Doctor_Name">
                                         <Form.Label style={{ width: "30%" }}>Tên</Form.Label>

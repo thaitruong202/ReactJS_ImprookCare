@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import "./Schedule.css";
+import "./DoctorTest.css";
 import { UserContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
@@ -7,8 +7,13 @@ import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
 import Spinner from "../../layout/Spinner";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-const Schedule = () => {
+const DoctorTest = () => {
     const [current_user,] = useContext(UserContext);
     const nav = useNavigate();
     const [minDate, setMinDate] = useState('');
@@ -18,20 +23,55 @@ const Schedule = () => {
     const [selectedProfileDoctorId, setSeletedProfileDoctorId] = useState();
     const [selectedTimeDistanceId, setSelectedTimeDistanceId] = useState('1');
     const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
-    // const [timeSlotCheck, setTimeSlotCheck] = useState([]);
+    const [timeSlotCheck, setTimeSlotCheck] = useState([]);
     const [checkSchedule, setCheckSchedule] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [scheduleDate, setScheduleDate] = useState(new Date().toISOString().split("T")[0]);
+    const [loading, setLoading] = useState(true);
+
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [value, setValue] = useState(dayjs('2022-04-17T15:30'));
+
+    const handleTimeChange = (time) => {
+        setSelectedTime(time);
+    };
 
     // const dateInput = document.getElementById('dateInput');
     // const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
 
     // const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
     useEffect(() => {
-        setLoading(true)
         const today = new Date().toISOString().split("T")[0];
         setMinDate(today);
-        const loadAll = async () => {
+    }, []);
+
+    useEffect(() => {
+        setLoading(true);
+        const loadTimeDistance = async () => {
+            try {
+                let res = await Apis.get(endpoints['time-distance']);
+                setTimeDistance(res.data);
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        const loadTimeSlot = async () => {
+            try {
+                let res = await Apis.get(endpoints['time-slot'](selectedTimeDistanceId));
+                setTimeSlot(res.data);
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        loadTimeDistance();
+        loadTimeSlot();
+        setLoading(false);
+    }, [selectedTimeDistanceId, current_user?.userId])
+
+    useEffect(() => {
+        const loadProfileDoctorByUserId = async () => {
             try {
                 let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId));
                 setProfileDoctorByUserId(res.data);
@@ -43,93 +83,12 @@ const Schedule = () => {
                     setSeletedProfileDoctorId(res.data[0].profileDoctorId)
                 }
                 console.log(res.data);
-                let ses = await Apis.get(endpoints['time-distance']);
-                setTimeDistance(ses.data);
-                console.log(ses.data);
-                let e = `${endpoints['check-timeslot-register'](selectedTimeDistanceId)}`
-                e += `?profileDoctorId=${res.data[0].profileDoctorId}&date=${scheduleDate}`
-                console.log(e)
-                let tes = await authApi().get(e)
-                setTimeSlot(tes.data);
-                console.log(tes.data);
             } catch (error) {
                 console.log(error);
             }
         }
-        loadAll()
-        setLoading(false)
-    }, [selectedProfileDoctorId, selectedTimeDistanceId, scheduleDate]);
-
-    // useEffect(() => {
-    //     setLoading(true);
-    //     const loadProfileDoctorByUserId = async () => {
-    //         try {
-    //             let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId));
-    //             setProfileDoctorByUserId(res.data);
-    //             if (res.data.length === 0) {
-    //                 toast.info("Vui lòng tạo hồ sơ trước khi đăng ký lịch khám!");
-    //                 nav('/profiledoctor');
-    //             }
-    //             if (res.data[0] !== undefined) {
-    //                 setSeletedProfileDoctorId(res.data[0].profileDoctorId)
-    //             }
-    //             console.log(res.data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     loadProfileDoctorByUserId();
-    //     const loadTimeDistance = async () => {
-    //         try {
-    //             let res = await Apis.get(endpoints['time-distance']);
-    //             setTimeDistance(res.data);
-    //             console.log(res.data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     const loadTimeSlotVer2 = async () => {
-    //         try {
-    //             // const dateInput = document.getElementById('dateInput');
-    //             // const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
-
-    //             // const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
-    //             // console.log(selectedTimeDistanceId)
-    //             console.log(typeof selectedDate)
-    //             let e = `${endpoints['check-timeslot-register'](selectedTimeDistanceId)}`
-    //             e += `?profileDoctorId=14&date=2024-04-07`
-    //             console.log(e)
-    //             let res = await authApi().get(e)
-    //             setTimeSlot(res.data);
-    //             console.log(res.data);
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     loadTimeDistance();
-    //     loadTimeSlotVer2();
-    //     setLoading(false);
-    // }, [selectedTimeDistanceId, current_user?.userId])
-
-    // useEffect(() => {
-    //     const loadProfileDoctorByUserId = async () => {
-    //         try {
-    //             let res = await Apis.get(endpoints['load-profile-doctor-by-userId'](current_user?.userId));
-    //             setProfileDoctorByUserId(res.data);
-    //             if (res.data.length === 0) {
-    //                 toast.info("Vui lòng tạo hồ sơ trước khi đăng ký lịch khám!");
-    //                 nav('/profiledoctor');
-    //             }
-    //             if (res.data[0] !== undefined) {
-    //                 setSeletedProfileDoctorId(res.data[0].profileDoctorId)
-    //             }
-    //             console.log(res.data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     loadProfileDoctorByUserId();
-    // }, [])
+        loadProfileDoctorByUserId();
+    }, [])
 
     // useEffect(() => {
     //     const scheduledCheck = async () => {
@@ -189,9 +148,9 @@ const Schedule = () => {
                         setSelectedTimeSlots([...selectedTimeSlots, timeSlotId]);
                     }
                 }
-                // else {
-                //     toast(res.data)
-                // }
+                else {
+                    toast(res.data)
+                }
                 setCheckSchedule(res.data);
                 console.log(res.data);
             } catch (error) {
@@ -212,11 +171,8 @@ const Schedule = () => {
         setSelectedTimeSlots([]);
     }
 
-    const scheduleDateChange = (date) => {
-        console.log(date);
-        const newDate = new Date(date).toISOString().split("T")[0];
-        console.log(newDate);
-        setScheduleDate(newDate);
+    const scheduleDateChange = () => {
+        setSelectedTimeSlots([]);
     }
     // const timeSlotClickCheck = (timeSlotId) => {
     //     const isSelected = selectedTimeSlots.includes(timeSlotId);
@@ -246,6 +202,7 @@ const Schedule = () => {
                 }
 
                 for (let i = 0; i < selectedTimeSlots.length; i++) {
+
                     const timeSlotId = selectedTimeSlots[i];
                     let res = await authApi().post(endpoints['add-schedule'], {
                         "profileDoctorId": selectedProfileDoctorId,
@@ -256,6 +213,7 @@ const Schedule = () => {
                 }
                 toast.success("Tạo lịch khám thành công!")
                 setLoading(false);
+
             } catch (error) {
                 console.log(error);
                 toast.error("Có lỗi xảy ra!")
@@ -282,7 +240,7 @@ const Schedule = () => {
                         <div className="Schedule_Option">
                             <div className="Schedule_Date_Option">
                                 <Form.Label style={{ width: "30%" }}>Chọn ngày</Form.Label>
-                                <input type="date" defaultValue={minDate} onChange={(e) => scheduleDateChange(e.target.value)} id="dateInput" min={minDate} />
+                                <input type="date" defaultValue={minDate} onChange={() => scheduleDateChange()} id="dateInput" min={minDate} />
                             </div>
                             <div className="Schedule_Profile_Option">
                                 <Form.Label style={{ width: "30%" }}>Chọn hồ sơ</Form.Label>
@@ -296,22 +254,48 @@ const Schedule = () => {
                                     {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
                                 </select>
                             </div>
+                            <div className="Schedule_Distance_Option">
+                                <Form.Label className="label" style={{ width: "30%" }}>Giờ bắt đầu</Form.Label>
+                                {/* <select className="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
+                                    {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
+                                </select> */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer components={['TimePicker', 'TimePicker']}>
+                                        <TimePicker
+                                            label="Uncontrolled picker"
+                                            defaultValue={dayjs('2022-04-17T15:30')}
+                                        />
+                                    </DemoContainer>
+                                </LocalizationProvider>
+                            </div>
+                            <div className="Schedule_Distance_Option">
+                                <Form.Label className="label" style={{ width: "30%" }}>Giờ kết thúc</Form.Label>
+                                {/* <select className="value" defaultValue={selectedTimeDistanceId} onChange={timeDistanceChange} onFocus={timeDistanceChange}>
+                                    {Object.values(timeDistance).map(td => <option key={td.timeDistanceId} value={td.timeDistanceId}>{td.timeDistanceValue}</option>)}
+                                </select> */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer components={['TimePicker', 'TimePicker']}>
+                                        <TimePicker
+                                            label="Uncontrolled picker"
+                                            defaultValue={dayjs('2022-04-17T15:30')}
+                                        />
+                                    </DemoContainer>
+                                </LocalizationProvider>
+                            </div>
                         </div>
                         <div className="Schedule_Timeslot">
+                            <h4 className="text-center">Danh sách lịch khám đã đăng ký</h4>
                             <div className="TimeSlot_Option">
                                 {loading === true ? <Spinner /> :
                                     <>
-                                        {Object.values(timeSlot).map((ts, index) => {
-                                            const timeBegin = new Date(ts.timeSlot.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                                            const timeEnd = new Date(ts.timeSlot.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                                            const isSelected = selectedTimeSlots.includes(ts.timeSlot.timeSlotId);
+                                        {Object.values(timeSlot).map(ts => {
+                                            const timeBegin = new Date(ts.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                            const timeEnd = new Date(ts.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                            const isSelected = selectedTimeSlots.includes(ts.timeSlotId);
                                             return (
-                                                <span key={ts.timeSlot.timeSlotId} value={ts.timeSlot.timeSlotId}
-                                                    style={{
-                                                        marginRight: '10px', background: ts.isRegister === true ? 'lightblue' : isSelected ? 'yellow' : 'white',
-                                                        cursor: ts.isRegister === true ? 'not-allowed' : 'pointer'
-                                                    }}
-                                                    onClick={(e) => scheduleCheck(e, ts.timeSlot.timeSlotId)}>
+                                                <span key={ts.timeSlotId} value={ts.timeSlotId}
+                                                    style={{ marginRight: '10px', background: isSelected ? 'lightblue' : 'white' }}
+                                                    onClick={(e) => scheduleCheck(e, ts.timeSlotId)}>
                                                     {timeBegin} - {timeEnd}
                                                 </span>
                                             );
@@ -320,12 +304,9 @@ const Schedule = () => {
                                 }
                             </div>
                         </div>
-                        <div className="Create_Butt">
-                            <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
-                        </div>
                     </div>
-                    <div>
-                        <h2 className="text-center">Đăng ký lịch khám bệnh tùy chỉnh</h2>
+                    <div className="Create_Butt">
+                        <button className="Create_Schedule_Butt" onClick={addSchedule}>Tạo lịch khám</button>
                     </div>
                 </div>
             </div>
@@ -333,4 +314,4 @@ const Schedule = () => {
     </>
 }
 
-export default Schedule;
+export default DoctorTest;
