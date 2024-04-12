@@ -132,7 +132,7 @@ const CustomSchedule = () => {
         setNote(event.title)
         setSelectedDate(event.start)
         setTimeE(event.end)
-        setTimeSlotId(event.timeSlotId)
+        setTimeSlotId(event.id)
     }
 
     const saveEvent = async () => {
@@ -151,8 +151,8 @@ const CustomSchedule = () => {
                 console.log(timeSlotId, selectedDate, timeE, note)
                 let res = await authApi().post(endpoints['edit-timeslot'], {
                     "timeSlotId": timeSlotId,
-                    "timeBegin": selectedDate,
-                    "timeEnd": timeE,
+                    "timeBegin": moment(selectedDate).format("YYYY-MM-DD HH:mm:ss"),
+                    "timeEnd": moment(timeE).format("YYYY-MM-DD HH:mm:ss"),
                     "note": note
                 })
                 console.log(res.data)
@@ -177,10 +177,10 @@ const CustomSchedule = () => {
                     "profileDoctorId": selectedProfileDoctorId
                 })
                 console.log(res.data)
-                setShowModal(false)
-                setNote('')
-                setSelectedEvent(null);
             }
+            setShowModal(false)
+            setNote('')
+            setSelectedEvent(null);
         }
     }
 

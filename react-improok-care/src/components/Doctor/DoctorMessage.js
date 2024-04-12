@@ -2,14 +2,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./DoctorMessage.css";
-import { Button, Form, Image } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import printer from "../../assets/images/printer.png"
-import profileicon from "../../assets/images/profile-icon.png"
 import profile404 from "../../assets/images/profile.png"
 import message from "../../assets/images/message.png"
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { MessageBox } from "react-chat-elements";
 import 'react-chat-elements/dist/main.css';
 import { over } from 'stompjs';
@@ -26,7 +23,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import { blue } from '@mui/material/colors';
 var stompClient = null;
@@ -35,8 +31,6 @@ function SimpleDialog(props) {
     const { onClose, selectedValue, open, onButtonClick } = props;
     const [current_user,] = useContext(UserContext);
     const [profileDoctor, setProfileDoctor] = useState([]);
-    const [selectedProfile, setSelectedProfile] = useState();
-    const [listMessage, setListMessage] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const handleClose = () => {
@@ -183,6 +177,9 @@ const DoctorMessage = () => {
         setSelectedProfile(pd.profileDoctorId, () => {
             console.log(selectedProfile);
         });
+        setProfile(pd.name, () => {
+            console.log(profile)
+        })
         const connect = () => {
             let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
             stompClient = over(Sock);
@@ -314,7 +311,7 @@ const DoctorMessage = () => {
     if (current_user === null)
         <Navigate to="/" />
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [selectedValue, setSelectedValue] = useState(1);
 
     const handleClickOpen = () => {
@@ -336,10 +333,10 @@ const DoctorMessage = () => {
                 </div>
                 <div className="Doctor_Message_Middle">
                     <div className="Doctor_Message_Middle_Header">
-                        <h3>Hồ sơ</h3>
                         <button onClick={handleClickOpen}>
                             <img src={current_user?.avatar} alt="avatar" style={{ width: "100%" }} />
                         </button>
+                        <h5>{profile}</h5>
                     </div>
                     <div style={{ marginRight: "2rem" }}>
                         <SimpleDialog
@@ -393,7 +390,7 @@ const DoctorMessage = () => {
                                         <div>
                                             {userSendMessageToDoctor.length === 0 ? <>
                                                 <div className="Doctor_Message_Null">
-                                                    <h5 className="mb-4">Chưa có tin nhắn nào</h5>
+                                                    <h5 className="mb-4">Bạn chưa nhắn tin với bệnh nhân nào</h5>
                                                     <img src={message} alt="Not found" width={'20%'} />
                                                 </div>
                                             </> :
@@ -450,49 +447,57 @@ const DoctorMessage = () => {
                                                             </Accordion>
                                                         </>
                                                     })} */}
-                                                    <div>
-                                                        <h4 className="text-center mb-3 mt-3">{patientName}</h4>
-                                                        <div className="Message_Content">
-                                                            {Object.values(listMessage).map((mes) => {
-                                                                return <>
-                                                                    {selectedProfile === mes.senderId ?
-                                                                        <MessageBox
-                                                                            key={mes.messageId}
-                                                                            position={'right'}
-                                                                            type={'text'}
-                                                                            avatar={null}
-                                                                            status={null}
-                                                                            text={mes.messageContent}
-                                                                            date={mes.createdDate}
-                                                                        /> :
-                                                                        <MessageBox
-                                                                            key={mes.messageId}
-                                                                            position={'left'}
-                                                                            type={'text'}
-                                                                            avatar={null}
-                                                                            status={null}
-                                                                            text={mes.messageContent}
-                                                                            date={mes.createdDate} />
-                                                                    }
-                                                                </>
-                                                            })}
+                                                    {listMessage.length === 0 ? <>
+                                                        <div className="Doctor_Message_Null">
+                                                            <h5 className="mb-4">Vui lòng chọn bệnh nhân để xem tin nhắn</h5>
+                                                            <img src={message} alt="Not found" width={'20%'} />
                                                         </div>
-                                                        <div className="Send_Message">
-                                                            <Form.Control className="mt-2" style={{ width: '100%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                                                    </> :
+                                                        <>
                                                             <div>
-                                                                <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                                                                {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
+                                                                <h4 className="text-center mb-3 mt-3">{patientName}</h4>
+                                                                <div className="Message_Content">
+                                                                    {Object.values(listMessage).map((mes) => {
+                                                                        return <>
+                                                                            {selectedProfile === mes.senderId ?
+                                                                                <MessageBox
+                                                                                    key={mes.messageId}
+                                                                                    position={'right'}
+                                                                                    type={'text'}
+                                                                                    avatar={null}
+                                                                                    status={null}
+                                                                                    text={mes.messageContent}
+                                                                                    date={mes.createdDate}
+                                                                                /> :
+                                                                                <MessageBox
+                                                                                    key={mes.messageId}
+                                                                                    position={'left'}
+                                                                                    type={'text'}
+                                                                                    avatar={null}
+                                                                                    status={null}
+                                                                                    text={mes.messageContent}
+                                                                                    date={mes.createdDate} />
+                                                                            }
+                                                                        </>
+                                                                    })}
+                                                                </div>
+                                                                <div className="Send_Message">
+                                                                    <Form.Control className="mt-2" style={{ width: '100%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                                                                    <div>
+                                                                        <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
+                                                                        {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    {/* <div className="Page_Nav">
-                                                        {prescriptionPages.map((page) => (
-                                                            <button id={`${page}`} key={page} onClick={() => handlePrescriptionPageChange(page)}
-                                                                className={page === selectedPage ? 'active' : ''}>
-                                                                {page}
-                                                            </button>
-                                                        ))}
-                                                    </div> */}
+                                                            {/* <div className="Page_Nav">
+                                                                {prescriptionPages.map((page) => (
+                                                                    <button id={`${page}`} key={page} onClick={() => handlePrescriptionPageChange(page)}
+                                                                        className={page === selectedPage ? 'active' : ''}>
+                                                                        {page}
+                                                                    </button>
+                                                                ))}
+                                                            </div> */}
+                                                        </>}
                                                 </>
                                             }
                                         </div>

@@ -1,12 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import "./Message.css";
 import { Form } from "react-bootstrap";
-import Apis, { authApi, endpoints } from "../../configs/Apis";
+import { authApi, endpoints } from "../../configs/Apis";
 // import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import printer from "../../assets/images/printer.png"
-import profileicon from "../../assets/images/profile-icon.png"
 import profile404 from "../../assets/images/profile.png"
 import message from "../../assets/images/message.png"
 import { MessageBox } from "react-chat-elements";
@@ -229,46 +228,54 @@ const Message = () => {
                                         <div>
                                             {doctorSendMessageToUser.length === 0 ? <>
                                                 <div className="Message_Null">
-                                                    <h5 className="mb-4">Chưa có tin nhắn nào</h5>
+                                                    <h5 className="mb-4">Bạn hiện chưa nhắn tin với bác sĩ nào</h5>
                                                     <img src={message} alt="Not found" width={'20%'} />
                                                 </div>
                                             </> :
                                                 <>
-                                                    <div>
-                                                        <h4 className="text-center mb-3 mt-3">{doctorName}</h4>
-                                                        <div className="Message_Content">
-                                                            {Object.values(listMessage).map((mes) => {
-                                                                return <>
-                                                                    {current_user?.userId === mes.senderId ?
-                                                                        <MessageBox
-                                                                            key={mes.messageId}
-                                                                            position={'right'}
-                                                                            type={'text'}
-                                                                            avatar={null}
-                                                                            status={null}
-                                                                            text={mes.messageContent}
-                                                                            date={mes.createdDate}
-                                                                        /> :
-                                                                        <MessageBox
-                                                                            key={mes.messageId}
-                                                                            position={'left'}
-                                                                            type={'text'}
-                                                                            avatar={null}
-                                                                            status={null}
-                                                                            text={mes.messageContent}
-                                                                            date={mes.createdDate} />
-                                                                    }
-                                                                </>
-                                                            })}
+                                                    {listMessage.length === 0 ? <>
+                                                        <div className="Message_Null">
+                                                            <h5 className="mb-4">Vui lòng chọn bác sĩ để xem tin nhắn</h5>
+                                                            <img src={message} alt="Not found" width={'20%'} />
                                                         </div>
-                                                        <div className="Send_Message">
-                                                            <Form.Control className="mt-2" style={{ width: '100%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                                                    </> :
+                                                        <>
                                                             <div>
-                                                                <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                                                                {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>}
+                                                                <h4 className="text-center mb-3 mt-3">{doctorName}</h4>
+                                                                <div className="Message_Content">
+                                                                    {Object.values(listMessage).map((mes) => {
+                                                                        return <>
+                                                                            {current_user?.userId === mes.senderId ?
+                                                                                <MessageBox
+                                                                                    key={mes.messageId}
+                                                                                    position={'right'}
+                                                                                    type={'text'}
+                                                                                    avatar={null}
+                                                                                    status={null}
+                                                                                    text={mes.messageContent}
+                                                                                    date={mes.createdDate}
+                                                                                /> :
+                                                                                <MessageBox
+                                                                                    key={mes.messageId}
+                                                                                    position={'left'}
+                                                                                    type={'text'}
+                                                                                    avatar={null}
+                                                                                    status={null}
+                                                                                    text={mes.messageContent}
+                                                                                    date={mes.createdDate} />
+                                                                            }
+                                                                        </>
+                                                                    })}
+                                                                </div>
+                                                                <div className="Send_Message">
+                                                                    <Form.Control className="mt-2" style={{ width: '100%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                                                                    <div>
+                                                                        <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
+                                                                        {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>}
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                        </>}
                                                 </>
                                             }
                                         </div>

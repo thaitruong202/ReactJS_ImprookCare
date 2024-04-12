@@ -41,7 +41,7 @@ div.UserMenu {
     display: flex;
     gap: 2rem;
     align-items: center;
-    justify-cotent: center;
+    /* justify-content: center; */
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     font-size: 16px;

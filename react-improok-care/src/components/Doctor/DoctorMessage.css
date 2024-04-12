@@ -18,7 +18,9 @@ div.Doctor_Message_Middle {
 
 div.Doctor_Message_Middle_Header {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    gap: 1.5rem;
+    align-items: center;
 }
 
 div.Doctor_Message_Middle_Header button {
