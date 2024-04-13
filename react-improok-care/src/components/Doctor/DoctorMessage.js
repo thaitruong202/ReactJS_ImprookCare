@@ -379,7 +379,7 @@ const DoctorMessage = () => {
                 <div className="Doctor_Message_Right">
                     <>
                         <section>
-                            <div className="Doctor_Message_Right_Header"><h2 className="text-center mb-4">Tin nhắn</h2></div>
+                            {/* <div className="Doctor_Message_Right_Header"><h2 className="text-center mb-4">Tin nhắn</h2></div> */}
                             <div className="Doctor_Message_Right_Content">
                                 {profileDoctor === null ? <>
                                     <div className="Doctor_Message_Null">
@@ -483,7 +483,7 @@ const DoctorMessage = () => {
                                                                     })}
                                                                 </div>
                                                                 <div className="Send_Message">
-                                                                    <Form.Control className="mt-2" style={{ width: '100%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                                                                    <Form.Control className="mt-2" style={{ width: '15%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
                                                                     <div>
                                                                         <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
                                                                         {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
