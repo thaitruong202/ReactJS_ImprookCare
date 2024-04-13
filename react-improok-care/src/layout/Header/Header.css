@@ -1,7 +1,3 @@
-.Title {
-    color: #183e9f;
-}
-
 /* div.Header {
     height: 100%;
     padding-top: 0.75rem;
@@ -53,7 +49,7 @@ div.Header1 .Link_Title::after {
     animation: toRight 1s linear forwards;
 }
 
-div.Header1 .Link_Title h2 {
+div.Header1 .Link_Title>h2 {
     background: #183e9f;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

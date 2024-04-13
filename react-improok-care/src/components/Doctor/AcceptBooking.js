@@ -76,7 +76,6 @@ const AcceptBooking = (props) => {
             setLoading(false);
             console.log("Đây là userInfo");
             console.log(res.data);
-            // console.log(profileDoctor);
         } catch (error) {
             console.log(error);
         }
