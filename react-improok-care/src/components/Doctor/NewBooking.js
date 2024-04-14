@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
+import ModalNotification from "../../layout/Modal";
 
 const NewBooking = (props) => {
     const [newBooking, setNewBooking] = useState([]);
-    const acceptBooking = (evt, bookingId) => {
-        evt.preventDefault();
+    const [showModal, setShowModal] = useState(false);
+    const [title, setTitle] = useState('');
+    const [bookingId, setBookingId] = useState(null);
+    const [bookingAction, setBookingAction] = useState(null);
+
+    const acceptBooking = (bookingId) => {
+        // evt.preventDefault();
         const process = async () => {
             try {
                 const requestBody = bookingId.toString()
@@ -15,11 +21,12 @@ const NewBooking = (props) => {
                         'Content-Type': 'text/plain'
                     }
                 })
+                loadNewBooking();
                 console.log(requestBody)
                 if (res.data === "Xác nhận thành công lịch đặt khám!") {
                     toast.success(res.data);
                     let mes = await Apis.post(endpoints['send-custom-email'], {
-                        "mailTo": "2051050549tuan@ou.edu.vn",
+                        "mailTo": "2051052125thai@ou.edu.vn",
                         "mailSubject": "Xác nhận lịch khám",
                         "mailContent": "Lịch khám của quý khách đã được xác nhận! Vui lòng đến trước giờ khám bệnh 15’"
                     })
@@ -36,8 +43,8 @@ const NewBooking = (props) => {
         process();
     }
 
-    const denyBooking = (evt, bookingId) => {
-        evt.preventDefault();
+    const denyBooking = (bookingId) => {
+        // evt.preventDefault();
 
         const process = async () => {
             try {
@@ -47,9 +54,9 @@ const NewBooking = (props) => {
                         'Content-Type': 'text/plain'
                     }
                 })
+                loadNewBooking();
                 if (res.data === "Từ chối thành công lịch đặt khám!") {
                     toast.success(res.data);
-                    // loadWaitingBooking();
                     let mes = await Apis.post(endpoints['send-custom-email'], {
                         "mailTo": "2051050549tuan@ou.edu.vn",
                         "mailSubject": "Từ chối lịch khám",
@@ -86,6 +93,13 @@ const NewBooking = (props) => {
         // loadWaitingBooking();
     }, [props.profileDoctorId])
 
+    const handleShowModal = (bookingId, modalTitle, action) => {
+        setBookingAction(action);
+        setBookingId(bookingId);
+        setTitle(modalTitle);
+        setShowModal(true);
+    };
+
     return <>
         <div>
             <div>
@@ -112,14 +126,26 @@ const NewBooking = (props) => {
                                     <td>{timeBegin} - {timeEnd}</td>
                                     <td>{nb[5]}</td>
                                     <td>
-                                        <Button style={{ marginRight: '.5rem' }} variant="success" onClick={(evt) => acceptBooking(evt, nb[0])}>Xác nhận</Button>
-                                        <Button variant="danger" onClick={(evt) => denyBooking(evt, nb[0])}>Từ chối</Button>
+                                        <Button style={{ marginRight: '.5rem' }} variant="success"
+                                            // onClick={(evt) => { acceptBooking(evt, nb[0]); setShowModal(true) }}
+                                            onClick={() => handleShowModal(nb[0], 'Bạn có chắc muốn xác nhận lịch khám?', "acceptBooking")}
+                                        >Xác nhận</Button>
+                                        <Button variant="danger"
+                                            // onClick={(evt) => denyBooking(evt, nb[0])}
+                                            onClick={() => handleShowModal(nb[0], 'Bạn có chắc muốn từ chối lịch khám?', "denyBooking")}
+                                        >Từ chối</Button>
                                     </td>
                                 </tr>
                             </>
                         })}
                     </tbody>
                 </Table>
+                <ModalNotification showModal={showModal}
+                    setShowModal={setShowModal}
+                    title={title}
+                    // acceptBooking={() => acceptBooking(bookingId)}
+                    // denyBooking={() => denyBooking(bookingId)}
+                    bookingAction={bookingAction === "acceptBooking" ? () => acceptBooking(bookingId) : bookingAction === 'denyBooking' ? () => denyBooking(bookingId) : null} />
             </div>
         </div>
     </>
