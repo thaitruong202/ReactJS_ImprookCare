@@ -11,7 +11,7 @@ var stompClient = null;
 
 const MessageChat = (props) => {
     const { onClose } = props;
-    const [current_user, dispatch] = useContext(UserContext)
+    const [current_user,] = useContext(UserContext)
     const [listMessage, setListMessage] = useState([]);
     const avatar = useRef();
 
@@ -19,8 +19,8 @@ const MessageChat = (props) => {
     const [loading, setLoading] = useState(false);
     const [messageContent, setMessageContent] = useState(null);
 
-    const [showChatRoom, setShowChatRoom] = useState(false);
-    const [disconnected, setDisconnected] = useState(false);
+    // const [showChatRoom, setShowChatRoom] = useState(false);
+    // const [disconnected, setDisconnected] = useState(false);
 
     const connect = () => {
         let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
@@ -100,7 +100,8 @@ const MessageChat = (props) => {
                 "profileDoctorId": props.profileDoctorId,
                 "userId": current_user.userId,
                 "senderId": current_user.userId,
-                "messageContent": messageContent
+                "messageContent": messageContent,
+                "avatar": avatar
             }
 
             // listMessage.push(myMess);

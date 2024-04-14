@@ -884,7 +884,6 @@ const Admin = () => {
                 console.log(medicineId);
                 let form = new FormData();
 
-                console.log("For nhé cả nhà")
                 let count = 0
                 for (let field in newMedicine)
                     if (field !== "createdDate" && field !== "updatedDate" && field !== "deletedDate" && field !== "active" && field !== "categoryId" && field !== "avatar" && field !== "medicineId") {
@@ -892,7 +891,6 @@ const Admin = () => {
                         form.append(field, newMedicine[field]);
                         console.log("Đây là count " + count++);
                     }
-                console.log("Bye for nhé cả nhà")
                 form.append("medicineId", medicineId);
 
                 if (avatar.current.files[0] !== undefined)

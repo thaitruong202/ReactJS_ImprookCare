@@ -25,6 +25,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import AddIcon from '@mui/icons-material/Add';
 import { blue } from '@mui/material/colors';
+import { MdRemoveCircle } from "react-icons/md";
 var stompClient = null;
 
 function SimpleDialog(props) {
@@ -111,6 +112,8 @@ const DoctorMessage = () => {
     const [patientName, setPatientName] = useState('');
 
     const [messageContent, setMessageContent] = useState(null);
+
+    const [selectImg, setSelectImg] = useState('')
 
     const avatar = useRef();
 
@@ -267,11 +270,14 @@ const DoctorMessage = () => {
             });
             console.log(res.data);
 
+            const imgMes = selectImg
+
             var myMess = {
                 "profileDoctorId": selectedProfile,
                 "userId": userId,
                 "senderId": selectedProfile,
-                "messageContent": messageContent
+                "messageContent": messageContent,
+                "avatar": imgMes
             }
 
             // listMessage.push(myMess);
@@ -300,6 +306,7 @@ const DoctorMessage = () => {
                 console.log("Chưa có kết nối")
 
             setMessageContent('');
+            setSelectImg('');
             // viewDoctorMessage(userId);
             setLoading(false);
         } catch (error) {
@@ -322,6 +329,19 @@ const DoctorMessage = () => {
         setOpen(false);
         setSelectedValue(value);
     };
+
+    const handleImgChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setSelectImg(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
 
     return <>
         <div className="Doctor_Message_Wrapper">
@@ -465,7 +485,7 @@ const DoctorMessage = () => {
                                                                                     key={mes.messageId}
                                                                                     position={'right'}
                                                                                     type={'text'}
-                                                                                    avatar={null}
+                                                                                    avatar={mes.avatar}
                                                                                     status={null}
                                                                                     text={mes.messageContent}
                                                                                     date={mes.createdDate}
@@ -474,7 +494,7 @@ const DoctorMessage = () => {
                                                                                     key={mes.messageId}
                                                                                     position={'left'}
                                                                                     type={'text'}
-                                                                                    avatar={null}
+                                                                                    avatar={mes.avatar}
                                                                                     status={null}
                                                                                     text={mes.messageContent}
                                                                                     date={mes.createdDate} />
@@ -483,21 +503,25 @@ const DoctorMessage = () => {
                                                                     })}
                                                                 </div>
                                                                 <div className="Send_Message">
-                                                                    <Form.Control className="mt-2" style={{ width: '15%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
-                                                                    <div>
-                                                                        <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                                                                        {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
+                                                                    {selectImg ? (
+                                                                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                                                                            <img src={selectImg} alt="Selected" width="20%" />
+                                                                            <div style={{ position: 'absolute', top: -10, right: 15, cursor: 'pointer' }} onClick={() => setSelectImg('')}>
+                                                                                <MdRemoveCircle size={25} color="grey" />
+                                                                            </div>
+                                                                        </div>
+                                                                    ) : (
+                                                                        <></>
+                                                                    )}
+                                                                    <div className="send_area">
+                                                                        <Form.Control className="mt-2" style={{ width: '15%', padding: '3px', margin: "8px" }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" onChange={handleImgChange} ref={avatar} />
+                                                                        <div>
+                                                                            <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
+                                                                            {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            {/* <div className="Page_Nav">
-                                                                {prescriptionPages.map((page) => (
-                                                                    <button id={`${page}`} key={page} onClick={() => handlePrescriptionPageChange(page)}
-                                                                        className={page === selectedPage ? 'active' : ''}>
-                                                                        {page}
-                                                                    </button>
-                                                                ))}
-                                                            </div> */}
                                                         </>}
                                                 </>
                                             }
