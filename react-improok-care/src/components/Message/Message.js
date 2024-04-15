@@ -13,28 +13,24 @@ import 'react-chat-elements/dist/main.css';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
 import UserMenu from "../../layout/UserMenu/UserMenu";
+import Spinner from "../../layout/Spinner"
+import { MdRemoveCircle } from "react-icons/md";
 var stompClient = null;
 
 const Message = () => {
     const [current_user,] = useContext(UserContext);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [profileDoctor, setProfileDoctor] = useState([]);
     const [doctorName, setDoctorName] = useState('');
     const [doctorId, setDoctorId] = useState();
     const [selectedProfile, setSelectedProfile] = useState();
     const [doctorSendMessageToUser, setDoctorSendMessageToUser] = useState([]);
     const [listMessage, setListMessage] = useState([]);
+    const [chatImg, setChatImg] = useState('');
 
     const [messageContent, setMessageContent] = useState(null);
 
     const avatar = useRef();
-
-    const [tempMessage, setTempMessage] = useState({
-        "profileDoctorId": null,
-        "userId": null,
-        "senderId": null,
-        "messageContent": null
-    })
 
     const connect = () => {
         let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
@@ -129,11 +125,15 @@ const Message = () => {
             });
             console.log(res.data);
 
+            // const imgMes = chatImg
+
             var myMess = {
                 "profileDoctorId": doctorId,
                 "userId": current_user?.userId,
                 "senderId": current_user?.userId,
-                "messageContent": messageContent
+                "messageContent": messageContent,
+                "avatar": res.data.avatar,
+                "isSeen": false
             }
 
             // listMessage.push(myMess);
@@ -161,6 +161,7 @@ const Message = () => {
             else
                 console.log("Chưa có kết nối")
             setMessageContent('');
+            setChatImg('');
             // viewDoctorMessage(userId);
             setLoading(false);
         } catch (error) {
@@ -168,6 +169,19 @@ const Message = () => {
             console.log(error);
         }
     };
+
+    const handleChatImgChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setChatImg(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
 
     if (current_user === null)
         <Navigate to="/" />
@@ -199,9 +213,9 @@ const Message = () => {
                                             <ul>
                                                 {Object.values(doctorSendMessageToUser).map(pd => {
                                                     return <>
-                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={() => { viewUserMessage(pd.profileDoctorId); setDoctorName(pd.name); setDoctorId(pd.profileDoctorId) }}>
-                                                            <img src={pd.userId.avatar} alt="profileicon" width={'20%'} />
-                                                            <li key={pd.profileDoctorId} value={pd.profileDoctorId}>{pd.name}</li>
+                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={() => { viewUserMessage(pd[0].profileDoctorId); setDoctorName(pd[0].name); setDoctorId(pd[0].profileDoctorId) }}>
+                                                            <img src={pd[0].userId.avatar} alt="profileicon" width={'20%'} />
+                                                            <li key={pd[0].profileDoctorId} value={pd[0].profileDoctorId}>{pd[0].name}</li>
                                                         </div>
                                                     </>
                                                 })}
@@ -216,7 +230,7 @@ const Message = () => {
                 <div className="Message_Right">
                     <>
                         <section>
-                            <div className="Message_Right_Header"><h3 className="text-center mb-4">Tin nhắn</h3></div>
+                            {/* <div className="Message_Right_Header"><h3 className="text-center mb-4">Tin nhắn</h3></div> */}
                             <div className="Message_Right_Content">
                                 {profileDoctor === null ? <>
                                     <div className="Message_Null">
@@ -250,7 +264,7 @@ const Message = () => {
                                                                                     key={mes.messageId}
                                                                                     position={'right'}
                                                                                     type={'text'}
-                                                                                    avatar={null}
+                                                                                    avatar={mes.avatar}
                                                                                     status={null}
                                                                                     text={mes.messageContent}
                                                                                     date={mes.createdDate}
@@ -259,7 +273,7 @@ const Message = () => {
                                                                                     key={mes.messageId}
                                                                                     position={'left'}
                                                                                     type={'text'}
-                                                                                    avatar={null}
+                                                                                    avatar={mes.avatar}
                                                                                     status={null}
                                                                                     text={mes.messageContent}
                                                                                     date={mes.createdDate} />
@@ -268,10 +282,22 @@ const Message = () => {
                                                                     })}
                                                                 </div>
                                                                 <div className="Send_Message">
-                                                                    <Form.Control className="mt-2" style={{ width: '100%' }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
-                                                                    <div>
-                                                                        <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                                                                        {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>}
+                                                                    {chatImg ? (
+                                                                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                                                                            <img src={chatImg} alt="Selected" width="20%" />
+                                                                            <div style={{ position: 'absolute', top: -10, right: 15, cursor: 'pointer' }} onClick={() => setChatImg('')}>
+                                                                                <MdRemoveCircle size={25} color="grey" />
+                                                                            </div>
+                                                                        </div>
+                                                                    ) : (
+                                                                        <></>
+                                                                    )}
+                                                                    <div className="send_chat">
+                                                                        <Form.Control className="mt-2" style={{ width: '15%', padding: '3px', margin: "8px" }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} onChange={handleChatImgChange} />
+                                                                        <div>
+                                                                            <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
+                                                                            {messageContent === null && chatImg === '' ? <button type="button">Gửi</button> : loading === true ? <Spinner /> : <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

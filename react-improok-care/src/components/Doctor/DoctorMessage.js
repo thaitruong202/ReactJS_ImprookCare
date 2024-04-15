@@ -12,6 +12,7 @@ import 'react-chat-elements/dist/main.css';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
+import Spinner from "../../layout/Spinner"
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -26,13 +27,14 @@ import Dialog from '@mui/material/Dialog';
 import AddIcon from '@mui/icons-material/Add';
 import { blue } from '@mui/material/colors';
 import { MdRemoveCircle } from "react-icons/md";
+
 var stompClient = null;
 
 function SimpleDialog(props) {
     const { onClose, selectedValue, open, onButtonClick } = props;
     const [current_user,] = useContext(UserContext);
     const [profileDoctor, setProfileDoctor] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const handleClose = () => {
         onClose(selectedValue);
@@ -236,7 +238,6 @@ const DoctorMessage = () => {
                 const res = await authApi().get(endpoints['get-message-for-all-view'](selectedProfile, userId));
                 setListMessage(res.data);
                 console.log(res.data);
-                console.log(listMessage);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -248,7 +249,6 @@ const DoctorMessage = () => {
     const addMessage = async (evt, userId) => {
         evt.preventDefault();
         setLoading(true);
-
         console.log(selectedProfile, userId, messageContent);
 
         let form = new FormData();
@@ -270,14 +270,15 @@ const DoctorMessage = () => {
             });
             console.log(res.data);
 
-            const imgMes = selectImg
+            // const imgMes = selectImg
 
             var myMess = {
                 "profileDoctorId": selectedProfile,
                 "userId": userId,
                 "senderId": selectedProfile,
                 "messageContent": messageContent,
-                "avatar": imgMes
+                "avatar": res.data.avatar,
+                "isSeen": false
             }
 
             // listMessage.push(myMess);
@@ -304,7 +305,6 @@ const DoctorMessage = () => {
             }
             else
                 console.log("Chưa có kết nối")
-
             setMessageContent('');
             setSelectImg('');
             // viewDoctorMessage(userId);
@@ -382,9 +382,9 @@ const DoctorMessage = () => {
                                             <ul>
                                                 {Object.values(userSendMessageToDoctor).map(usmtd => {
                                                     return <>
-                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={() => { viewDoctorMessage(usmtd.userId); setPatientName(`${usmtd.firstname} ${usmtd.lastname}`) }}>
-                                                            <div className="avatar_Cont"><img src={usmtd.avatar} alt="profileicon" /></div>
-                                                            <li key={usmtd.userId} value={usmtd.userId}>{usmtd.firstname} {usmtd.lastname}</li>
+                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={() => { viewDoctorMessage(usmtd[0].userId); setPatientName(`${usmtd[0].firstname} ${usmtd[0].lastname}`) }}>
+                                                            <div className="avatar_Cont"><img src={usmtd[0].avatar} alt="profileicon" /></div>
+                                                            <li key={usmtd[0].userId} value={usmtd[0].userId}>{usmtd[0].firstname} {usmtd[0].lastname}</li>
                                                         </div>
                                                     </>
                                                 })}
@@ -517,7 +517,7 @@ const DoctorMessage = () => {
                                                                         <Form.Control className="mt-2" style={{ width: '15%', padding: '3px', margin: "8px" }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" onChange={handleImgChange} ref={avatar} />
                                                                         <div>
                                                                             <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                                                                            {messageContent === null ? <button type="button">Gửi</button> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
+                                                                            {messageContent === null && selectImg === '' ? <button type="button">Gửi</button> : loading === true ? <Spinner /> : <button type="button" onClick={(e) => addMessage(e, selectedPatient)}>Gửi</button>}
                                                                         </div>
                                                                     </div>
                                                                 </div>

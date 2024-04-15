@@ -6,6 +6,8 @@ import { Form } from "react-bootstrap";
 import { authApi, endpoints } from "../../configs/Apis";
 import SockJS from "sockjs-client";
 import { over } from "stompjs";
+import { MdRemoveCircle } from "react-icons/md";
+import Spinner from "../../layout/Spinner"
 
 var stompClient = null;
 
@@ -18,6 +20,8 @@ const MessageChat = (props) => {
     const [doctorDetail, setDoctorDetail] = useState('');
     const [loading, setLoading] = useState(false);
     const [messageContent, setMessageContent] = useState(null);
+
+    const [image, setImage] = useState('');
 
     // const [showChatRoom, setShowChatRoom] = useState(false);
     // const [disconnected, setDisconnected] = useState(false);
@@ -96,12 +100,15 @@ const MessageChat = (props) => {
                 },
             });
 
+            console.log(res.data)
+
             var myMess = {
                 "profileDoctorId": props.profileDoctorId,
                 "userId": current_user.userId,
                 "senderId": current_user.userId,
                 "messageContent": messageContent,
-                "avatar": avatar
+                "avatar": res.data.avatar,
+                "isSeen": false
             }
 
             // listMessage.push(myMess);
@@ -122,6 +129,7 @@ const MessageChat = (props) => {
                 console.log("Chưa có kết nối")
             console.log(res.data);
             setMessageContent('');
+            setImage('');
             // viewUserMessage();
             setLoading(false);
         } catch (error) {
@@ -139,6 +147,19 @@ const MessageChat = (props) => {
         connect();
     }, [])
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setImage(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
     return <>
         <div>
             <div className="User_Message_Detail_Inner">
@@ -155,7 +176,7 @@ const MessageChat = (props) => {
                                     key={mes.messageId}
                                     position={'right'}
                                     type={'text'}
-                                    avatar={null}
+                                    avatar={mes.avatar}
                                     status={null}
                                     text={mes.messageContent}
                                     date={mes.createdDate}
@@ -164,7 +185,7 @@ const MessageChat = (props) => {
                                     key={mes.messageId}
                                     position={'left'}
                                     type={'text'}
-                                    avatar={null}
+                                    avatar={mes.avatar}
                                     status={null}
                                     text={mes.messageContent}
                                     date={mes.createdDate}
@@ -174,10 +195,20 @@ const MessageChat = (props) => {
                     })}
                 </div>
                 <div className="User_Send_Message">
-                    <Form.Control className="mt-2" accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} />
+                    {/* {image ? (
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <img src={image} alt="Selected" width="20%" />
+                            <div style={{ position: 'absolute', top: -10, right: 15, cursor: 'pointer' }} onClick={() => setImage('')}>
+                                <MdRemoveCircle size={25} color="grey" />
+                            </div>
+                        </div>
+                    ) : (
+                        <></>
+                    )} */}
+                    <Form.Control className="mt-2" accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} onChange={handleImageChange} />
                     <div>
                         <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                        <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>
+                        {messageContent === null && image === '' ? <button type="button">Gửi</button> : loading === true ? <Spinner /> : <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>}
                     </div>
                 </div>
             </div>

@@ -36,24 +36,27 @@ div.Message_Detail_Inner {
     padding: 2rem;
 }
 
-div.Send_Message {
+div.Send_Message>div.send_chat {
     margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
 }
 
-div.Send_Message>div {
+div.Send_Message>div>div {
+    width: 80%;
     display: flex;
     gap: 0.5rem;
-    margin-top: 0.5rem;
 }
 
-div.Send_Message>div>input {
+div.Send_Message>div.send_chat>div>input {
     width: 80%;
     height: 2.5rem;
     padding: 1rem;
     background: #EEEEEE;
 }
 
-div.Send_Message>div>button {
+div.Send_Message>div.send_chat>div>button {
     width: 20%;
     height: 2.5rem;
     outline: 0;
