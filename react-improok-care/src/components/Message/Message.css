@@ -102,3 +102,7 @@ div.Message_Null>h5 {
 div.Message_Right_Header>h3 {
     color: #183e9f;
 }
+
+.seen {
+    background: #EEEEEE;
+}

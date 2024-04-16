@@ -22,15 +22,22 @@ const Message = () => {
     const [loading, setLoading] = useState(false);
     const [profileDoctor, setProfileDoctor] = useState([]);
     const [doctorName, setDoctorName] = useState('');
-    const [doctorId, setDoctorId] = useState();
+    const [doctorId, setDoctorId] = useState(null);
     const [selectedProfile, setSelectedProfile] = useState();
     const [doctorSendMessageToUser, setDoctorSendMessageToUser] = useState([]);
     const [listMessage, setListMessage] = useState([]);
     const [chatImg, setChatImg] = useState('');
+    const messagesEndRef = useRef(null);
 
     const [messageContent, setMessageContent] = useState(null);
+    const [lastMessageId, setLastMessageId] = useState(null);
+    const [sender, setSender] = useState(null)
 
     const avatar = useRef();
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     const connect = () => {
         let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
@@ -69,12 +76,32 @@ const Message = () => {
         // })
     }
 
+    useEffect(() => {
+        const loadNewMessage = async () => {
+            try {
+                let res = await authApi().get(endpoints['get-doctor-send-message-to-user'](current_user?.userId))
+                setDoctorSendMessageToUser(res.data.content);
+                setLastMessageId(res.data.content[0][1]);
+                console.log(res.data.content);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        if (listMessage.length > 0) {
+            loadNewMessage()
+        }
+    }, [listMessage])
+
     const getDoctorSendMessageToUser = async () => {
         connect();
         try {
             let res = await authApi().get(endpoints['get-doctor-send-message-to-user'](current_user?.userId))
             setDoctorSendMessageToUser(res.data.content);
             console.log(res.data.content);
+            console.log(res.data.content[0][0].profileDoctorId);
+            setDoctorId(res.data.content[0][0].profileDoctorId);
+            let mes = await authApi().get(endpoints['get-message-for-all-view'](res.data.content[0][0].profileDoctorId, current_user?.userId));
+            setListMessage(mes.data);
         } catch (error) {
             console.log(error);
         }
@@ -113,7 +140,8 @@ const Message = () => {
         form.append("messageContent", messageContent);
 
         if (avatar.current.files[0] !== undefined && avatar !== null) {
-            form.append("avatar", avatar.current.files[0]);
+            // form.append("avatar", avatar.current.files[0]);
+            form.append("avatar", chatImg);
         } else {
             form.append("avatar", new Blob());
         }
@@ -170,6 +198,18 @@ const Message = () => {
         }
     };
 
+    const handleFocus = async () => {
+        try {
+            console.log(lastMessageId)
+            let res = await authApi().post(endpoints['seen-message'](lastMessageId))
+            console.log(res.data)
+            let mes = await authApi().get(endpoints['get-doctor-send-message-to-user'](current_user?.userId))
+            setDoctorSendMessageToUser(mes.data.content);
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
     const handleChatImgChange = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -182,6 +222,10 @@ const Message = () => {
             reader.readAsDataURL(file);
         }
     }
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [listMessage]);
 
     if (current_user === null)
         <Navigate to="/" />
@@ -210,12 +254,17 @@ const Message = () => {
                                         </div>
                                     </> : <>
                                         <div className="Profile_List_Info">
-                                            <ul>
+                                            <ul style={{ paddingLeft: "1rem", paddingRight: "0.75rem" }}>
+
                                                 {Object.values(doctorSendMessageToUser).map(pd => {
+                                                    const isSeen = pd[5] === false;
                                                     return <>
-                                                        <div className="Profile_List_Detail" value={selectedProfile} onClick={() => { viewUserMessage(pd[0].profileDoctorId); setDoctorName(pd[0].name); setDoctorId(pd[0].profileDoctorId) }}>
+                                                        <div className={`Profile_List_Detail ${isSeen && pd[2] !== current_user?.userId ? 'seen' : ''}`} value={selectedProfile} onClick={() => { viewUserMessage(pd[0].profileDoctorId); setDoctorName(pd[0].name); setDoctorId(pd[0].profileDoctorId) }}>
                                                             <img src={pd[0].userId.avatar} alt="profileicon" width={'20%'} />
-                                                            <li key={pd[0].profileDoctorId} value={pd[0].profileDoctorId}>{pd[0].name}</li>
+                                                            <div className="Profile_List_Detail_Mes_Info">
+                                                                <li key={pd[0].profileDoctorId} value={pd[0].profileDoctorId}>{pd[0].name}</li>
+                                                                <p>{pd[3]}</p>
+                                                            </div>
                                                         </div>
                                                     </>
                                                 })}
@@ -280,6 +329,7 @@ const Message = () => {
                                                                             }
                                                                         </>
                                                                     })}
+                                                                    <div ref={messagesEndRef}></div>
                                                                 </div>
                                                                 <div className="Send_Message">
                                                                     {chatImg ? (
@@ -293,10 +343,10 @@ const Message = () => {
                                                                         <></>
                                                                     )}
                                                                     <div className="send_chat">
-                                                                        <Form.Control className="mt-2" style={{ width: '15%', padding: '3px', margin: "8px" }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" ref={avatar} onChange={handleChatImgChange} />
+                                                                        <Form.Control className="mt-2" style={{ width: '15%', padding: '3px', margin: "8px" }} accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" key={chatImg} ref={avatar} onChange={handleChatImgChange} />
                                                                         <div>
-                                                                            <input type="text" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
-                                                                            {messageContent === null && chatImg === '' ? <button type="button">Gửi</button> : loading === true ? <Spinner /> : <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>}
+                                                                            <input type="text" value={messageContent} onFocus={handleFocus} onChange={(e) => setMessageContent(e.target.value)} placeholder="Nhập nội dung tin nhắn..." />
+                                                                            {chatImg === "" && messageContent === "" ? <button type="button">Gửi</button> : loading === true ? <Spinner /> : <button type="button" onClick={(e) => addMessage(e)}>Gửi</button>}
                                                                         </div>
                                                                     </div>
                                                                 </div>

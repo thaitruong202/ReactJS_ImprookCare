@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import "./Header.css"
 import { useNavigate, Link } from "react-router-dom"
 import { Dropdown, Image, NavDropdown } from "react-bootstrap";
@@ -11,7 +11,6 @@ const Header = () => {
     // const [currentUser,] = useContext(UserContext);
     const [user, dispatch] = useContext(UserContext);
     const nav = useNavigate();
-    const [loading, setLoading] = useState(true);
 
     const logout = () => {
         dispatch({
@@ -21,22 +20,22 @@ const Header = () => {
     }
 
     const handleItemClick = (to) => {
-        window.location.href = to;
+        nav(to);
     }
 
     const handleAdminClick = () => {
-        window.location.href = "/improok/admin";
+        nav("/admin")
     };
 
     const handleDoctorClick = () => {
-        window.location.href = "/improok/doctor";
+        nav("/doctor")
     };
 
     const menuItems = [
-        { to: "/improok", text: "Về trang chủ", icon: <FaHome /> },
-        { to: "/improok/personal", text: "Thông tin cá nhân", icon: <FaInfoCircle /> },
-        { to: "/improok/history", text: "Lịch sử khám bệnh", icon: <FaHistory /> },
-        { to: "/improok/changepassword", text: "Thay đổi mật khẩu", icon: <MdSecurity /> }
+        { to: "/", text: "Về trang chủ", icon: <FaHome /> },
+        { to: "/personal", text: "Thông tin cá nhân", icon: <FaInfoCircle /> },
+        { to: "/history", text: "Lịch sử khám bệnh", icon: <FaHistory /> },
+        { to: "/changepassword", text: "Thay đổi mật khẩu", icon: <MdSecurity /> }
     ];
 
     return (<>

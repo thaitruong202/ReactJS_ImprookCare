@@ -145,6 +145,7 @@ div.Doctor_Message_Right_Header>h2 {
     height: 50px;
     border-radius: 25px;
     margin-bottom: .5rem;
+    width: 20%;
 }
 
 .avatar_Cont img {
@@ -154,5 +155,22 @@ div.Doctor_Message_Right_Header>h2 {
 }
 
 div.Profile_List_Info>ul{
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
+}
+
+div.Profile_List_Detail_Mes_Info {
+    width: 75%;
+}
+
+div.Profile_List_Detail_Mes_Info>p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.seen {
+    background: #EEEEEE;
 }
