@@ -130,7 +130,7 @@ const Booking = () => {
                             {Object.values(specialty).map(s => {
                                 return <>
                                     <div className="Specialty_Item">
-                                        <img src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/308833424_3412840289039678_7588527159202436779_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeESeSkjjFrwi0j5G00D1nD2TXPvQH1oHStNc-9AfWgdK4S_Ru-9Y_OIPx-wimFYB2lnSevQgzJOC_Y-F8CJc9HO&_nc_ohc=bGOGlAnIkYYAX_U28sZ&_nc_ht=scontent.fsgn2-3.fna&oh=00_AfBvju079OsOeRgTfSSO55Ltq6hgS6S4we8Z7pLwrfmCFw&oe=65F8924D" alt="404" />
+                                        <img src={s.avatar} alt="404" />
                                         <span>{s.specialtyName}</span>
                                     </div>
                                 </>

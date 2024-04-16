@@ -35,6 +35,7 @@ const Home = () => {
     };
 
     const [listDoctor, setListDoctor] = useState([]);
+    const [listSpecialty, setListSpecialty] = useState([]);
     useEffect(() => {
         const loadProfileDoctor = async () => {
             try {
@@ -45,7 +46,17 @@ const Home = () => {
                 console.log(error);
             }
         }
+        const loadSpecialty = async () => {
+            try {
+                let res = await Apis.get(endpoints['specialty']);
+                setListSpecialty(res.data);
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
         loadProfileDoctor();
+        loadSpecialty();
     }, [])
 
     return (
@@ -133,30 +144,14 @@ const Home = () => {
                             sliderClass="Service_Carousel"
                             itemClass="custom-item"
                             centerMode={true}>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Khoa thần kinh</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Khoa phụ sản</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Khoa cơ - xương - khớp</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Khoa nhi</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Khoa răng - hàm - mặt</span>
-                            </div>
-                            <div className="card">
-                                <img src={doctor} alt="Doctor" style={{ width: "40%" }} />
-                                <span>Đặt khám bác sĩ</span>
-                            </div>
+                            {Object.values(listSpecialty).map(ls => {
+                                return (
+                                    <div className="card">
+                                        <div className="image-container"><img src={ls.avatar} alt="Specialty" /></div>
+                                        <span>{ls.specialtyName}</span>
+                                    </div>
+                                )
+                            })}
                         </Carousel>
                     </div>
                     <div className="Home_News">
