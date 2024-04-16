@@ -2,18 +2,18 @@ div.Doctor_Message {
     display: flex;
     max-width: 85rem;
     flex-wrap: wrap;
-    padding-top: 7rem;
+    /* padding-top: 7rem; */
     gap: 5rem;
     margin-left: auto;
     margin-right: auto;
 }
 
-div.Doctor_Message_Left {
+/* div.Doctor_Message_Left {
     width: 20%;
-}
+} */
 
 div.Doctor_Message_Middle {
-    width: 22%;
+    width: 30%;
 }
 
 div.Doctor_Message_Middle_Header {
@@ -60,7 +60,7 @@ div.Doctor_Message_Middle_Info>input {
 }
 
 div.Doctor_Message_Right {
-    width: 45%;
+    width: 60%;
 }
 
 .rce-mbox-left-notch {

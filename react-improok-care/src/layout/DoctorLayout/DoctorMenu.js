@@ -13,7 +13,7 @@ const DoctorMenu = () => {
 
     const handleItemClick = (item, path) => {
         setSelectedItem(item);
-        nav(path);
+        // nav(path);
     };
 
     const logout = (item) => {
@@ -29,8 +29,8 @@ const DoctorMenu = () => {
             <div>
                 <NavLink
                     activeClassName="active"
-                    onClick={() => handleItemClick("doctor", "/doctor")}
-                    to="/doctor"
+                    onClick={() => handleItemClick("doctorinformation", "/doctorinformation")}
+                    to="doctorinformation"
                 >
                     <FaInfoCircle className="icon" />
                     <span className="text">Thông tin cá nhân</span>
@@ -38,7 +38,7 @@ const DoctorMenu = () => {
                 <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("schedule", "/schedule")}
-                    to="/schedule"
+                    to="schedule"
                 >
                     <MdEditCalendar className="icon" />
                     <span className="text">Đăng ký lịch khám</span>
@@ -46,7 +46,7 @@ const DoctorMenu = () => {
                 <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("customschedule", "/customschedule")}
-                    to="/customschedule"
+                    to="customschedule"
                 >
                     <FaCalendarPlus className="icon" />
                     <span className="text">Lịch khám tùy chỉnh</span>
@@ -54,7 +54,7 @@ const DoctorMenu = () => {
                 <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("bookingmanagement", "/bookingmanagement")}
-                    to="/bookingmanagement"
+                    to="bookingmanagement"
                 >
                     <FaCalendarCheck className="icon" />
                     <span className="text">Lịch hẹn</span>
@@ -62,7 +62,7 @@ const DoctorMenu = () => {
                 <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("profiledoctor", "/profiledoctor")}
-                    to="/profiledoctor"
+                    to="profiledoctor"
                 >
                     <ImProfile className="icon" />
                     <span className="text">Hồ sơ</span>
@@ -70,7 +70,7 @@ const DoctorMenu = () => {
                 <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("doctormessage", "/doctormessage")}
-                    to="/doctormessage"
+                    to="doctormessage"
                 >
                     <MdMessage className="icon" />
                     <span className="text">Tin nhắn</span>
@@ -78,7 +78,7 @@ const DoctorMenu = () => {
                 <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("videocall", "/videocall")}
-                    to="/videocall"
+                    to="videocall"
                 >
                     <FaVideo className="icon" />
                     <span className="text">Cuộc họp</span>

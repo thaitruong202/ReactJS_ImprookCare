@@ -383,11 +383,11 @@ const DoctorMessage = () => {
     return <>
         <div className="Doctor_Message_Wrapper">
             <div className="Doctor_Message">
-                <div className="Doctor_Message_Left">
+                {/* <div className="Doctor_Message_Left">
                     <div className="Doctor_Message_Left_Content">
                         <DoctorMenu />
                     </div>
-                </div>
+                </div> */}
                 <div className="Doctor_Message_Middle">
                     <div className="Doctor_Message_Middle_Header">
                         <h5 style={{ width: "65%" }}>{profile}</h5>

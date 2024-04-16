@@ -143,11 +143,11 @@ const BookingManagement = () => {
     return <>
         <div className="BookingManagement_Wrapper">
             <div className="BookingManagement">
-                <div className="BookingManagement_Left">
+                {/* <div className="BookingManagement_Left">
                     <div className="BookingManagement_Left_Content">
                         <DoctorMenu />
                     </div>
-                </div>
+                </div> */}
                 <div className="BookingManagement_Right">
                     <div className="BookingManagement_Right_Header">
                         <h2 className="text-center mb-3">Quản lý lịch hẹn</h2>

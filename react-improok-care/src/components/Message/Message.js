@@ -4,7 +4,6 @@ import { UserContext } from "../../App";
 import "./Message.css";
 import { Form } from "react-bootstrap";
 import { authApi, endpoints } from "../../configs/Apis";
-// import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import printer from "../../assets/images/printer.png"
 import profile404 from "../../assets/images/profile.png"
 import message from "../../assets/images/message.png"
@@ -12,7 +11,6 @@ import { MessageBox } from "react-chat-elements";
 import 'react-chat-elements/dist/main.css';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
-import UserMenu from "../../layout/UserMenu/UserMenu";
 import Spinner from "../../layout/Spinner"
 import { MdRemoveCircle } from "react-icons/md";
 var stompClient = null;
@@ -233,11 +231,11 @@ const Message = () => {
     return <>
         <div className="Message_Wrapper">
             <div className="Message">
-                <div className="Message_Left">
+                {/* <div className="Message_Left">
                     <div className="Message_Left_Content">
                         <UserMenu />
                     </div>
-                </div>
+                </div> */}
                 <div className="Message_Middle">
                     <div className="Message_Middle_Header">
                         <h3>Tin nhắn</h3>
