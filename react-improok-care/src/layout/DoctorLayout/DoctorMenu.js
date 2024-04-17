@@ -83,6 +83,14 @@ const DoctorMenu = () => {
                     <FaVideo className="icon" />
                     <span className="text">Cuộc họp</span>
                 </NavLink>
+                <NavLink
+                    activeClassName="active"
+                    onClick={() => handleItemClick("zego", "/zego")}
+                    to="zego"
+                >
+                    <FaVideo className="icon" />
+                    <span className="text">Zego</span>
+                </NavLink>
                 <div onClick={logout}><MdLogout />Đăng xuất</div>
             </div>
         </div>

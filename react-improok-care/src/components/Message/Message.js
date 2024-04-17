@@ -79,7 +79,7 @@ const Message = () => {
             try {
                 let res = await authApi().get(endpoints['get-doctor-send-message-to-user'](current_user?.userId))
                 setDoctorSendMessageToUser(res.data.content);
-                setLastMessageId(res.data.content[0][1]);
+                // setLastMessageId(res.data.content[0][1]);
                 console.log(res.data.content);
             } catch (error) {
                 console.log(error);
@@ -98,6 +98,8 @@ const Message = () => {
             console.log(res.data.content);
             console.log(res.data.content[0][0].profileDoctorId);
             setDoctorId(res.data.content[0][0].profileDoctorId);
+            console.log(res.data.content[0][1].messageId);
+            setLastMessageId(res.data.content[0][1].messageId);
             let mes = await authApi().get(endpoints['get-message-for-all-view'](res.data.content[0][0].profileDoctorId, current_user?.userId));
             setListMessage(mes.data);
         } catch (error) {
@@ -105,7 +107,9 @@ const Message = () => {
         }
     }
 
-    const viewUserMessage = (profileDoctorId) => {
+    const viewUserMessage = (profileDoctorId, messageId) => {
+        console.log(messageId);
+        setLastMessageId(messageId);
         const process = async () => {
             try {
                 setLoading(true);
@@ -255,13 +259,13 @@ const Message = () => {
                                             <ul style={{ paddingLeft: "1rem", paddingRight: "0.75rem" }}>
 
                                                 {Object.values(doctorSendMessageToUser).map(pd => {
-                                                    const isSeen = pd[5] === false;
+                                                    const isSeen = pd[1].isSeen === false;
                                                     return <>
-                                                        <div className={`Profile_List_Detail ${isSeen && pd[2] !== current_user?.userId ? 'seen' : ''}`} value={selectedProfile} onClick={() => { viewUserMessage(pd[0].profileDoctorId); setDoctorName(pd[0].name); setDoctorId(pd[0].profileDoctorId) }}>
+                                                        <div className={`Profile_List_Detail ${isSeen && pd[1].senderId !== current_user?.userId ? 'seen' : ''}`} value={selectedProfile} onClick={() => { viewUserMessage(pd[0].profileDoctorId, pd[1].messageId); setDoctorName(pd[0].name); setDoctorId(pd[0].profileDoctorId) }}>
                                                             <img src={pd[0].userId.avatar} alt="profileicon" width={'20%'} />
                                                             <div className="Profile_List_Detail_Mes_Info">
                                                                 <li key={pd[0].profileDoctorId} value={pd[0].profileDoctorId}>{pd[0].name}</li>
-                                                                <p>{pd[3]}</p>
+                                                                <p>{pd[1].messageContent}</p>
                                                             </div>
                                                         </div>
                                                     </>

@@ -11,7 +11,6 @@ import { MessageBox } from "react-chat-elements";
 import 'react-chat-elements/dist/main.css';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
-import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 import Spinner from "../../layout/Spinner"
 
 import * as React from 'react';
@@ -178,7 +177,7 @@ const DoctorMessage = () => {
             try {
                 let res = await authApi().get(endpoints['get-user-send-message-to-doctor'](selectedProfile))
                 setUserSendMessageToDoctor(res.data.content);
-                setLastMessageId(res.data.content[0][1]);
+                // setLastMessageId(res.data.content[0][1]);
                 console.log(res.data.content);
             } catch (error) {
                 console.log(error);
@@ -228,7 +227,7 @@ const DoctorMessage = () => {
 
     const handleFocus = async () => {
         try {
-            console.log(lastMessageId)
+            console.log(lastMessageId);
             let res = await authApi().post(endpoints['seen-message'](lastMessageId))
             console.log(res.data)
             let mes = await authApi().get(endpoints['get-user-send-message-to-doctor'](selectedProfile))
@@ -259,7 +258,9 @@ const DoctorMessage = () => {
     //     process();
     // }
 
-    const viewDoctorMessage = (userId) => {
+    const viewDoctorMessage = (userId, messageId) => {
+        setLastMessageId(messageId);
+        console.log(messageId);
         setSelectedPatient(userId);
         const process = async () => {
             try {
@@ -436,7 +437,7 @@ const DoctorMessage = () => {
                                                             className={`Profile_List_Detail ${isSeen && usmtd[2] !== selectedProfile ? 'seen' : ''}`}
                                                             value={selectedProfile}
                                                             onClick={() => {
-                                                                viewDoctorMessage(usmtd[0].userId);
+                                                                viewDoctorMessage(usmtd[0].userId, usmtd[1]);
                                                                 setPatientName(`${usmtd[0].firstname} ${usmtd[0].lastname}`);
                                                             }}
                                                         >

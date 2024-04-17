@@ -36,7 +36,8 @@ import VideoCall from "./components/VideoCall/VideoCall";
 import NewBooking from "./components/Doctor/NewBooking";
 import AcceptBooking from "./components/Doctor/AcceptBooking";
 import DeclineBooking from "./components/Doctor/DeclineBooking";
-import DoctorInformation from "./components/Doctor/DoctorInformation"
+import DoctorInformation from "./components/Doctor/DoctorInformation";
+import ZegoVideo from "./components/ZegoVideo/ZegoVideo";
 import User from "./components/User/User";
 
 export const UserContext = createContext();
@@ -81,6 +82,7 @@ const App = () => {
               <Route path='profiledoctor' element={<ProfileDoctor />} />
               <Route path='doctormessage' element={<DoctorMessage />} />
               <Route path='videocall' element={<VideoCall />} />
+              <Route path='zego' element={<ZegoVideo />} />
             </Route>
           </Routes>
           <Footer />
