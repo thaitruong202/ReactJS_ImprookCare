@@ -39,6 +39,7 @@ import DeclineBooking from "./components/Doctor/DeclineBooking";
 import DoctorInformation from "./components/Doctor/DoctorInformation";
 import ZegoVideo from "./components/ZegoVideo/ZegoVideo";
 import User from "./components/User/User";
+import Search from "./components/Search/Search";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -48,6 +49,7 @@ const App = () => {
   const [user, dispatch] = useReducer(UserReducer, cookie.load("user") || null)
   const [booking, dispatchBooking] = useReducer(PrescriptionReducer, cookie.load("bookingInfo") || null)
   // const [prescriptionCounter, prescriptionDispatch] = useReducer(MyPrescriptionCounterReducer, 0)
+
   return (
     <UserContext.Provider value={[user, dispatch]}>
       <BookingManagementContext.Provider value={[booking, dispatchBooking]}>
@@ -67,6 +69,7 @@ const App = () => {
             <Route path='/booking/doctor/:profileDoctorId' element={<BookingDetail />} />
             <Route path='/paymentresult' element={<PaymentResult />} />
             <Route path='/prescription' element={<Prescription />} />
+            <Route path='/search' element={<Search />} />
             <Route path="/user" element={<User />}>
               <Route path='personal' element={<Personal />} />
               <Route path='appointment' element={<Appointment />} />

@@ -118,7 +118,7 @@ div.Send_Message>div.send_area>div>button {
 }
 
 div.Message_Content {
-    max-height: 22rem;
+    height: 22rem;
     overflow: auto;
 }
 

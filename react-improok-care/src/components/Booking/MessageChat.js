@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap";
 import { authApi, endpoints } from "../../configs/Apis";
 import SockJS from "sockjs-client";
 import { over } from "stompjs";
-import { MdRemoveCircle } from "react-icons/md";
 import Spinner from "../../layout/Spinner"
 
 var stompClient = null;
@@ -17,7 +16,6 @@ const MessageChat = (props) => {
     const [listMessage, setListMessage] = useState([]);
     const avatar = useRef();
 
-    const [doctorDetail, setDoctorDetail] = useState('');
     const [loading, setLoading] = useState(false);
     const [messageContent, setMessageContent] = useState("");
 

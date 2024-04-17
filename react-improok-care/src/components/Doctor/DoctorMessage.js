@@ -374,12 +374,12 @@ const DoctorMessage = () => {
     }
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     };
 
     useEffect(() => {
         scrollToBottom();
-    }, [listMessage]);
+    }, [listMessage, messagesEndRef]);
 
     return <>
         <div className="Doctor_Message_Wrapper">

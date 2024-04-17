@@ -29,12 +29,11 @@ const Message = () => {
 
     const [messageContent, setMessageContent] = useState(null);
     const [lastMessageId, setLastMessageId] = useState(null);
-    const [sender, setSender] = useState(null)
 
     const avatar = useRef();
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     };
 
     const connect = () => {
