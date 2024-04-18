@@ -177,7 +177,8 @@ const DoctorMessage = () => {
             try {
                 let res = await authApi().get(endpoints['get-user-send-message-to-doctor'](selectedProfile))
                 setUserSendMessageToDoctor(res.data.content);
-                // setLastMessageId(res.data.content[0][1]);
+                console.log(res.data.content[0][1]);
+                setLastMessageId(res.data.content[0][1]);
                 console.log(res.data.content);
             } catch (error) {
                 console.log(error);

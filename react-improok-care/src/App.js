@@ -68,8 +68,9 @@ const App = () => {
             <Route path='/doctor/:profileDoctorId' element={<BookingDoctor />} />
             <Route path='/booking/doctor/:profileDoctorId' element={<BookingDetail />} />
             <Route path='/paymentresult' element={<PaymentResult />} />
-            <Route path='/prescription' element={<Prescription />} />
+            {/* <Route path='/prescription' element={<Prescription />} /> */}
             <Route path='/search' element={<Search />} />
+            <Route path='/zego' element={<ZegoVideo />} />
             <Route path="/user" element={<User />}>
               <Route path='personal' element={<Personal />} />
               <Route path='appointment' element={<Appointment />} />
@@ -85,7 +86,8 @@ const App = () => {
               <Route path='profiledoctor' element={<ProfileDoctor />} />
               <Route path='doctormessage' element={<DoctorMessage />} />
               <Route path='videocall' element={<VideoCall />} />
-              <Route path='zego' element={<ZegoVideo />} />
+              <Route path='prescription' element={<Prescription />} />
+              {/* <Route path='zego' element={<ZegoVideo />} /> */}
             </Route>
           </Routes>
           <Footer />

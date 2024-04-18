@@ -78,7 +78,7 @@ const Message = () => {
             try {
                 let res = await authApi().get(endpoints['get-doctor-send-message-to-user'](current_user?.userId))
                 setDoctorSendMessageToUser(res.data.content);
-                // setLastMessageId(res.data.content[0][1]);
+                setLastMessageId(res.data.content[0][1]);
                 console.log(res.data.content);
             } catch (error) {
                 console.log(error);
@@ -258,13 +258,13 @@ const Message = () => {
                                             <ul style={{ paddingLeft: "1rem", paddingRight: "0.75rem" }}>
 
                                                 {Object.values(doctorSendMessageToUser).map(pd => {
-                                                    const isSeen = pd[1].isSeen === false;
+                                                    const isSeen = pd[5] === false;
                                                     return <>
-                                                        <div className={`Profile_List_Detail ${isSeen && pd[1].senderId !== current_user?.userId ? 'seen' : ''}`} value={selectedProfile} onClick={() => { viewUserMessage(pd[0].profileDoctorId, pd[1].messageId); setDoctorName(pd[0].name); setDoctorId(pd[0].profileDoctorId) }}>
+                                                        <div className={`Profile_List_Detail ${isSeen && pd[2] !== current_user?.userId ? 'seen' : ''}`} value={selectedProfile} onClick={() => { viewUserMessage(pd[0].profileDoctorId, pd[1]); setDoctorName(pd[0].name); setDoctorId(pd[0].profileDoctorId) }}>
                                                             <img src={pd[0].userId.avatar} alt="profileicon" width={'20%'} />
                                                             <div className="Profile_List_Detail_Mes_Info">
                                                                 <li key={pd[0].profileDoctorId} value={pd[0].profileDoctorId}>{pd[0].name}</li>
-                                                                <p>{pd[1].messageContent}</p>
+                                                                <p>{pd[3]}</p>
                                                             </div>
                                                         </div>
                                                     </>

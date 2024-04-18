@@ -75,22 +75,22 @@ const DoctorMenu = () => {
                     <MdMessage className="icon" />
                     <span className="text">Tin nhắn</span>
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("videocall", "/videocall")}
                     to="videocall"
                 >
                     <FaVideo className="icon" />
                     <span className="text">Cuộc họp</span>
-                </NavLink>
-                <NavLink
+                </NavLink> */}
+                {/* <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("zego", "/zego")}
                     to="zego"
                 >
                     <FaVideo className="icon" />
                     <span className="text">Zego</span>
-                </NavLink>
+                </NavLink> */}
                 <div onClick={logout}><MdLogout />Đăng xuất</div>
             </div>
         </div>
