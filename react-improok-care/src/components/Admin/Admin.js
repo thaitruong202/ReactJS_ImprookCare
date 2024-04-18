@@ -209,7 +209,6 @@ const Admin = () => {
     const loadUser = async () => {
         try {
             setLoading(true);
-
             let res = await Apis.get(endpoints['search-users'])
             setUserList(res.data.content);
             setTotalPages(res.data.totalPages);

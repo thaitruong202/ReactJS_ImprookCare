@@ -4,24 +4,35 @@ import { FcSearch } from "react-icons/fc";
 import { Accordion, Form } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
 import doctorprofile from "../../assets/images/doctor-profile-icon.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
+import Pagination from "../../utils/Pagination"
 
 const Search = () => {
     const [listSpecialty, setListSpecialty] = useState([]);
     const [listDoctor, setListDoctor] = useState([]);
+    const [count, setCount] = useState('');
+    const [q] = useSearchParams();
+    const nav = useNavigate();
+
+    const [totalPages, setTotalPages] = useState('1');
+    const [selectedPage, setSelectedPage] = useState('1');
+
+    const [keyword, setKeyword] = useState(q.get('kw'));
+
+    const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+    const handlePageChange = (pageNumber) => {
+        // TODO: Xử lý sự kiện khi người dùng chuyển trang
+        setSelectedPage(pageNumber);
+        if (selectedOption)
+            handleOptionChange(selectedOption, pageNumber)
+        else
+            lookUp(pageNumber);
+        console.log(`Chuyển đến trang ${pageNumber}`);
+    };
 
     useEffect(() => {
-        const loadProfileDoctor = async () => {
-            try {
-                let res = await Apis.get(endpoints['load-profile-doctor']);
-                setListDoctor(res.data);
-                console.log(res.data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
         const loadSpecialty = async () => {
             try {
                 let res = await Apis.get(endpoints['specialty']);
@@ -31,15 +42,92 @@ const Search = () => {
                 console.log(error);
             }
         }
-        loadProfileDoctor();
         loadSpecialty();
     }, [])
 
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const handleOptionChange = (option) => {
-        setSelectedOption(option);
+    // const handleOptionChange = (option) => {
+    //     setSelectedOption(option);
+    //     console.log(option);
+    // };
+
+    const handleOptionChange = async (option, pageNumber) => {
+        try {
+            setSelectedOption(option);
+            console.log(option)
+            let e = endpoints['search-function']
+            if (pageNumber !== null && !isNaN(pageNumber)) {
+                e += `?pageNumber=${pageNumber - 1}&`
+            }
+            else {
+                e += `?`
+            }
+            if (option !== null && option !== "all")
+                e += `?specialtyId=${option}`
+            else
+                e += ``
+            console.log(e)
+            let res = await Apis.get(e)
+            setListDoctor(res.data.content)
+            setTotalPages(res.data.totalPages)
+            setCount(res.data.totalElements)
+            console.log(res.data.content)
+        } catch (error) {
+            console.log(error)
+        }
     };
+
+    useEffect(() => {
+        handleOptionChange(selectedOption)
+    }, [selectedOption])
+
+    useEffect(() => {
+        // search()
+        lookUp()
+    }, [])
+
+    // const search = async () => {
+    //     try {
+    //         let kw = q.get("kw")
+    //         console.log(kw)
+    //         setKeyword(kw)
+    //         let e = endpoints['search-function']
+    //         if (kw !== "")
+    //             e += `?name=${kw}`
+    //         let res = await Apis.get(e)
+    //         setListDoctor(res.data.content)
+    //         setTotalPages(res.data.totalPages)
+    //         setCount(res.data.totalElements)
+    //         console.log(res.data.content)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
+    const lookUp = async (pageNumber) => {
+        try {
+            console.log(keyword);
+            nav(`/search?kw=${keyword}`)
+            let e = endpoints['search-function']
+            if (pageNumber !== null && !isNaN(pageNumber)) {
+                e += `?pageNumber=${pageNumber - 1}&`
+            }
+            else {
+                e += ``
+            }
+            if (keyword !== "")
+                e += `?name=${keyword}`
+            console.log(e);
+            let res = await Apis.get(e)
+            setListDoctor(res.data.content)
+            setTotalPages(res.data.totalPages)
+            setCount(res.data.totalElements)
+            console.log(res.data.content)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -47,8 +135,8 @@ const Search = () => {
                 <div className="search-header">
                     <div>
                         <div className="search-input">
-                            <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." />
-                            <button><FcSearch /></button>
+                            <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." defaultValue={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                            <button onClick={lookUp}><FcSearch /></button>
                         </div>
                     </div>
                 </div>
@@ -66,6 +154,12 @@ const Search = () => {
                                     </div>
                                     <div className="search-specialty-tick">
                                         <div>
+                                            <Form.Check
+                                                type="radio"
+                                                label="Tất cả"
+                                                checked={selectedOption === "all"}
+                                                onChange={() => handleOptionChange("all")}
+                                            />
                                             {Object.values(listSpecialty).map(ls => {
                                                 return (
                                                     <Form.Check
@@ -85,7 +179,7 @@ const Search = () => {
                     </div>
                     <div className="search-result">
                         <div className="search-count-result">
-                            <p>Đã tìm thấy <strong>10</strong> kết quả</p>
+                            <p>Đã tìm thấy <strong>{count}</strong> kết quả</p>
                         </div>
                         <div className="search-result-detail">
                             {Object.values(listDoctor).map(ld => {
@@ -103,6 +197,9 @@ const Search = () => {
                                 )
                             })}
                         </div>
+                        <Pagination pages={pages}
+                            selectedPage={selectedPage}
+                            handlePageChange={handlePageChange} />
                     </div>
                 </div>
                 <div className="search-footer">

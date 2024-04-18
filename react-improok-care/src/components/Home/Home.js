@@ -1,6 +1,6 @@
 import { FcSearch } from "react-icons/fc";
 import "./Home.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaBriefcaseMedical, FaEye, FaHandshake, FaHeartbeat, FaHospital, FaStethoscope } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { AiFillSecurityScan } from "react-icons/ai";
@@ -15,6 +15,10 @@ import Apis, { endpoints } from "../../configs/Apis";
 import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 
 const Home = () => {
+    const [searchKw, setSearchKw] = useState('');
+
+    const nav = useNavigate();
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -59,6 +63,11 @@ const Home = () => {
         loadSpecialty();
     }, [])
 
+    const search = (evt) => {
+        evt.preventDefault();
+        nav(`/search?kw=${searchKw}`)
+    }
+
     return (
         <>
             <div className="Home_Wrapper">
@@ -69,8 +78,8 @@ const Home = () => {
                             <h5>Đặt khám với hơn 500 bác sĩ đã kết nối chính thức với I'MPROOK CARE để có số thứ tự và khung giờ khám trước</h5>
                         </div>
                         <div className="Home_Content_1_Content">
-                            <input type="text" placeholder="Nhập tên bác sĩ,..." />
-                            <button><FcSearch /></button>
+                            <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." value={searchKw} onChange={(e) => setSearchKw(e.target.value)} />
+                            <button onClick={search}><FcSearch /></button>
                         </div>
                     </div>
                 </div>
@@ -128,7 +137,7 @@ const Home = () => {
                                         <div className="image-container"><img src={ld.userId?.avatar === null ? doctorprofile : ld.userId?.avatar} alt="404" /></div>
                                         <span style={{ fontSize: '1.2rem' }}><strong>{ld.name}</strong></span>
                                         <span>{ld.specialtyId.specialtyName}</span>
-                                        <button className="Booking_Now"><Link to={url} style={{ color: 'white' }}>Đặt khám ngay</Link></button>
+                                        <button className="Booking_Now"><Link to={url} style={{ color: 'white' }}>Đặt khám</Link></button>
                                     </div>
                                 )
                             })}
