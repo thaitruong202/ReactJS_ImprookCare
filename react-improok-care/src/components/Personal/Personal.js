@@ -11,7 +11,7 @@ import avatar_user from "../../assets/images/user.png"
 const Personal = () => {
     const [current_user, dispatch] = useContext(UserContext);
     const [current_avatar, setCurrent_avatar] = useState(current_user?.avatar);
-    const [current_birthday, setCurrent_birthday] = useState('');
+    // const [current_birthday, setCurrent_birthday] = useState('');
     const [birthday, setBirthday] = useState(null);
     const [gender, setGender] = useState(null);
     const avatar = useRef();

@@ -5,10 +5,10 @@ import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
 import maledoctor from "../../assets/images/male-doctor.png"
 import femaledoctor from "../../assets/images/female-doctor.png"
-import profileicon from "../../assets/images/profile-icon.png"
+// import profileicon from "../../assets/images/profile-icon.png"
 import { TiTick } from "react-icons/ti";
 import { FcSearch } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
@@ -21,6 +21,10 @@ const Booking = () => {
     const checkImageClick = () => {
         setImageClick(!imageClick);
     }
+
+    const [searchKw, setSearchKw] = useState('');
+
+    const nav = useNavigate();
 
     // useEffect(() => {
     //     const loadProfileDoctorById = async () => {
@@ -78,6 +82,11 @@ const Booking = () => {
         }
     };
 
+    const search = (evt) => {
+        evt.preventDefault();
+        nav(`/search?kw=${searchKw}`)
+    }
+
     return <>
         <div className="Booking_Wrapper">
             <div className="Booking_Content_1">
@@ -87,8 +96,8 @@ const Booking = () => {
                         <h5>Đặt khám với hơn 500 bác sĩ đã kết nối chính thức với I'MPROOK CARE để có số thứ tự và khung giờ khám trước</h5>
                     </div>
                     <div className="Booking_Content_1_Content">
-                        <input type="text" placeholder="Nhập tên bác sĩ,..." />
-                        <button><FcSearch /></button>
+                        <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." value={searchKw} onChange={(e) => setSearchKw(e.target.value)} />
+                        <button onClick={search}><FcSearch /></button>
                     </div>
                 </div>
             </div>

@@ -40,6 +40,17 @@ import DoctorInformation from "./components/Doctor/DoctorInformation";
 import ZegoVideo from "./components/ZegoVideo/ZegoVideo";
 import User from "./components/User/User";
 import Search from "./components/Search/Search";
+import ScrollToTop from "./utils/ScrollToTop";
+import Revenue from "./components/Admin/Revenue";
+import Collab from "./components/Admin/Collab";
+import AddMedicine from "./components/Admin/AddMedicine";
+import MedicineCategory from "./components/Admin/MedicineCategory";
+import AllMedicine from "./components/Admin/AllMedicine";
+import Overview from "./components/Admin/Overview";
+import AllUser from "./components/Admin/AllUser";
+import AddUser from "./components/Admin/AddUser";
+import UpdateUser from "./components/Admin/UpdateUser";
+import UpdateMedicine from "./components/Admin/UpdateMedicine";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -56,6 +67,7 @@ const App = () => {
         <BrowserRouter>
           <Header />
           <Routes>
+            {/* <Route element={<ScrollToTop />} /> */}
             <Route exact path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
@@ -68,7 +80,6 @@ const App = () => {
             <Route path='/doctor/:profileDoctorId' element={<BookingDoctor />} />
             <Route path='/booking/doctor/:profileDoctorId' element={<BookingDetail />} />
             <Route path='/paymentresult' element={<PaymentResult />} />
-            {/* <Route path='/prescription' element={<Prescription />} /> */}
             <Route path='/search' element={<Search />} />
             <Route path='/zego' element={<ZegoVideo />} />
             <Route path="/user" element={<User />}>
@@ -89,7 +100,20 @@ const App = () => {
               <Route path='prescription' element={<Prescription />} />
               {/* <Route path='zego' element={<ZegoVideo />} /> */}
             </Route>
+            <Route path='/admin' element={<Admin />} >
+              <Route path='overview' element={<Overview />} />
+              <Route path='alluser' element={<AllUser />} />
+              <Route path='adduser' element={<AddUser />} />
+              <Route path='updateuser/:userId' element={<UpdateUser />} />
+              <Route path='allmedicine' element={<AllMedicine />} />
+              <Route path='updatemedicine/:medicineId' element={<UpdateMedicine />} />
+              <Route path='medicinecategory' element={<MedicineCategory />} />
+              <Route path='addmedicine' element={<AddMedicine />} />
+              <Route path='collab' element={<Collab />} />
+              <Route path='revenue' element={<Revenue />} />
+            </Route>
           </Routes>
+          <ScrollToTop />
           <Footer />
           <ToastContainer />
         </BrowserRouter>

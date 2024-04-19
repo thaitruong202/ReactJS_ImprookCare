@@ -24,7 +24,7 @@ const Header = () => {
     }
 
     const handleAdminClick = () => {
-        nav("/admin")
+        nav("/admin/overview")
     };
 
     const handleDoctorClick = () => {
@@ -65,7 +65,7 @@ const Header = () => {
                         <li>
                             <Dropdown>
                                 <NavDropdown title='Hợp tác bác sĩ ' id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/improok/collaboration">Đăng ký</NavDropdown.Item>
+                                    <NavDropdown.Item href="/collaboration">Đăng ký</NavDropdown.Item>
                                 </NavDropdown>
                             </Dropdown>
                             <span>Đăng ký ngay</span>
@@ -97,7 +97,7 @@ const Header = () => {
                                     ))}
                                     {user.roleId.roleId === 1 ?
                                         <>
-                                            <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }} onClick={handleAdminClick}><Link to="/admin"><MdAdminPanelSettings />Quản trị</Link></NavDropdown.Item>
+                                            <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }} onClick={handleAdminClick}><Link to="/admin/overview"><MdAdminPanelSettings />Quản trị</Link></NavDropdown.Item>
                                             {/* <button class="Admin"><Link to="/admin">Quản trị</Link></button> */}
                                         </> :
                                         <>
