@@ -19,7 +19,7 @@ const Search = () => {
     const [totalPages, setTotalPages] = useState('1');
     const [selectedPage, setSelectedPage] = useState('1');
 
-    const [keyword, setKeyword] = useState(q.get('kw'));
+    const [keyword, setKeyword] = useState(q.get('q'));
 
     const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
     const handlePageChange = (pageNumber) => {
@@ -28,7 +28,7 @@ const Search = () => {
         if (selectedOption)
             handleOptionChange(selectedOption, pageNumber)
         else
-            lookUp(pageNumber);
+            search(pageNumber);
         console.log(`Chuyển đến trang ${pageNumber}`);
     };
 
@@ -55,20 +55,29 @@ const Search = () => {
     const handleOptionChange = async (option, pageNumber) => {
         try {
             setSelectedOption(option);
-            console.log(option)
+            console.log(option);
+            console.log(pageNumber);
+            // let kw = q.get("q")
+            let kw = keyword;
             let e = endpoints['search-function']
             if (pageNumber !== null && !isNaN(pageNumber)) {
-                e += `?pageNumber=${pageNumber - 1}&`
+                e += `?pageNumber=${pageNumber - 1}`
             }
             else {
-                e += `?`
+                e += ``
+            }
+            if (kw !== "" && kw !== null && kw !== undefined)
+                e += `&name=${kw}`
+            else {
+                e += ``
             }
             if (option !== null && option !== "all")
-                e += `?specialtyId=${option}`
+                e += `&specialtyId=${option}`
             else
                 e += ``
             console.log(e)
             let res = await Apis.get(e)
+            nav(`/search?q=${keyword}&specialtyId=${option}&page=${pageNumber}`)
             setListDoctor(res.data.content)
             setTotalPages(res.data.totalPages)
             setCount(res.data.totalElements)
@@ -79,47 +88,34 @@ const Search = () => {
     };
 
     useEffect(() => {
-        handleOptionChange(selectedOption)
+        handleOptionChange(selectedOption, 1)
     }, [selectedOption])
 
     useEffect(() => {
-        // search()
-        lookUp()
+        search(1)
     }, [])
 
-    // const search = async () => {
-    //     try {
-    //         let kw = q.get("kw")
-    //         console.log(kw)
-    //         setKeyword(kw)
-    //         let e = endpoints['search-function']
-    //         if (kw !== "")
-    //             e += `?name=${kw}`
-    //         let res = await Apis.get(e)
-    //         setListDoctor(res.data.content)
-    //         setTotalPages(res.data.totalPages)
-    //         setCount(res.data.totalElements)
-    //         console.log(res.data.content)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    const lookUp = async (pageNumber) => {
+    const search = async (pageNumber) => {
         try {
-            console.log(keyword);
-            nav(`/search?kw=${keyword}`)
+            nav(`/search?q=${keyword}`)
+            // let kw = q.get("q")
+            let kw = keyword;
+            console.log(kw)
+            setKeyword(kw)
             let e = endpoints['search-function']
             if (pageNumber !== null && !isNaN(pageNumber)) {
-                e += `?pageNumber=${pageNumber - 1}&`
+                e += `?pageNumber=${pageNumber - 1}`
             }
             else {
                 e += ``
             }
-            if (keyword !== "")
-                e += `?name=${keyword}`
-            console.log(e);
+            if (kw !== "" && kw !== null && kw !== undefined)
+                e += `&name=${kw}`
+            else {
+                e += ``
+            }
             let res = await Apis.get(e)
+            console.log(res.data.content)
             setListDoctor(res.data.content)
             setTotalPages(res.data.totalPages)
             setCount(res.data.totalElements)
@@ -129,14 +125,20 @@ const Search = () => {
         }
     }
 
+    const handleKeyPress = (event) => {
+        if (event.key === "Enter") {
+            search(1);
+        }
+    };
+
     return (
         <>
             <div className="search-wrapper">
                 <div className="search-header">
                     <div>
                         <div className="search-input">
-                            <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." defaultValue={keyword} onChange={(e) => setKeyword(e.target.value)} />
-                            <button onClick={lookUp}><FcSearch /></button>
+                            <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." defaultValue={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={(event) => handleKeyPress(event)} />
+                            <button onClick={() => search(1)}><FcSearch /></button>
                         </div>
                     </div>
                 </div>
@@ -158,7 +160,7 @@ const Search = () => {
                                                 type="radio"
                                                 label="Tất cả"
                                                 checked={selectedOption === "all"}
-                                                onChange={() => handleOptionChange("all")}
+                                                onChange={() => handleOptionChange("all", 1)}
                                             />
                                             {Object.values(listSpecialty).map(ls => {
                                                 return (
@@ -167,7 +169,7 @@ const Search = () => {
                                                         type="radio"
                                                         label={ls.specialtyName}
                                                         checked={selectedOption === ls.specialtyId}
-                                                        onChange={() => handleOptionChange(ls.specialtyId)}
+                                                        onChange={() => handleOptionChange(ls.specialtyId, 1)}
                                                     />
                                                 )
                                             })}

@@ -65,8 +65,14 @@ const Home = () => {
 
     const search = (evt) => {
         evt.preventDefault();
-        nav(`/search?kw=${searchKw}`)
+        nav(`/search?q=${searchKw}`)
     }
+
+    const handleKeyPress = (event) => {
+        if (event.key === "Enter") {
+            search(event)
+        }
+    };
 
     return (
         <>
@@ -78,7 +84,7 @@ const Home = () => {
                             <h5>Đặt khám với hơn 500 bác sĩ đã kết nối chính thức với I'MPROOK CARE để có số thứ tự và khung giờ khám trước</h5>
                         </div>
                         <div className="Home_Content_1_Content">
-                            <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." value={searchKw} onChange={(e) => setSearchKw(e.target.value)} />
+                            <input type="text" placeholder="Tìm theo bác sĩ, chuyên khoa, triệu chứng,.." value={searchKw} onChange={(e) => setSearchKw(e.target.value)} onKeyDown={(event) => handleKeyPress(event)} />
                             <button onClick={search}><FcSearch /></button>
                         </div>
                     </div>

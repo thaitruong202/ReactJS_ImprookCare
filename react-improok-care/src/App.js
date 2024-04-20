@@ -67,7 +67,6 @@ const App = () => {
         <BrowserRouter>
           <Header />
           <Routes>
-            {/* <Route element={<ScrollToTop />} /> */}
             <Route exact path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />

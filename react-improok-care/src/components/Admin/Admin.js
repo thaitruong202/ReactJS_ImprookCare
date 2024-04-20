@@ -125,19 +125,6 @@ const Admin = () => {
     const tempStatsDataServicePriceUnpaid = [];
     const tempStatsLabelsServicePriceUnpaid = [];
 
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            setSelectedImage(reader.result);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    };
-
     var isAdmin = 0;
     var isLogin = 0;
 
@@ -268,19 +255,6 @@ const Admin = () => {
         }
         loadMedicineCategories();
     }, [])
-
-    // const loadMedicineCategories = async () => {
-    //     try {
-    //         setLoading(true);
-    //         let res = await Apis.get(endpoints['medicine-categories'])
-    //         setCategories(res.data);
-    //         // setTotalPages(res.data.totalPages);
-    //         setLoading(false);
-    //         console.log(res.data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 
     const loadMedicineCategories = async () => {
         try {
@@ -425,10 +399,6 @@ const Admin = () => {
         loadCollabDoctor();
         loadCollabDoctorPage();
     }, [])
-
-    // useEffect(() => {
-
-    // }, [q])
 
     // const loadSearchUser = async () => {
     //     try {
