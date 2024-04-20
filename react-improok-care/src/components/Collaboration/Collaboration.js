@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Collaboration.css"
 import Apis, { endpoints } from "../../configs/Apis";
 import googleplay from "../../assets/images/googleplay.svg"
@@ -15,8 +15,11 @@ import { TiTick } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { connectNotification } from "../../utils/WebSocket";
+import { UserContext } from "../../App";
 
 const Collaboration = () => {
+    const [current_user,] = useContext(UserContext)
     const [name, setName] = useState();
     const [phonenumber, setPhonenumber] = useState();
     const [email, setEmail] = useState();
@@ -42,6 +45,13 @@ const Collaboration = () => {
         }
         process();
     }
+
+    useEffect(() => {
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
+    }, [])
 
     return <>
         <div className="CollabDoctor_Wrapper">

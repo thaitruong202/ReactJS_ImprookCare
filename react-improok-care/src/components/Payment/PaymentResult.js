@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import "./PaymentResult.css";
 import success from "../../assets/images/success.png"
 import { Badge } from "react-bootstrap";
+import { connectNotification } from "../../utils/WebSocket";
+import { UserContext } from "../../App";
 
 function PaymentResult() {
+    const [current_user,] = useContext(UserContext)
     const [transactionRef, setTransactionRef] = useState("");
     const [amount, setAmount] = useState("");
     const [orderInfo, setOrderInfo] = useState("");
@@ -43,6 +46,10 @@ function PaymentResult() {
         setBankCode(q.get("vnp_BankCode"));
         setPayDate(q.get("vnp_PayDate"));
         setTransactionStatus(q.get("vnp_TransactionStatus"));
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
     }, []);
 
     const validSignature = async () => {

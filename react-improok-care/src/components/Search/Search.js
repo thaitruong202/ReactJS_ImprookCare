@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import "./Search.css"
 import { FcSearch } from "react-icons/fc";
 import { Accordion, Form } from "react-bootstrap";
@@ -8,8 +8,11 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
 import Pagination from "../../utils/Pagination"
+import { connectNotification } from "../../utils/WebSocket";
+import { UserContext } from "../../App";
 
 const Search = () => {
+    const [current_user,] = useContext(UserContext);
     const [listSpecialty, setListSpecialty] = useState([]);
     const [listDoctor, setListDoctor] = useState([]);
     const [count, setCount] = useState('');
@@ -43,6 +46,10 @@ const Search = () => {
             }
         }
         loadSpecialty();
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
     }, [])
 
     const [selectedOption, setSelectedOption] = useState(null);

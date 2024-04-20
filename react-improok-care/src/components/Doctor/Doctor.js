@@ -4,6 +4,7 @@ import { UserContext } from "../../App";
 import "./Doctor.css";
 import { toast } from "react-toastify";
 import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
+import { connectNotification } from "../../utils/WebSocket";
 
 const Doctor = () => {
     const [current_user,] = useContext(UserContext);
@@ -33,6 +34,10 @@ const Doctor = () => {
     useEffect(() => {
         checkLogin(current_user)
         doctorAuth(current_user)
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
     }, [current_user])
 
     const nav = useNavigate();

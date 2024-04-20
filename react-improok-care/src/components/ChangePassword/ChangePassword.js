@@ -1,12 +1,13 @@
 import Spinner from "../../layout/Spinner";
 import { Form, InputGroup } from "react-bootstrap";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import "./ChangePassword.css";
 import { useNavigate } from "react-router-dom";
 import { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
 import { Key, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
+import { connectNotification } from "../../utils/WebSocket";
 
 const ChangePassword = () => {
     const [current_user,] = useContext(UserContext);
@@ -94,6 +95,13 @@ const ChangePassword = () => {
     const toggleShowConfirmPassword = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
+
+    useEffect(() => {
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
+    }, [])
 
     return <>
         <div className="ChangePassword_Wrapper">

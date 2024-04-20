@@ -21,8 +21,10 @@ import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
 import MessageChat from "./MessageChat";
 import Pagination from "../../utils/Pagination"
+import { connectNotification } from "../../utils/WebSocket";
 
 var stompClient = null;
+var clientStomp = null;
 
 const BookingDoctor = () => {
     const { profileDoctorId } = useParams();
@@ -32,6 +34,7 @@ const BookingDoctor = () => {
     const [comment, setComment] = useState([]);
     const [content, setContent] = useState(null);
     const [rating, setRating] = useState(1);
+    const [userDoctorId, setUserDoctorId] = useState(null)
 
     const [updateRating, setUpdateRating] = useState(null)
     const [updateContent, setUpdateContent] = useState(null)
@@ -59,7 +62,7 @@ const BookingDoctor = () => {
     // const [messageContent, setMessageContent] = useState(null);
 
     const avatar = useRef();
-    const updateAvatar = useRef();
+    // const updateAvatar = useRef();
 
     const connect = () => {
         let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/webSocket/');
@@ -104,20 +107,49 @@ const BookingDoctor = () => {
             setDisconnected(true);
     }
 
+    const connectNotification = () => {
+        let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/notification/');
+        clientStomp = over(Sock);
+        clientStomp.connect({}, onConnectedNotification, onErrorNotification);
+    }
+
+    const onConnectedNotification = () => {
+        clientStomp.subscribe('/user/' + current_user?.userId + '/notification', onPrivateNotification);
+        // stompClient.subscribe('/user/private', onPrivateMessage);
+    }
+
+    const onErrorNotification = (err) => {
+        console.log(err);
+    }
+
+    const onPrivateNotification = (payload) => {
+        console.log("ĐÂY LÀ PAYLOAD");
+        console.log(payload);
+        var payloadData = JSON.parse(payload.body);
+        console.log("PAYLOAD LÀM SẠCH");
+        console.log(payloadData);
+        // toast.info(payloadData.notificationContent)
+    }
+
     useEffect(() => {
         const loadProfileDoctorById = async () => {
             try {
                 setLoading(true);
                 let res = await Apis.get(endpoints['load-profile-doctor-by-Id'](profileDoctorId));
                 setDoctorDetail(res.data);
+                console.log(res.data.userId.userId);
+                setUserDoctorId(res.data.userId.userId);
                 console.log(res.data);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
             }
         }
-
         loadProfileDoctorById();
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
     }, [profileDoctorId])
 
     // const loadComment = async () => {
@@ -266,6 +298,7 @@ const BookingDoctor = () => {
             toast.success(res.data);
             setContent("");
             loadComment();
+            addCommentNotification(content)
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -357,6 +390,36 @@ const BookingDoctor = () => {
     //     const selectedRoleId = e.target.value;
     //     setSelectedRole(selectedRoleId);
     // }
+
+    const addCommentNotification = async (notificationContent) => {
+        try {
+            let res = await authApi().post(endpoints['add-notification'], {
+                "senderId": current_user?.userId,
+                "receiverId": userDoctorId,
+                "profileDoctorId": profileDoctorId,
+                "notificationTypeId": "2",
+                "notificationContent": "Bạn có một bình luận mới: " + notificationContent
+            })
+
+            var myNoti = {
+                "senderId": current_user?.userId,
+                "receiverId": userDoctorId,
+                "profileDoctorId": profileDoctorId,
+                "notificationTypeId": "1",
+                "notificationContent": "Bạn có một bình luận mới: " + notificationContent
+            }
+
+            if (clientStomp) {
+                console.log("OK STOMP")
+                clientStomp.send("/app/private-notification", {}, JSON.stringify(myNoti));
+            }
+            else
+                console.log("Chưa có kết nối")
+            console.log(res.status)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     let url = `/booking/doctor/${doctorDetail.profileDoctorId}`
 

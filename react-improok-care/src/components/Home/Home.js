@@ -10,12 +10,15 @@ import appstore from "../../assets/images/appstore.svg"
 import doctor from "../../assets/images/stethoscope.png"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Apis, { endpoints } from "../../configs/Apis";
 import doctorprofile from "../../assets/images/doctor-profile-icon.png"
+import { connectNotification } from "../../utils/WebSocket";
+import { UserContext } from "../../App";
 
 const Home = () => {
     const [searchKw, setSearchKw] = useState('');
+    const [current_user,] = useContext(UserContext);
 
     const nav = useNavigate();
 
@@ -61,6 +64,10 @@ const Home = () => {
         }
         loadProfileDoctor();
         loadSpecialty();
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
     }, [])
 
     const search = (evt) => {

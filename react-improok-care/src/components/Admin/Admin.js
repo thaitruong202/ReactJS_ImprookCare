@@ -24,6 +24,7 @@ import MedicineCategory from "./MedicineCategory";
 import AllMedicine from "./AllMedicine";
 import UpdateUser from "./UpdateUser";
 import UpdateMedicine from "./UpdateMedicine";
+import { connectNotification } from "../../utils/WebSocket";
 
 const Admin = () => {
     const [current_user,] = useContext(UserContext);
@@ -151,6 +152,10 @@ const Admin = () => {
     useEffect(() => {
         checkLogin(current_user)
         adminAuth(current_user)
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
     }, [current_user])
 
     const [open, setOpen] = useState(false);

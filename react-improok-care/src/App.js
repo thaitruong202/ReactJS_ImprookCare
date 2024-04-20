@@ -72,7 +72,7 @@ const App = () => {
             <Route path='/register' element={<Register />} />
             <Route path='/forgetpassword' element={<ForgetPassword />} />
             <Route path='/collaboration' element={<Collaboration />} />
-            <Route path='/admin' element={<Admin />} />
+            {/* <Route path='/admin' element={<Admin />} /> */}
             <Route path='/changepassword' element={<ChangePassword />} />
             <Route path='/phoneverification' element={<PhoneVerification />} />
             <Route path='/booking' element={<Booking />} />
@@ -81,7 +81,7 @@ const App = () => {
             <Route path='/paymentresult' element={<PaymentResult />} />
             <Route path='/search' element={<Search />} />
             <Route path='/zego' element={<ZegoVideo />} />
-            <Route path="/user" element={<User />}>
+            <Route path='/user' element={<User />}>
               <Route path='personal' element={<Personal />} />
               <Route path='appointment' element={<Appointment />} />
               <Route path='history' element={<History />} />

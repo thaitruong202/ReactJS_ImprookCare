@@ -12,6 +12,7 @@ import { Badge } from "react-bootstrap";
 import { FaAngleDown, FaArrowRight } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 import { toast } from "react-toastify";
+import { connectNotification } from "../../utils/WebSocket";
 
 const BookingDetail = () => {
     const [current_user,] = useContext(UserContext);
@@ -175,6 +176,13 @@ const BookingDetail = () => {
         }
         process();
     }
+
+    useEffect(() => {
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
+    }, [])
 
     return <>
         <div className="Booking_Detail_Wrapper">

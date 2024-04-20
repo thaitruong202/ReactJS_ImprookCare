@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Booking.css"
 import Apis, { endpoints } from "../../configs/Apis";
 import googleplay from "../../assets/images/googleplay.svg"
@@ -12,8 +12,11 @@ import { Link, useNavigate } from "react-router-dom";
 import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
+import { connectNotification } from "../../utils/WebSocket";
+import { UserContext } from "../../App";
 
 const Booking = () => {
+    const [current_user,] = useContext(UserContext)
     const [specialty, setSpecialty] = useState([]);
     const [imageClick, setImageClick] = useState(true);
     const [listDoctor, setListDoctor] = useState([]);
@@ -61,6 +64,10 @@ const Booking = () => {
         }
         loadProfileDoctor();
         loadSpecialty();
+        if (current_user && current_user.userId) {
+            console.log(current_user.userId);
+            connectNotification(current_user.userId);
+        }
     }, [])
 
     const responsive = {
