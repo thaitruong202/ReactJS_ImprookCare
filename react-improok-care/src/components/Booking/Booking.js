@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Booking.css"
 import Apis, { endpoints } from "../../configs/Apis";
 import googleplay from "../../assets/images/googleplay.svg"
@@ -12,8 +12,12 @@ import { Link, useNavigate } from "react-router-dom";
 import doctorprofile from "../../assets/images/doctor-profile-icon.png"
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
+import { UserContext, WebSocketContext } from "../../App";
+import { reConnectNotification } from "../../utils/WebSocket";
 
 const Booking = () => {
+    const [current_user,] = useContext(UserContext)
+    const [webSocket,] = useContext(WebSocketContext);
     const [specialty, setSpecialty] = useState([]);
     const [imageClick, setImageClick] = useState(true);
     const [listDoctor, setListDoctor] = useState([]);
@@ -61,6 +65,8 @@ const Booking = () => {
         }
         loadProfileDoctor();
         loadSpecialty();
+        console.log("Kết nối booking", webSocket);
+        reConnectNotification(false, current_user.userId)
     }, [])
 
     const responsive = {

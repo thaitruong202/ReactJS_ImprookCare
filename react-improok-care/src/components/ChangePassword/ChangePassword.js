@@ -1,6 +1,6 @@
 import Spinner from "../../layout/Spinner";
 import { Form, InputGroup } from "react-bootstrap";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import "./ChangePassword.css";
 import { useNavigate } from "react-router-dom";

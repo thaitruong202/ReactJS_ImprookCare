@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import "./User.css";
 import UserMenu from "../../layout/UserMenu/UserMenu";
+import { UserContext } from "../../App";
 
 const User = () => {
+    const [current_user,] = useContext(UserContext);
     return <>
         <div className="User_Wrapper">
             <div className="User">

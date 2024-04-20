@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import "./PaymentResult.css";
 import success from "../../assets/images/success.png"
 import { Badge } from "react-bootstrap";
+import { UserContext } from "../../App";
 
 function PaymentResult() {
+    const [current_user,] = useContext(UserContext)
     const [transactionRef, setTransactionRef] = useState("");
     const [amount, setAmount] = useState("");
     const [orderInfo, setOrderInfo] = useState("");
