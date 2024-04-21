@@ -14,6 +14,7 @@ import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import { UserContext, WebSocketContext } from "../../App";
 import { reConnectNotification } from "../../utils/WebSocket";
+import cookie from "react-cookies";
 
 const Booking = () => {
     const [current_user,] = useContext(UserContext)
@@ -65,8 +66,13 @@ const Booking = () => {
         }
         loadProfileDoctor();
         loadSpecialty();
-        console.log("Kết nối booking", webSocket);
-        reConnectNotification(false, current_user.userId)
+        console.log("Kết nối booking", cookie.load("socket"));
+        let client = cookie.load("socket")
+        console.log("Client", client?.connected);
+        if (current_user && client) {
+            cookie.remove("socket");
+            reConnectNotification(false, current_user?.userId);
+        }
     }, [])
 
     const responsive = {

@@ -73,6 +73,7 @@ const Login = () => {
                     "type": "login",
                     "payload": connectNoti
                 });
+
                 setLoading(false)
                 console.log("Login", connectNoti);
                 if (res.status === 200)

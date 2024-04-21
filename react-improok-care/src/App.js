@@ -52,6 +52,7 @@ import AddUser from "./components/Admin/AddUser";
 import UpdateUser from "./components/Admin/UpdateUser";
 import UpdateMedicine from "./components/Admin/UpdateMedicine";
 import WebSocketReducer from "./reducers/WebSocketReducer";
+import BookingResult from "./components/BookingResult/BookingResult";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -77,7 +78,7 @@ const App = () => {
               <Route path='/register' element={<Register />} />
               <Route path='/forgetpassword' element={<ForgetPassword />} />
               <Route path='/collaboration' element={<Collaboration />} />
-              {/* <Route path='/admin' element={<Admin />} /> */}
+              <Route path='/bookingresult' element={<BookingResult />} />
               <Route path='/changepassword' element={<ChangePassword />} />
               <Route path='/phoneverification' element={<PhoneVerification />} />
               <Route path='/booking' element={<Booking />} />

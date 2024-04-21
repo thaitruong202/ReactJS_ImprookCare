@@ -69,7 +69,13 @@ const Home = () => {
         loadSpecialty();
         console.log("Kết nối Home", webSocket);
         console.log("Kết nối Home 1", cookie.load("socket"));
-        reConnectNotification(false, current_user.userId)
+        // reConnectNotification(false, current_user?.userId)
+        let client = cookie.load("socket")
+        console.log("Client", client?.connected);
+        if (current_user && client) {
+            cookie.remove("socket");
+            reConnectNotification(false, current_user?.userId);
+        }
     }, [])
 
     const search = (evt) => {

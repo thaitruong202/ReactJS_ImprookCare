@@ -22,9 +22,10 @@ import SockJS from 'sockjs-client';
 import MessageChat from "./MessageChat";
 import Pagination from "../../utils/Pagination"
 import { reConnectNotification } from "../../utils/WebSocket";
+import cookie from "react-cookies";
 
 var stompClient = null;
-var clientStomp = null;
+// var clientStomp = null;
 
 const BookingDoctor = () => {
     const { profileDoctorId } = useParams();
@@ -123,9 +124,15 @@ const BookingDoctor = () => {
             }
         }
         loadProfileDoctorById();
-        reConnectNotification(false, current_user.userId)
-        console.log("Booking doctor", webSocket);
-        console.log("Booking connect", webSocket.ws.connected)
+        // reConnectNotification(false, current_user.userId)
+        // console.log("Booking doctor", webSocket);
+        // console.log("Booking connect", webSocket.ws.connected)
+        let client = cookie.load("socket")
+        console.log("Client", client?.connected);
+        if (current_user && client) {
+            cookie.remove("socket")
+            reConnectNotification(false, current_user?.userId);
+        }
     }, [profileDoctorId])
 
     // const loadComment = async () => {

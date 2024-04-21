@@ -9,6 +9,8 @@ import googleplay from "../../assets/images/googleplay.svg"
 import appstore from "../../assets/images/appstore.svg"
 import Pagination from "../../utils/Pagination"
 import { UserContext } from "../../App";
+import cookie from "react-cookies";
+import { reConnectNotification } from "../../utils/WebSocket";
 
 const Search = () => {
     const [current_user,] = useContext(UserContext);
@@ -45,6 +47,12 @@ const Search = () => {
             }
         }
         loadSpecialty();
+        let client = cookie.load("socket")
+        console.log("Client", client?.connected);
+        if (current_user && client) {
+            cookie.remove("socket");
+            reConnectNotification(false, current_user?.userId);
+        }
     }, [])
 
     const [selectedOption, setSelectedOption] = useState(null);

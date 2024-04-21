@@ -5,6 +5,8 @@ import "./PaymentResult.css";
 import success from "../../assets/images/success.png"
 import { Badge } from "react-bootstrap";
 import { UserContext } from "../../App";
+import cookie from "react-cookies";
+import { reConnectNotification } from "../../utils/WebSocket";
 
 function PaymentResult() {
     const [current_user,] = useContext(UserContext)
@@ -45,6 +47,12 @@ function PaymentResult() {
         setBankCode(q.get("vnp_BankCode"));
         setPayDate(q.get("vnp_PayDate"));
         setTransactionStatus(q.get("vnp_TransactionStatus"));
+        let client = cookie.load("socket")
+        console.log("Client", client?.connected);
+        if (current_user && client) {
+            cookie.remove("socket");
+            reConnectNotification(false, current_user?.userId);
+        }
     }, []);
 
     const validSignature = async () => {

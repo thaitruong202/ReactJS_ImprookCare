@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { UserContext } from "../../App";
+import { reConnectNotification } from "../../utils/WebSocket";
+import cookie from "react-cookies";
 
 const Collaboration = () => {
     const [current_user,] = useContext(UserContext)
@@ -44,6 +46,15 @@ const Collaboration = () => {
         }
         process();
     }
+
+    useEffect(() => {
+        let client = cookie.load("socket")
+        console.log("Client", client?.connected);
+        if (current_user && client) {
+            cookie.remove("socket");
+            reConnectNotification(false, current_user?.userId);
+        }
+    }, [])
 
     return <>
         <div className="CollabDoctor_Wrapper">

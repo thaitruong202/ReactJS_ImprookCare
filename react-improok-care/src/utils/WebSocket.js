@@ -8,15 +8,19 @@ var isToastDisplayed = false;
 
 const connectNotification = (data) => {
     // isToastDisplayed = false;
+    if (clientStomp !== null) {
+        return;
+    }
     let Sock = new SockJS('http://localhost:2024/IMPROOK_CARE/api/public/notification/');
     clientStomp = over(Sock);
-    clientStomp.connect({}, () => onConnectedNotification(data), onErrorNotification);
-    return clientStomp;
+    clientStomp.connect({}, () => onConnectedNotification(data, clientStomp), onErrorNotification);
+    // return clientStomp;
 };
 
-const onConnectedNotification = (data) => {
+const onConnectedNotification = (data, clientStomp) => {
     clientStomp.subscribe('/user/' + data + '/notification', onPrivateNotification);
     cookie.save("socket", clientStomp);
+    // console.log(clientStomp);
 };
 
 const onErrorNotification = (err) => {
@@ -37,7 +41,7 @@ const onPrivateNotification = (payload) => {
 };
 
 export const reConnectNotification = (isConnected, data) => {
-    if (isConnected === false) {
-        connectNotification(data)
+    if (isConnected === false && clientStomp === null) {
+        connectNotification(data);
     }
 }
