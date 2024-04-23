@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { FaCalendar, FaHistory, FaInfoCircle } from "react-icons/fa";
+import { IoIosChatboxes } from "react-icons/io";
 import { ImProfile } from "react-icons/im";
 import { MdLogout, MdMessage } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -60,6 +61,13 @@ const UserMenu = () => {
                     to="message">
                     <MdMessage className="icon" />
                     <span className="text">Tin nhắn</span>
+                </NavLink>
+                <NavLink
+                    activeClassName="active"
+                    onClick={() => handleItemClick("consultantmessage", "/consultantmessage")}
+                    to="consultantchat">
+                    <IoIosChatboxes className="icon" />
+                    <span className="text">Tư vấn</span>
                 </NavLink>
                 <div onClick={logout}><MdLogout />Đăng xuất</div>
             </div>

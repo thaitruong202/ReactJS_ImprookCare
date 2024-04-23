@@ -25,10 +25,11 @@ const NewBooking = (props) => {
                 console.log(requestBody)
                 if (res.status === 200) {
                     toast.success(res.data);
+                    let link = `http://localhost:3000/zego/?roomID=${res.data.linkVideoCall}`
                     let mes = await Apis.post(endpoints['send-custom-email'], {
                         "mailTo": "2051052125thai@ou.edu.vn",
                         "mailSubject": "Xác nhận lịch khám",
-                        "mailContent": "Lịch khám của quý khách đã được xác nhận! Vui lòng đến trước giờ khám bệnh 15’"
+                        "mailContent": "Lịch khám của quý khách đã được xác nhận! Vui lòng đến trước giờ khám bệnh 15’. Đây là liên kết meeting: " + link
                     })
                     console.log(mes.data);
                 }

@@ -54,6 +54,7 @@ import UpdateMedicine from "./components/Admin/UpdateMedicine";
 import WebSocketReducer from "./reducers/WebSocketReducer";
 import BookingResultReducer from "./reducers/BookingResultReducer";
 import BookingResult from "./components/BookingResult/BookingResult";
+import ConsultantChat from "./components/ConsultantChat/ConsultantChat";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -97,6 +98,7 @@ const App = () => {
                   <Route path='history' element={<History />} />
                   <Route path='profile' element={<Profile />} />
                   <Route path='message' element={<Message />} />
+                  <Route path='consultantchat' element={<ConsultantChat />} />
                 </Route>
                 <Route path='/doctor' element={<Doctor />} >
                   <Route path='doctorinformation' element={<DoctorInformation />} />

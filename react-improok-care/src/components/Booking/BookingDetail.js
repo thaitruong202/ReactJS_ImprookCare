@@ -127,13 +127,13 @@ const BookingDetail = () => {
                 if (res.data.length !== 0) {
                     cookie.save('bookingresult', res.data.bookingId);
                     toast.success("Đặt lịch thành công");
-                    // setBookingResultList(res.data);
-                    // let mes = await Apis.post(endpoints['send-custom-email'], {
-                    //     "mailTo": "2051050549tuan@ou.edu.vn",
-                    //     "mailSubject": "Xác nhận đặt khám",
-                    //     "mailContent": "Bạn đã đặt khám thành công tại hệ thống IMPROOKCARE"
-                    // })
-                    // console.log(mes.data);
+                    setBookingResultList(res.data);
+                    let mes = await Apis.post(endpoints['send-custom-email'], {
+                        "mailTo": "2051050549tuan@ou.edu.vn",
+                        "mailSubject": "Xác nhận đặt khám",
+                        "mailContent": "Bạn đã đặt khám thành công tại hệ thống IMPROOKCARE"
+                    })
+                    console.log(mes.data);
 
                     dispatchBookingResult({
                         "type": "booking",
