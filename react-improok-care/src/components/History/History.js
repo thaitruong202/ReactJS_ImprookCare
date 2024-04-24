@@ -40,11 +40,13 @@ const History = () => {
     //     "returnUrl": "http://localhost:3000/medicalrecord"
     // })
     // let tempTotal = 0;
+
     const loadProfilePatient = async () => {
         try {
-            let res = await authApi().get(endpoints['load-profile-patient'](current_user.userId))
-            setProfilePatient(res.data);
-            console.log(res.data);
+            let e = endpoints['load-profile-patient'](current_user?.userId)
+            let res = await authApi().get(e)
+            setProfilePatient(res.data.content);
+            console.log(res.data.content);
         } catch (error) {
             console.log(error)
         }
@@ -52,7 +54,7 @@ const History = () => {
 
     useEffect(() => {
         loadProfilePatient();
-    }, [current_user.userId])
+    }, [current_user?.userId])
 
     const profilePatientChange = (e) => {
         const selectedId = e.target.value;

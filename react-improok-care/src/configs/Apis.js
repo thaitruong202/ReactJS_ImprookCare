@@ -2,7 +2,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 const SERVER_CONTEXT = "/IMPROOK_CARE";
-const SERVER = "http://localhost:2024"
+const SERVER = "http://localhost:2024";
 
 export const endpoints = {
     "login": `${SERVER_CONTEXT}/api/public/login/`,
@@ -37,6 +37,7 @@ export const endpoints = {
     "forgot-password": `${SERVER_CONTEXT}/api/public/forgot-password/`,
     "change-password": `${SERVER_CONTEXT}/api/auth/change-password/`,
     "booking-user-view": `${SERVER_CONTEXT}/api/auth/booking-user-view/`,
+    "booking-user-view-page": `${SERVER_CONTEXT}/api/auth/booking-user-view-page/`,
     "booking-doctor-view": `${SERVER_CONTEXT}/api/auth/booking-doctor-view/`,
     "accept-booking": `${SERVER_CONTEXT}/api/auth/doctor/accept-booking/`,
     "deny-booking": `${SERVER_CONTEXT}/api/auth/doctor/deny-booking/`,

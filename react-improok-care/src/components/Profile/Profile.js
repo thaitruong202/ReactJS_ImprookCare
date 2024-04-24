@@ -21,7 +21,7 @@ const Profile = () => {
     const [personalAddress, setPersonalAddress] = useState();
     const [email, setEmail] = useState();
     const [relationship, setRelationship] = useState();
-    const [birthday, setBirthday] = useState(null)
+    const [birthday, setBirthday] = useState(null);
 
     const [updateName, setUpdateName] = useState();
     const [updatePhonenumber, setUpdatePhonenumber] = useState();
@@ -102,9 +102,11 @@ const Profile = () => {
 
     const loadProfilePatient = async () => {
         try {
-            let res = await authApi().get(endpoints['load-profile-patient'](current_user.userId))
-            setProfilePatient(res.data);
-            console.log(res.data);
+            let e = endpoints['load-profile-patient'](current_user?.userId)
+            // e += `?islock=true`
+            let res = await authApi().get(e)
+            setProfilePatient(res.data.content);
+            console.log(res.data.content);
         } catch (error) {
             console.log(error)
         }
@@ -118,7 +120,6 @@ const Profile = () => {
         evt.preventDefault();
         console.log("pp" + pp.profilePatientId)
         setSelectedProfile(pp.profilePatientId);
-        // console.log(selectedProfile);
 
         const process = async () => {
             try {
@@ -171,7 +172,6 @@ const Profile = () => {
                 setLoading(false);
                 setAddProfileInfo(false);
                 loadProfilePatient();
-
             } catch (error) {
                 console.log(error);
                 toast.error("Có lỗi xảy ra!")
@@ -195,7 +195,7 @@ const Profile = () => {
                 // setUpdateDistrictName("Vue.js");
                 // setUpdateWardName("Nue.js");
                 const dateInput = document.getElementById('dateInput');
-                const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
+                const selectedDate = dateInput.value;
 
                 const birthDate = new Date(selectedDate).toISOString().split('T')[0]; // Định dạng lại ngày thành "yyyy-MM-dd"
 

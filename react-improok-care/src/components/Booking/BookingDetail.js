@@ -131,7 +131,7 @@ const BookingDetail = () => {
                     let mes = await Apis.post(endpoints['send-custom-email'], {
                         "mailTo": "2051050549tuan@ou.edu.vn",
                         "mailSubject": "Xác nhận đặt khám",
-                        "mailContent": "Bạn đã đặt khám thành công tại hệ thống IMPROOKCARE"
+                        "mailContent": "Bạn đã đặt khám thành công tại hệ thống I'MPROOKCARE"
                     })
                     console.log(mes.data);
 
@@ -154,9 +154,11 @@ const BookingDetail = () => {
     useEffect(() => {
         const loadProfilePatient = async () => {
             try {
-                let res = await authApi().get(endpoints['load-profile-patient'](current_user?.userId))
-                setProfilePatient(res.data);
-                console.log(res.data);
+                let e = endpoints['load-profile-patient'](current_user?.userId)
+                e += `?isLock=false`
+                let res = await authApi().get(e)
+                setProfilePatient(res.data.content);
+                console.log(res.data.content);
             } catch (error) {
                 console.log(error)
             }

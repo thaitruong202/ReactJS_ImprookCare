@@ -55,6 +55,13 @@ import WebSocketReducer from "./reducers/WebSocketReducer";
 import BookingResultReducer from "./reducers/BookingResultReducer";
 import BookingResult from "./components/BookingResult/BookingResult";
 import ConsultantChat from "./components/ConsultantChat/ConsultantChat";
+import ConfirmedAppointment from "./components/Appointment/ConfirmedAppointment";
+import WaitedAppointment from "./components/Appointment/WaitedAppointment";
+import DeniedAppointment from "./components/Appointment/DeniedAppointment";
+import PaidAppointment from "./components/Appointment/PaidAppointment";
+import CanceledAppointment from "./components/Appointment/CanceledAppointment";
+import CompletedAppointment from "./components/Appointment/CompletedAppointment";
+import AppointmentDetail from "./components/Appointment/AppointmentDetail";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -92,9 +99,17 @@ const App = () => {
                 <Route path='/paymentresult' element={<PaymentResult />} />
                 <Route path='/search' element={<Search />} />
                 <Route path='/zego' element={<ZegoVideo />} />
+                <Route path='appointmentdetail' element={<AppointmentDetail />} />
                 <Route path='/user' element={<User />}>
                   <Route path='personal' element={<Personal />} />
-                  <Route path='appointment' element={<Appointment />} />
+                  <Route path='appointment' element={<Appointment />} >
+                    <Route path='confirmed' element={<ConfirmedAppointment />} />
+                    <Route path='waited' element={<WaitedAppointment />} />
+                    <Route path='paid' element={<PaidAppointment />} />
+                    <Route path='denied' element={<DeniedAppointment />} />
+                    <Route path='canceled' element={<CanceledAppointment />} />
+                    <Route path='completed' element={<CompletedAppointment />} />
+                  </Route>
                   <Route path='history' element={<History />} />
                   <Route path='profile' element={<Profile />} />
                   <Route path='message' element={<Message />} />

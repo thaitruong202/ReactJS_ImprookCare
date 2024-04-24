@@ -15,7 +15,7 @@ div.consultant_header {
 }
 
 div.consultant_content {
-    height: 22rem;
+    max-height: 22rem;
     overflow: auto;
 }
 

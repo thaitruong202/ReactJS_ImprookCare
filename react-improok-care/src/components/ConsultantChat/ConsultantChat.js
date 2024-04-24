@@ -70,7 +70,7 @@ const ConsultantChat = () => {
                         {listMessage.length === 0 ?
                             <>
                                 <div className="consultant_null">
-                                    <p>Hello! I'm DOCTOR AI, here to help you with your health questions. Remember I can't replace a real doctor.</p>
+                                    <p>Chào bạn! Tôi là DOCTOR AI, có thể giúp bạn với những câu hỏi về sức khỏe. Các tư vấn của tôi chỉ dành cho mục đích tham khảo và không thay thế cho việc chuẩn đoán hoặc điều trị y khoa. Bạn cần tuyệt đối tuân theo hướng dẫn của Bác sĩ và Nhân viên y tế.</p>
                                 </div>
                             </> :
                             <>
