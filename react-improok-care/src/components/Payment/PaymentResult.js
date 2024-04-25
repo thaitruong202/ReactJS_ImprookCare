@@ -20,21 +20,6 @@ function PaymentResult() {
     const [transactionStatus, setTransactionStatus] = useState("");
     const [signatureValid, setSignatureValid] = useState(false);
 
-    const {
-        vnp_Amount,
-        vnp_BankCode,
-        vnp_BankTranNo,
-        vnp_CardType,
-        vnp_OrderInfo,
-        vnp_PayDate,
-        vnp_ResponseCode,
-        vnp_TmnCode,
-        vnp_TransactionNo,
-        vnp_TransactionStatus,
-        vnp_TxnRef,
-        vnp_SecureHash,
-    } = useSearchParams();
-
     const [q] = useSearchParams();
 
     useEffect(() => {
@@ -116,36 +101,8 @@ function PaymentResult() {
         }
     }
 
-    // const addPayment = async () => {
-    //     try {
-    //         let e = endpoints['add-payment']
-    //         // let bookingId = params.get("bookingId");
-    //         let bookingId = q.get("bookingId");
-    //         let vnp_ResponseId = q.get("vnp_ResponseId");
-    //         let vnp_command = q.get("vnp_command");
-    //         let vnp_ResponseCode = q.get("vnp_ResponseCode");
-    //         let vnp_Message = q.get("vnp_Message");
-    //         let vnp_tmncode = q.get("vnp_tmncode");
-    //         let vnp_txnref = q.get("vnp_txnref");
-    //         let vnp_amount = q.get("vnp_amount");
-    //         let vnp_orderinfo = q.get("vnp_orderinfo");
-    //         let vnp_bankcode = q.get("vnp_bankcode");
-    //         let vnp_PayDate = q.get("vnp_PayDate");
-    //         let vnp_TransactionNo = q.get("vnp_TransactionNo");
-    //         let vnp_TransactionStatus = q.get("vnp_TransactionStatus");
-    //         let vnp_securehash = q.get("vnp_securehash");
-
-    //         e += `vnp_amount=${vnp_Amount}&vnp_bankcode=${vnp_BankCode}&vnp_banktranno=${vnp_BankTranNo}&vnp_cardtype=${vnp_CardType}&vnp_orderinfo=${vnp_OrderInfo}&vnp_paydate=${vnp_PayDate}&vnp_responsecode=${vnp_ResponseCode}&vnp_tmncode=${vnp_TmnCode}&vnp_transactionno=${vnp_TransactionNo}&vnp_transactionstatus=${vnp_TransactionStatus}&vnp_txnref=${vnp_TxnRef}&vnp_securehash=${vnp_SecureHash}`;
-    //         let res = await authApi().get(e)
-    //         console.log(res.data)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     useEffect(() => {
         checkPayment();
-        // addPayment();
     }, [])
 
     return (

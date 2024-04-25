@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaCalendar, FaHistory, FaInfoCircle } from "react-icons/fa";
+import { FaCalendar, FaHistory, FaInfoCircle, FaWallet } from "react-icons/fa";
 import { IoIosChatboxes } from "react-icons/io";
 import { ImProfile } from "react-icons/im";
 import { MdLogout, MdMessage } from "react-icons/md";
@@ -46,6 +46,13 @@ const UserMenu = () => {
                     to="history">
                     <FaHistory className="icon" />
                     <span className="text">Lịch sử đơn thuốc</span>
+                </NavLink>
+                <NavLink
+                    activeClassName="active"
+                    onClick={() => handleItemClick("payment")}
+                    to="paymenthistory">
+                    <FaWallet className="icon" />
+                    <span className="text">Lịch sử thanh toán</span>
                 </NavLink>
                 <NavLink
                     activeClassName="active"

@@ -63,6 +63,7 @@ import CanceledAppointment from "./components/Appointment/CanceledAppointment";
 import CompletedAppointment from "./components/Appointment/CompletedAppointment";
 import AppointmentDetail from "./components/Appointment/AppointmentDetail";
 import Payment from "./components/Payment/Payment";
+import PaymentHistory from "./components/Payment/PaymentHistory";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -113,6 +114,7 @@ const App = () => {
                     <Route path='completed' element={<CompletedAppointment />} />
                   </Route>
                   <Route path='history' element={<History />} />
+                  <Route path='paymenthistory' element={<PaymentHistory />} />
                   <Route path='profile' element={<Profile />} />
                   <Route path='message' element={<Message />} />
                   <Route path='consultantchat' element={<ConsultantChat />} />

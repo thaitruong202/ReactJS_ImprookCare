@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Badge, Button, Table } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import ModalNotification from "../../layout/Modal";
@@ -12,7 +12,6 @@ const NewBooking = (props) => {
     const [bookingAction, setBookingAction] = useState(null);
 
     const acceptBooking = (bookingId) => {
-        // evt.preventDefault();
         const process = async () => {
             try {
                 const requestBody = bookingId.toString()
@@ -45,8 +44,6 @@ const NewBooking = (props) => {
     }
 
     const denyBooking = (bookingId) => {
-        // evt.preventDefault();
-
         const process = async () => {
             try {
                 const requestBody = bookingId.toString()
@@ -125,7 +122,7 @@ const NewBooking = (props) => {
                                     <td>{nb[6]}</td>
                                     <td>{nb[2]}</td>
                                     <td>{timeBegin} - {timeEnd}</td>
-                                    <td>{nb[5]}</td>
+                                    <td><Badge bg="warning">{nb[5]}</Badge></td>
                                     <td>
                                         <Button style={{ marginRight: '.5rem' }} variant="success"
                                             // onClick={(evt) => { acceptBooking(evt, nb[0]); setShowModal(true) }}

@@ -167,7 +167,6 @@ const History = () => {
 
     const prescriptionPages = Array.from({ length: totalPrescriptionPages }, (_, index) => index + 1);
     const handlePrescriptionPageChange = (pageNumber) => {
-        // TODO: Xử lý sự kiện khi người dùng chuyển trang
         setSelectedPage(pageNumber);
         loadPrescriptionPage(pageNumber);
         console.log(`Chuyển đến trang ${pageNumber}`);
@@ -238,12 +237,12 @@ const History = () => {
                 </div> */}
                 <div className="MedicalRecords_Middle">
                     <div className="MedicalRecords_Middle_Header">
-                        <h3>Lịch sử khám</h3>
+                        <h3>Lịch sử đơn thuốc</h3>
                     </div>
                     <div className="MedicalRecords_Middle_Content">
                         <div className="MedicalRecords_Middle_Container">
                             <div className="MedicalRecords_Middle_Info">
-                                <input type="text" placeholder="Nhập chuẩn đoán, triệu chứng..."></input>
+                                <input type="text" placeholder="Nhập tên hồ sơ cần tìm..."></input>
                                 <div className="MedicalRecords_List">
                                     {profilePatient.length === 0 ? <>
                                         <div className="MedicalRecords_List_404">
