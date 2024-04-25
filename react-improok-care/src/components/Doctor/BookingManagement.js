@@ -174,9 +174,9 @@ const BookingManagement = () => {
                         <div className="List_Action">
                             <ul>
                                 <li className={selectedOption === "new" ? "active" : ""}
-                                    onClick={() => handleOptionClick("new")}>Bệnh nhân mới</li>
+                                    onClick={() => handleOptionClick("new")}>Chờ tiếp nhận</li>
                                 <li className={selectedOption === "confirmed" ? "active" : ""}
-                                    onClick={() => handleOptionClick("confirmed")}>Đã xác nhận</li>
+                                    onClick={() => handleOptionClick("confirmed")}>Đã tiếp nhận</li>
                                 <li className={selectedOption === "rejected" ? "active" : ""}
                                     onClick={() => handleOptionClick("rejected")}>Đã từ chối</li>
                                 <li className={selectedOption === "cancelled" ? "active" : ""}

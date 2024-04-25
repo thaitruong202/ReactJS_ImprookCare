@@ -14,6 +14,7 @@ import { TiTick } from "react-icons/ti";
 import { toast } from "react-toastify";
 import { reConnectNotification } from "../../utils/WebSocket";
 import cookie from "react-cookies";
+import MySpinner from "../../layout/Spinner";
 
 const BookingDetail = () => {
     const [current_user,] = useContext(UserContext);
@@ -33,6 +34,8 @@ const BookingDetail = () => {
     const [bookingProfile, setBookingProfile] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [bookingResultList, setBookingResultList] = useState([]);
+
+    const [loading, setLoading] = useState(false);
 
     const nav = useNavigate();
 
@@ -119,6 +122,7 @@ const BookingDetail = () => {
 
         const process = async () => {
             try {
+                setLoading(true)
                 console.log(scheduleId, profilePatientName)
                 let res = await authApi().post(endpoints['add-booking'], {
                     "scheduleId": scheduleId,
@@ -126,7 +130,6 @@ const BookingDetail = () => {
                 })
                 if (res.data.length !== 0) {
                     cookie.save('bookingresult', res.data.bookingId);
-                    toast.success("Đặt lịch thành công");
                     setBookingResultList(res.data);
                     let mes = await Apis.post(endpoints['send-custom-email'], {
                         "mailTo": "2051050549tuan@ou.edu.vn",
@@ -141,11 +144,16 @@ const BookingDetail = () => {
                     });
                     console.log(res.data.bookingId);
                     nav('/bookingresult');
+                    toast.success("Đặt lịch thành công");
+                    setLoading(false)
                 }
-                else
-                    toast.error("Lỗi rồi")
+                else {
+                    toast.error("Lỗi rồi");
+                    setLoading(false)
+                }
             } catch (error) {
                 console.log(error);
+                setLoading(false)
             }
         }
         process();
@@ -299,7 +307,9 @@ const BookingDetail = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <button style={{ backgroundColor: "grey", cursor: "not-allowed" }}>Xác nhận đặt khám</button>
+                                    <div>
+                                        <button style={{ backgroundColor: "grey", cursor: "not-allowed" }}>Xác nhận đặt khám</button>
+                                    </div>
                                 </div>
                                 <span>Bằng cách nhấn nút xác nhận, bạn đã đồng ý với các điều khoản và điều kiện đặt khám</span>
                             </div>
@@ -395,15 +405,17 @@ const BookingDetail = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    {profilePatient.length === 0 ? <>
-                                        <button style={{ backgroundColor: "gray", cursor: "not-allowed" }}>Đặt lịch</button>
-                                        {/* <button onClick={(e) => saveBooking(e)}>Đặt hàng</button> */}
-                                    </> : <>
-                                        {profilePatientId === '' ? <><button style={{ backgroundColor: "gray", cursor: "not-allowed" }}>Đặt lịch</button></> : <>
-                                            <button onClick={saveBooking}>Đặt lịch</button></>}
-                                        {/* <button style={{ backgroundColor: "gray" }}>Đặt lịch</button> */}
-                                        {/* <button onClick={(e) => saveBooking(e)}>Đặt lịch</button> */}
-                                    </>}
+                                    <div>
+                                        {profilePatient.length === 0 ? <>
+                                            <button style={{ backgroundColor: "gray", cursor: "not-allowed" }}>Đặt lịch</button>
+                                            {/* <button onClick={(e) => saveBooking(e)}>Đặt hàng</button> */}
+                                        </> : <>
+                                            {profilePatientId === '' ? <><button style={{ backgroundColor: "gray", cursor: "not-allowed" }}>Đặt lịch</button></> : <>
+                                                {loading === true ? <MySpinner /> : <button onClick={saveBooking}>Đặt lịch</button>}</>}
+                                            {/* <button style={{ backgroundColor: "gray" }}>Đặt lịch</button> */}
+                                            {/* <button onClick={(e) => saveBooking(e)}>Đặt lịch</button> */}
+                                        </>}
+                                    </div>
                                     <span>Bằng cách nhấn nút xác nhận, bạn đã đồng ý với các điều khoản và điều kiện đặt khám</span>
                                 </div>
                             </div>

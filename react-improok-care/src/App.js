@@ -62,6 +62,7 @@ import PaidAppointment from "./components/Appointment/PaidAppointment";
 import CanceledAppointment from "./components/Appointment/CanceledAppointment";
 import CompletedAppointment from "./components/Appointment/CompletedAppointment";
 import AppointmentDetail from "./components/Appointment/AppointmentDetail";
+import Payment from "./components/Payment/Payment";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -97,9 +98,10 @@ const App = () => {
                 <Route path='/doctor/:profileDoctorId' element={<BookingDoctor />} />
                 <Route path='/booking/doctor/:profileDoctorId' element={<BookingDetail />} />
                 <Route path='/paymentresult' element={<PaymentResult />} />
+                <Route path='/payment' element={<Payment />} />
                 <Route path='/search' element={<Search />} />
                 <Route path='/zego' element={<ZegoVideo />} />
-                <Route path='appointmentdetail' element={<AppointmentDetail />} />
+                <Route path='/appointmentdetail' element={<AppointmentDetail />} />
                 <Route path='/user' element={<User />}>
                   <Route path='personal' element={<Personal />} />
                   <Route path='appointment' element={<Appointment />} >

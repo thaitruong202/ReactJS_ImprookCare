@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import { Badge, Button, Table } from "react-bootstrap";
-// import { Link } from "react-router-dom";
 import { authApi, endpoints } from "../../configs/Apis";
 import { useNavigate } from "react-router-dom";
 

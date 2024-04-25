@@ -208,20 +208,20 @@ div.Appointment_Right_Header {
     color: #183e9f;
 }
 
-div.AppointmentMenu>div {
+div.Appointment_Menu>div {
     display: flex;
     width: 100%;
     gap: 1rem;
 }
 
-div.AppointmentMenu {
+div.Appointment_Menu {
     display: flex;
     list-style: none;
     background: white;
     width: 100%;
 }
 
-div.AppointmentMenu>div>a {
+div.Appointment_Menu>div>a {
     text-decoration: none;
     color: black;
     width: 100%;
@@ -231,17 +231,17 @@ div.AppointmentMenu>div>a {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     font-size: 16px;
+    border: 1px solid black;
+    padding-left: 0.75rem !important;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
 }
 
-.activate {
+.active {
     background-color: #183e9f;
     border-radius: 0.25rem;
 }
-
-/* .active .icon {
-    color: white;
-} */
   
-.activate .text {
+.active .text {
     color: white;
 }

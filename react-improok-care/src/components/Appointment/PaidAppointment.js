@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import { Badge, Button, Table } from "react-bootstrap";
-// import { Link } from "react-router-dom";
-import { authApi, endpoints } from "../../configs/Apis";
+import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
 
 const PaidAppointment = () => {
     const [paidAppointment, setPaidAppointment] = useState([]);
     const [current_user,] = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
 
     const nav = useNavigate();
     // const [selectedBookingId, setSelectedBookingId] = useState("");
@@ -39,6 +40,23 @@ const PaidAppointment = () => {
         nav(`/appointmentdetail?bookingId=${bookingId}`)
     }
 
+    const servicePayment = async (price, patientName, bookingId) => {
+        try {
+            setLoading(true);
+            cookie.save('bookingresult', bookingId)
+            let res = await Apis.post(endpoints['vnpay-payment'], {
+                "amount": price,
+                "orderInfor": "Service Payment: " + patientName + " đã thanh toán tiền khám thành công ",
+                "returnUrl": "http://localhost:3000/payment"
+            });
+            window.location.href = res.data;
+            setLoading(false);
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return <>
         <div>
             <div>
@@ -64,9 +82,9 @@ const PaidAppointment = () => {
                                     <td>{pa.profilePatientId.name}</td>
                                     <td>{pa.scheduleId.date}</td>
                                     <td>{timeBegin} - {timeEnd}</td>
-                                    <td><Badge bg="success">{pa.statusId.statusValue}</Badge></td>
+                                    <td><Badge bg="secondary">{pa.statusId.statusValue}</Badge></td>
                                     <td><Button variant="primary" onClick={(e) => viewBookingDetail(e, pa.bookingId)}>Chi tiết</Button></td>
-                                    <td><Button variant="primary">Thanh toán</Button></td>
+                                    <td><Button variant="primary" onClick={() => servicePayment(pa.scheduleId.profileDoctorId.bookingPrice, pa.profilePatientId.name, pa.bookingId)}>Thanh toán</Button></td>
                                 </tr>
                             </>
                         })}

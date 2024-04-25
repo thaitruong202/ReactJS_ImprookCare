@@ -12,9 +12,8 @@ const UserMenu = () => {
     const [, dispatch] = useContext(UserContext);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const handleItemClick = (item, path) => {
+    const handleItemClick = (item) => {
         setSelectedItem(item);
-        // nav(path);
     };
 
     const logout = () => {
@@ -37,7 +36,7 @@ const UserMenu = () => {
                 <NavLink
                     activeClassName="active"
                     onClick={() => handleItemClick("appointment")}
-                    to="appointment/paid">
+                    to="appointment">
                     <FaCalendar className="icon" />
                     <span className="text">Lịch sử đặt khám</span>
                 </NavLink>

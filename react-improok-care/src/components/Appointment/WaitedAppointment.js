@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import { Badge, Button, Table } from "react-bootstrap";
-// import { Link } from "react-router-dom";
 import { authApi, endpoints } from "../../configs/Apis";
 import { useNavigate } from "react-router-dom";
 
@@ -63,7 +62,7 @@ const WaitedAppointment = () => {
                                     <td>{wa.profilePatientId.name}</td>
                                     <td>{wa.scheduleId.date}</td>
                                     <td>{timeBegin} - {timeEnd}</td>
-                                    <td><Badge bg="success">{wa.statusId.statusValue}</Badge></td>
+                                    <td><Badge bg="warning">{wa.statusId.statusValue}</Badge></td>
                                     <td><Button variant="primary" onClick={(e) => viewBookingDetail(e, wa.bookingId)}>Chi tiết</Button></td>
                                 </tr>
                             </>

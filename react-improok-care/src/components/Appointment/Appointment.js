@@ -30,12 +30,10 @@ const Appointment = () => {
 
     const viewBookingDetail = (evt, b) => {
         evt.preventDefault();
-        // setSelectedBooking(b[8]);
-        console.log(b[8])
+        console.log(b[8]);
 
         const process = async () => {
             try {
-                // console.log(selectedBooking)
                 let res = await authApi().post(endpoints['booking-details-user-view'], {
                     "bookingId": b[8]
                 })
@@ -69,48 +67,47 @@ const Appointment = () => {
 
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const handleItemClick = (item, path) => {
+    const handleItemClick = (item) => {
         setSelectedItem(item);
-        // nav(path);
     };
 
     return <>
         <div className="Appointment_Wrapper">
             <div className="Appointment">
-                <div className="AppointmentMenu">
+                <div className="Appointment_Menu">
                     <div>
                         <NavLink
-                            activeClassName="activate"
+                            activeClassName="active"
                             onClick={() => handleItemClick("paid")}
                             to="paid">
                             <span className="text">Chờ thanh toán</span>
                         </NavLink>
                         <NavLink
-                            activeClassName="activate"
+                            activeClassName="active"
                             onClick={() => handleItemClick("waited")}
                             to="waited">
                             <span className="text">Chờ tiếp nhận</span>
                         </NavLink>
                         <NavLink
-                            activeClassName="activate"
+                            activeClassName="active"
                             onClick={() => handleItemClick("confirmed")}
                             to="confirmed">
                             <span className="text">Đã tiếp nhận</span>
                         </NavLink>
                         <NavLink
-                            activeClassName="activate"
+                            activeClassName="active"
                             onClick={() => handleItemClick("denied")}
                             to="denied">
                             <span className="text">Đã từ chối</span>
                         </NavLink>
                         <NavLink
-                            activeClassName="activate"
+                            activeClassName="active"
                             onClick={() => handleItemClick("canceled")}
                             to="canceled">
                             <span className="text">Đã hủy</span>
                         </NavLink>
                         <NavLink
-                            activeClassName="activate"
+                            activeClassName="active"
                             onClick={() => handleItemClick("completed")}
                             to="completed">
                             <span className="text">Đã khám</span>

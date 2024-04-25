@@ -79,12 +79,11 @@ const AppointmentDetail = () => {
                     </div>
                     <div className="Patient_In4_2">
                         <span>Ngày sinh</span>
-                        {/* <span>{bookingDetail[6] === null ? 'Chưa cập nhật' : bookingDetail[6].substring(0, 10)}</span> */}
-                        <span>{bookingDetail[6]}</span>
+                        <span>{bookingDetail[6] === null ? 'Chưa cập nhật' : bookingDetail[6]?.substring(0, 10)}</span>
                     </div>
                     <div className="Patient_In4_3">
                         <span>Giới tính</span>
-                        <span>{bookingDetail[9] === false ? 'Nam' : 'Nữ'}</span>
+                        <span>{bookingDetail[9] === true ? 'Nam' : 'Nữ'}</span>
                     </div>
                     <div className="Patient_In4_4">
                         <span>Số điện thoại</span>
@@ -103,10 +102,7 @@ const AppointmentDetail = () => {
                     </div>
                     <div className="Result_In4_2">
                         <span>Kết quả</span>
-                        <span>{bookingDetail[12]?.statusValue === "Chờ xác nhận" ? <Badge bg="warning">Chờ xác nhận</Badge> :
-                            bookingDetail[12]?.statusValue === "Đã xác nhận" ? <Badge bg="success">Đã xác nhận</Badge> :
-                                <Badge bg="danger">Từ chối</Badge>
-                        }</span>
+                        <span><Badge bg="secondary">{bookingDetail[12]?.statusValue}</Badge></span>
                     </div>
                 </div>
                 <div className="Cancel_Button">
