@@ -64,6 +64,10 @@ import CompletedAppointment from "./components/Appointment/CompletedAppointment"
 import AppointmentDetail from "./components/Appointment/AppointmentDetail";
 import Payment from "./components/Payment/Payment";
 import PaymentHistory from "./components/Payment/PaymentHistory";
+import PrescriptionHistory from "./components/PrescriptionHistory/PrescriptionHistory";
+import ReExamination from "./components/Re-examination/ReExamination";
+import TestService from "./components/TestService/TestService";
+import Examination from "./components/Examination/Examination";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -127,7 +131,12 @@ const App = () => {
                   <Route path='profiledoctor' element={<ProfileDoctor />} />
                   <Route path='doctormessage' element={<DoctorMessage />} />
                   <Route path='videocall' element={<VideoCall />} />
-                  <Route path='prescription' element={<Prescription />} />
+                  <Route path='examination' element={<Examination />}>
+                    <Route path='prescription' element={<Prescription />} />
+                    <Route path='prescriptionhistory' element={<PrescriptionHistory />} />
+                    <Route path='testservice' element={<TestService />} />
+                    <Route path='reexamination' element={<ReExamination />} />
+                  </Route>
                   {/* <Route path='zego' element={<ZegoVideo />} /> */}
                 </Route>
                 <Route path='/admin' element={<Admin />} >

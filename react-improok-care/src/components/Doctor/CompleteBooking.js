@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Badge, Table } from "react-bootstrap";
+import { Badge, Button, Table } from "react-bootstrap";
 import { authApi, endpoints } from "../../configs/Apis";
 
 const CompleteBooking = (props) => {
@@ -34,6 +34,7 @@ const CompleteBooking = (props) => {
                             <th>Ngày</th>
                             <th>Khung giờ</th>
                             <th>Tình trạng</th>
+                            <th>Tái khám</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,6 +48,7 @@ const CompleteBooking = (props) => {
                                     <td>{cb[2]}</td>
                                     <td>{timeBegin} - {timeEnd}</td>
                                     <td><Badge bg="warning">{cb[5]}</Badge></td>
+                                    <td><Button variant="primary">Tạo tái khám</Button></td>
                                 </tr>
                             </>
                         })}

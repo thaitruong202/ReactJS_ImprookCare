@@ -138,11 +138,14 @@ const BookingDetail = () => {
                     })
                     console.log(mes.data);
 
+                    const bookingId = res.data.bookingId
+
                     dispatchBookingResult({
                         "type": "booking",
-                        "payload": res.data.bookingId
+                        "payload": bookingId
                     });
                     console.log(res.data.bookingId);
+                    console.log(bookingId);
                     nav('/bookingresult');
                     toast.success("Đặt lịch thành công");
                     setLoading(false)

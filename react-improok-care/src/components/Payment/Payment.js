@@ -4,19 +4,20 @@ import Apis, { authApi, endpoints } from "../../configs/Apis";
 import "./Payment.css";
 import success from "../../assets/images/success.png"
 import { Badge } from "react-bootstrap";
-import { UserContext } from "../../App";
+import { BookingResultContext, UserContext } from "../../App";
 import cookie from "react-cookies";
 import { reConnectNotification } from "../../utils/WebSocket";
 
 const Payment = () => {
     const [current_user,] = useContext(UserContext)
     const [signatureValid, setSignatureValid] = useState([]);
+    const [bookingResult,] = useContext(BookingResultContext)
     const [bookingId, setBookingId] = useState(cookie.load('bookingresult'))
 
     const [q] = useSearchParams();
 
     useEffect(() => {
-        validSignature(bookingId);
+        validSignature(bookingResult);
         let client = cookie.load("socket")
         console.log("Client", client?.connected);
         if (current_user && client) {

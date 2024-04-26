@@ -7,7 +7,6 @@ import cookie from "react-cookies"
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { toast } from "react-toastify";
 import { Autocomplete, Stack, TextField } from "@mui/material";
-import DoctorMenu from "../../layout/DoctorLayout/DoctorMenu";
 
 const Prescription = () => {
     const [current_user, dispatch] = useContext(UserContext);
@@ -187,7 +186,7 @@ const Prescription = () => {
         const medicineName = selectedMedicine.medicineName;
 
         if (medicineId in pres) {
-            pres[medicineId].quantity += 1; // Tăng số lượng thuốc
+            pres[medicineId].quantity += 1;
         } else {
             pres[medicineId] = {
                 medicineId,
@@ -306,7 +305,7 @@ const Prescription = () => {
                 </div> */}
                 <div className="Prescription_Right">
                     <div className="Prescription_Right_Header">
-                        <h2 className="text-center mb-4">THÔNG TIN ĐƠN THUỐC</h2>
+                        <h3 className="text-center mb-4">THÔNG TIN ĐƠN THUỐC</h3>
                     </div>
                     <div className="Prescription_Right_Body_1">
                         <div className="Patient_Name">
@@ -507,7 +506,9 @@ const Prescription = () => {
                                     </tbody>
                                 </Table>
                             </div>
-                            {(pres === null || Object.keys(pres).length === 0) ? <Button variant="secondary" style={{ cursor: "not-allowed" }}>Lưu đơn thuốc</Button> : <Button variant="info" onClick={(e) => addPrescription(e)}>Lưu đơn thuốc</Button>}
+                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                {(pres === null || Object.keys(pres).length === 0) ? <Button variant="secondary" style={{ cursor: "not-allowed" }}>Lưu đơn thuốc</Button> : <Button variant="info" onClick={(e) => addPrescription(e)}>Lưu đơn thuốc</Button>}
+                            </div>
                         </div>
                     </div>
                 </div>

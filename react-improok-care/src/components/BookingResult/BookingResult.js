@@ -19,7 +19,7 @@ const BookingResult = () => {
     useEffect(() => {
         console.log(bookingResult);
         console.log(cookie.load("bookingresult"));
-        let bookingId = cookie.load("bookingresult");
+        let bookingId = bookingResult;
         const viewBookingDetail = async () => {
             try {
                 let res = await authApi().post(endpoints['booking-details-user-view'], {
@@ -81,7 +81,7 @@ const BookingResult = () => {
                         </div>
                         <div className="BookingResult_In4_3">
                             <span>Phí khám</span>
-                            <span>{bookingDetail[3]}</span>
+                            <span>{bookingDetail[3]} VNĐ</span>
                         </div>
                     </div>
                     <div className="BookingPatient_In4">
