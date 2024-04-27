@@ -1,0 +1,35 @@
+div.test-service {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+div.test-service-register {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+div.test-service-history {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+div.test-service-register>div {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+div.test-service-register>div>h6 {
+    width: 20%;
+}
+
+div.test-service-register>div>select {
+    width: 60%
+}
+
+div.test-service-register>div>button {
+    width: 15%
+}
