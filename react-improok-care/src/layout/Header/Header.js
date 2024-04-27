@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { Dropdown, Image, NavDropdown } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from "../../App";
-import { FaHome, FaInfoCircle, FaHistory } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaHistory, FaUserNurse } from "react-icons/fa";
 import { MdSecurity, MdLogout, MdAccountCircle, MdAdminPanelSettings } from "react-icons/md";
 
 const Header = () => {
@@ -28,6 +28,10 @@ const Header = () => {
 
     const handleDoctorClick = () => {
         nav("/doctor/doctorinformation")
+    };
+
+    const handleNurseClick = () => {
+        nav("/nurse/medicaltest")
     };
 
     const menuItems = [
@@ -104,7 +108,13 @@ const Header = () => {
                                                 <>
                                                     <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }} onClick={handleDoctorClick}><Link to="/doctor/doctorinformation"><MdAccountCircle />Bác sĩ</Link></NavDropdown.Item>
                                                     {/* <button class="Doctor"><Link to="/doctor">Bác sĩ</Link></button> */}
-                                                </> : <></>}
+                                                </> : <>
+                                                    {user.roleId.roleId === 4 ?
+                                                        <>
+                                                            <NavDropdown.Item style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }} onClick={handleNurseClick}><Link to="/nurse/medicaltest"><FaUserNurse />Y tá</Link></NavDropdown.Item>
+                                                            {/* <button class="Doctor"><Link to="/doctor">Bác sĩ</Link></button> */}
+                                                        </> : <></>}
+                                                </>}
                                         </>
                                     }
                                     <NavDropdown.Item onClick={logout} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}><MdLogout />Đăng xuất</NavDropdown.Item>

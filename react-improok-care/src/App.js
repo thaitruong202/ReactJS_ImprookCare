@@ -68,6 +68,8 @@ import PrescriptionHistory from "./components/PrescriptionHistory/PrescriptionHi
 import ReExamination from "./components/Re-examination/ReExamination";
 import TestService from "./components/TestService/TestService";
 import Examination from "./components/Examination/Examination";
+import Nurse from "./components/Nurse/Nurse";
+import MedicalTest from "./components/Nurse/MedicalTest";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -150,6 +152,9 @@ const App = () => {
                   <Route path='addmedicine' element={<AddMedicine />} />
                   <Route path='collab' element={<Collab />} />
                   <Route path='revenue' element={<Revenue />} />
+                </Route>
+                <Route path='/nurse' element={<Nurse />}>
+                  <Route path='medicaltest' element={<MedicalTest />} />
                 </Route>
               </Routes>
               <ScrollToTop />

@@ -98,22 +98,22 @@ const PaymentHistory = () => {
                                                         </div>
                                                     </> :
                                                         <>
-                                                            {Object.values(paymentList).map(pl => {
-                                                                const timeBegin = new Date(pl.bookingId.scheduleId.timeSlotId?.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                                                                const timeEnd = new Date(pl.bookingId.scheduleId.timeSlotId?.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                                                                return <>
-                                                                    <Table striped bordered hover>
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>#</th>
-                                                                                <th>Bác sĩ</th>
-                                                                                <th>Bệnh nhân</th>
-                                                                                <th>Khung giờ</th>
-                                                                                <th>Chuyên khoa</th>
-                                                                                <th>Chi tiết</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
+                                                            <Table striped bordered hover>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Bác sĩ</th>
+                                                                        <th>Bệnh nhân</th>
+                                                                        <th>Khung giờ</th>
+                                                                        <th>Chuyên khoa</th>
+                                                                        <th>Chi tiết</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {Object.values(paymentList).map(pl => {
+                                                                        const timeBegin = new Date(pl.bookingId.scheduleId.timeSlotId?.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                                                        const timeEnd = new Date(pl.bookingId.scheduleId.timeSlotId?.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                                                        return <>
                                                                             <tr key={pl.paymentHistoryId}>
                                                                                 <td>{pl.paymentHistoryId}</td>
                                                                                 <td>{pl.bookingId.scheduleId.profileDoctorId.name}</td>
@@ -122,10 +122,10 @@ const PaymentHistory = () => {
                                                                                 <td>{pl.bookingId.scheduleId.profileDoctorId.specialtyId.specialtyName}</td>
                                                                                 <td><Button variant="primary">Chi Tiết</Button></td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                    </Table>
-                                                                </>
-                                                            })}
+                                                                        </>
+                                                                    })}
+                                                                </tbody>
+                                                            </Table>
                                                         </>
                                                     }
                                                 </div>
