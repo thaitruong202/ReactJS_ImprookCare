@@ -68,7 +68,7 @@ const AppointmentDetail = () => {
                     </div>
                     <div className="Booking_In4_3">
                         <span>Phí khám</span>
-                        <span>{bookingDetail[3]}</span>
+                        <span>{bookingDetail[3]?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
                     </div>
                 </div>
                 <div className="Patient_In4">

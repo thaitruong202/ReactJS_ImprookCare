@@ -4,13 +4,14 @@ import "./Appointment.css";
 import { authApi, endpoints } from "../../configs/Apis";
 import printer from "../../assets/images/printer.png"
 import schedule from "../../assets/images/schedule.png"
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const Appointment = () => {
     const [current_user,] = useContext(UserContext);
     const [booking, setBooking] = useState([]);
     const [bookingDetail, setBookingDetail] = useState(null);
     const [selectedBooking, setSelectedBooking] = useState('');
+    const nav = useNavigate()
 
     const loadUserBooking = async () => {
         try {
@@ -26,6 +27,8 @@ const Appointment = () => {
 
     useEffect(() => {
         loadUserBooking();
+        nav("/user/appointment/paid")
+        // Load lại trang vẫn giữ nguyên tab đang chọn
     }, [current_user?.userId])
 
     const viewBookingDetail = (evt, b) => {
@@ -79,7 +82,8 @@ const Appointment = () => {
                         <NavLink
                             activeClassName="active"
                             onClick={() => handleItemClick("paid")}
-                            to="paid">
+                            to="paid"
+                        >
                             <span className="text">Chờ thanh toán</span>
                         </NavLink>
                         <NavLink

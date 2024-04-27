@@ -70,6 +70,7 @@ import TestService from "./components/TestService/TestService";
 import Examination from "./components/Examination/Examination";
 import Nurse from "./components/Nurse/Nurse";
 import MedicalTest from "./components/Nurse/MedicalTest";
+import TestPdf from "./components/Test/TestPdf";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -95,6 +96,7 @@ const App = () => {
               <Routes>
                 <Route exact path='/' element={<Home />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/testpdf' element={<TestPdf />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/forgetpassword' element={<ForgetPassword />} />
                 <Route path='/collaboration' element={<Collaboration />} />
