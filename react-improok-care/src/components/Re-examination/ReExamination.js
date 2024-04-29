@@ -195,8 +195,8 @@ const ReExamination = () => {
                                     </div>
                                 </Modal.Body>
                                 <Modal.Footer>
-                                    <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
-                                    <Button variant="primary" onClick={saveEvent}>Save changes</Button>
+                                    <Button variant="secondary" onClick={() => setShowModal(false)}>Đóng</Button>
+                                    <Button variant="primary" onClick={saveEvent}>Lưu</Button>
                                 </Modal.Footer>
                             </Modal.Dialog>
                         </div>

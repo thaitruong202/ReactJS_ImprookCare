@@ -12,7 +12,11 @@ const MedicalTest = () => {
     const [testList, setTestList] = useState([])
     const [showModal, setShowModal] = useState(false)
 
+    const [testResultValue, setTestResultValue] = useState('')
+    const [testResultDiagnosis, setTestResultDiagnosis] = useState('')
+
     const [selectedImage, setSelectedImage] = useState('');
+    const [testResultDetail, setTestResultDetail] = useState(null);
     const testImage = useRef();
 
     useEffect(() => {
@@ -26,7 +30,7 @@ const MedicalTest = () => {
             }
         }
         loadtestList()
-    }, [])
+    }, [testResultDetail])
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -41,13 +45,43 @@ const MedicalTest = () => {
         }
     };
 
-    // const returnTestResult = async () => {
-    //     try {
-    //         setShowModal(true)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    const loadTestResultDetail = async (testResultId) => {
+        try {
+            console.log(testResultId)
+            let res = await authApi().get(endpoints['load-test-service-detail'](testResultId))
+            setTestResultDetail(res.data)
+            console.log(res.data)
+            setShowModal(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const returnTestResult = async (testResultId) => {
+        try {
+            let form = new FormData()
+
+            form.append("testResultId", testResultId)
+            form.append("userId", current_user?.userId)
+            form.append("testResultValue", testResultValue)
+            form.append("testResultDiagnosis", testResultDiagnosis)
+            if (testImage.current.files[0] !== undefined) {
+                form.append("image", testImage.current.files[0]);
+            } else {
+                form.append("image", new Blob());
+            }
+
+            let res = await authApi().post(endpoints['return-test-result'], form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            })
+            console.log(res.data)
+            setShowModal(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -90,7 +124,7 @@ const MedicalTest = () => {
                                                         <td>{tl.bookingId.scheduleId.profileDoctorId.specialtyId.specialtyName}</td>
                                                         <td>{tl.bookingId.scheduleId.profileDoctorId.name}</td>
                                                         {/* <td>{tr.userId.lastname} {tr.userId.firstname}</td> */}
-                                                        <td><Button variant="primary" onClick={() => setShowModal(true)}>Chi tiết</Button></td>
+                                                        <td><Button variant="primary" onClick={() => loadTestResultDetail(tl.testResultId)}>Chi tiết</Button></td>
                                                     </tr>
                                                 </>
                                             })}
@@ -113,11 +147,11 @@ const MedicalTest = () => {
                                                 <div className="test-body-info">
                                                     <div>
                                                         <Form.Label style={{ width: "50%" }}>Bệnh nhân</Form.Label>
-                                                        <Form.Control type="text" value="Trần My" disabled />
+                                                        <Form.Control type="text" value={testResultDetail?.bookingId.profilePatientId.name} disabled />
                                                     </div>
                                                     <div>
                                                         <Form.Label style={{ width: "50%" }}>Bác sĩ</Form.Label>
-                                                        <Form.Control type="text" value="Hiếu Nguyễn" disabled />
+                                                        <Form.Control type="text" value={testResultDetail?.bookingId.scheduleId.profileDoctorId.name} disabled />
                                                     </div>
                                                     <div>
                                                         <Form.Label style={{ width: "50%" }}>Người thực hiện</Form.Label>
@@ -125,15 +159,15 @@ const MedicalTest = () => {
                                                     </div>
                                                     <div>
                                                         <Form.Label style={{ width: "50%" }}>Tình trạng</Form.Label>
-                                                        <Form.Control type="text" value="Test_Result_Value" disabled />
+                                                        <Form.Control type="Text" defaultValue={testResultValue} onChange={(e) => setTestResultValue(e.target.value)} placeholder="Nhập kết quả..." />
                                                     </div>
                                                     <div>
                                                         <Form.Label style={{ width: "50%" }}>Chẩn đoán</Form.Label>
-                                                        <Form.Control type="text" value="Test_Result_Diagnosis" disabled />
+                                                        <Form.Control type="Text" defaultValue={testResultDiagnosis} onChange={(e) => setTestResultDiagnosis(e.target.value)} placeholder="Nhập triệu chứng..." />
                                                     </div>
                                                     <div>
                                                         <Form.Label style={{ width: "50%" }}>Loại xét nghiệm</Form.Label>
-                                                        <Form.Control type="text" value="Xét nghiệm máu" disabled />
+                                                        <Form.Control type="text" value={testResultDetail?.testServiceId.testServiceName} disabled />
                                                     </div>
                                                 </div>
                                                 <div className="test-body-image">
@@ -156,7 +190,7 @@ const MedicalTest = () => {
                                         </Modal.Body>
                                         <Modal.Footer>
                                             <Button variant="secondary" onClick={() => setShowModal(false)}>Đóng</Button>
-                                            <Button variant="primary">Lưu</Button>
+                                            <Button variant="primary" onClick={() => returnTestResult(testResultDetail?.testResultId)}>Lưu</Button>
                                         </Modal.Footer>
                                     </Modal>
                                     // </div>

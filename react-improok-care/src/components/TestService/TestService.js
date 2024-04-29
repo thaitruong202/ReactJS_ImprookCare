@@ -11,7 +11,8 @@ const TestService = () => {
     const [testType, setTestType] = useState([])
     const [testChoice, setTestChoice] = useState(null)
     const [testResult, setTestResult] = useState([])
-    const [selectedImage, setSelectedImage] = useState('')
+    const [selectedService, setSelectedService] = useState('')
+    const [testResultDetail, setTestResultDetail] = useState(null)
 
     const [showModal, setShowModal] = useState(false)
 
@@ -28,7 +29,7 @@ const TestService = () => {
             }
         }
         loadTestResult()
-    }, [testResult])
+    }, [])
 
     useEffect(() => {
         const loadTestService = async () => {
@@ -43,6 +44,19 @@ const TestService = () => {
         loadTestService()
     }, [])
 
+    const loadTestResultDetail = async (testResultId) => {
+        try {
+            console.log(testResultId)
+            let res = await authApi().get(endpoints['load-test-service-detail'](testResultId))
+            console.log(res.data)
+            setTestResultDetail(res.data)
+            setSelectedService(res.data.testServiceId.testServiceId)
+            setShowModal(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const addTestResult = async () => {
         try {
             let res = await authApi().post(endpoints['add-test-result'], {
@@ -50,6 +64,25 @@ const TestService = () => {
                 "bookingId": booking.bookingId
             })
             console.log(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleServiceChange = (e) => {
+        const selectedServiceId = e.target.value;
+        setSelectedService(selectedServiceId);
+    }
+
+    const updateTestResult = async (testResultId) => {
+        try {
+            console.log(selectedService)
+            let res = await authApi().post(endpoints['update-test-result'], {
+                "testResultId": testResultId,
+                "testServiceId": selectedService
+            })
+            console.log(res.data)
+            loadTestResultDetail(testResultId)
         } catch (error) {
             console.log(error)
         }
@@ -107,7 +140,7 @@ const TestService = () => {
                                                         <td>{tr.bookingId.scheduleId.profileDoctorId.specialtyId.specialtyName}</td>
                                                         <td>{tr.bookingId.scheduleId.profileDoctorId.name}</td>
                                                         {/* <td>{tr.userId.lastname} {tr.userId.firstname}</td> */}
-                                                        <td><Button variant="primary" onClick={() => setShowModal(true)}>Chi tiết</Button></td>
+                                                        <td><Button variant="primary" onClick={() => loadTestResultDetail(tr.testResultId)}>Chi tiết</Button></td>
                                                     </tr>
                                                 </>
                                             })}
@@ -129,27 +162,27 @@ const TestService = () => {
                                                     <div className="test-body-info">
                                                         <div>
                                                             <Form.Label style={{ width: "50%" }}>Bệnh nhân</Form.Label>
-                                                            <Form.Control type="text" value="Trần My" disabled />
+                                                            <Form.Control type="text" value={testResultDetail?.bookingId.profilePatientId.name} disabled />
                                                         </div>
                                                         <div>
                                                             <Form.Label style={{ width: "50%" }}>Bác sĩ</Form.Label>
-                                                            <Form.Control type="text" value="Hiếu Nguyễn" disabled />
+                                                            <Form.Control type="text" value={testResultDetail?.bookingId.scheduleId.profileDoctorId.name} disabled />
                                                         </div>
                                                         <div>
                                                             <Form.Label style={{ width: "50%" }}>Người thực hiện</Form.Label>
-                                                            <Form.Control type="text" value="Hồng Nhung" disabled />
+                                                            <Form.Control type="text" value={testResultDetail?.userId === null ? "Chưa xét nghiệm" : `${testResultDetail?.userId.lastname} ${testResultDetail?.userId.firstname}`} disabled />
                                                         </div>
                                                         <div>
                                                             <Form.Label style={{ width: "50%" }}>Tình trạng</Form.Label>
-                                                            <Form.Control type="text" value="Test_Result_Value" disabled />
+                                                            <Form.Control type="text" value={testResultDetail?.testResultValue === null ? "Chưa có kết quả" : testResultDetail?.testResultValue} disabled />
                                                         </div>
                                                         <div>
                                                             <Form.Label style={{ width: "50%" }}>Chẩn đoán</Form.Label>
-                                                            <Form.Control type="text" value="Test_Result_Diagnosis" disabled />
+                                                            <Form.Control type="text" value={testResultDetail?.testResultDiagnosis === null ? "Chưa có kết quả" : testResultDetail?.testResultDiagnosis} disabled />
                                                         </div>
                                                         <div>
                                                             <Form.Label style={{ width: "50%" }}>Loại xét nghiệm</Form.Label>
-                                                            <Form.Select className="test-choice-select" value={testChoice} name="testChoice" onChange={(e) => setTestChoice(e.target.value)}>
+                                                            <Form.Select className="test-choice-select" value={selectedService} name="selectedtService" onChange={(e) => handleServiceChange(e)}>
                                                                 {Object.values(testType).map(tt => <option key={tt.testServiceId} value={tt.testServiceId}>{tt.testServiceName}</option>)}
                                                             </Form.Select>
                                                         </div>
@@ -157,9 +190,9 @@ const TestService = () => {
                                                     <div className="test-body-image">
                                                         <h4>Kết quả</h4>
                                                         <div className="Avatar_Choice">
-                                                            {selectedImage ? (
+                                                            {testResultDetail?.testResultImage ? (
                                                                 <div>
-                                                                    <img src={selectedImage} alt="Selected" width="100%" />
+                                                                    <img src={testResultDetail?.testResultImage} alt="Selected" width="100%" />
                                                                 </div>
                                                             ) : (
                                                                 <div className="Avatar_Null">
@@ -172,7 +205,7 @@ const TestService = () => {
                                             </Modal.Body>
                                             <Modal.Footer>
                                                 <Button variant="secondary" onClick={() => setShowModal(false)}>Đóng</Button>
-                                                <Button variant="primary">Lưu</Button>
+                                                <Button variant="primary" onClick={() => updateTestResult(testResultDetail?.testResultId)}>Cập nhật</Button>
                                             </Modal.Footer>
                                         </Modal>
                                         // </div>
