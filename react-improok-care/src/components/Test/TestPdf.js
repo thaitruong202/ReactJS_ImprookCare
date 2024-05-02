@@ -59,8 +59,26 @@ function TestPdf() {
   const [pdfUrl, setPdfUrl] = useState(null);
 
   const fetchPDF = async () => {
-    const response = await fetch('http://localhost:2024/IMPROOK_CARE/api/public/generate-pdf/', {
+// Dữ liệu JSON cần gửi
+  const jsonData = {
+    "profilePatientName": "Bệnh nhân Lỡ Hoàng Lan Thảo",
+    "profileDoctorName": "Nguyễn Minh Hiếu",
+    "nurseName": "Nguyễn Thị Hồng Nhung",
+    "birthday": "",
+    "address": "371 Nguyễn Kiệm",
+    "specialtyName": "Khoa răng hàm mặt",
+    "testResultDiagnosis": "Đau răng",
+    "gender": "nam",
+    "createdDate": "",
+    "updatedDate": ""
+  };
+
+    const response = await fetch('http://localhost:2024/IMPROOK_CARE/api/public/generate-pdf-test-result/', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Đặt Content-Type là JSON
+      },
+      body: JSON.stringify(jsonData), // Chuyển đổi đối tượng JSON thành chuỗi JSON
     });
 
     if (response.ok) {
