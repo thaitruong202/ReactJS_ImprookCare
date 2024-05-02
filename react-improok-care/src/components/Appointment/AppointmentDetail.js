@@ -106,7 +106,7 @@ const AppointmentDetail = () => {
                     </div>
                 </div>
                 <div className="Cancel_Button">
-                    <button type="button" onClick={(evt) => cancelBooking(evt)}>Hủy Lịch</button>
+                    {bookingDetail[12]?.statusValue === "Đã khám xong" || bookingDetail[12]?.statusValue === "Đã xác nhận" ? '' : <button type="button" onClick={(evt) => cancelBooking(evt)}>Hủy Lịch</button>}
                 </div>
             </div>
         </div>

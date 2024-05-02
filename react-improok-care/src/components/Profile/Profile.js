@@ -61,6 +61,8 @@ const Profile = () => {
     const currentDate = new Date();
     const currentFormattedDate = currentDate.toISOString().split('T')[0];
 
+    const [lockProfile, setLockProfile] = useState([])
+
     const handleRelationshipChange = (e) => {
         setUpdateRelationship(e);
     };
@@ -103,10 +105,29 @@ const Profile = () => {
     const loadProfilePatient = async () => {
         try {
             let e = endpoints['load-profile-patient'](current_user?.userId)
-            // e += `?islock=true`
             let res = await authApi().get(e)
             setProfilePatient(res.data.content);
             console.log(res.data.content);
+            // res.data.forEach(element => {
+            //     if (element.isLock === false) {
+            //         setLockProfile(true);
+            //         return;
+            //     }
+            // });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const loadLockProfile = async () => {
+        try {
+            let endpoint = endpoints['load-profile-patient'](current_user?.userId)
+            endpoint += `?isLock=false`
+            console.log(endpoint)
+            let response = await authApi().get(endpoint)
+            setLockProfile(response.data.content);
+            console.log(response.data.content);
+            console.log(response.data.content.length);
         } catch (error) {
             console.log(error)
         }
@@ -114,6 +135,7 @@ const Profile = () => {
 
     useEffect(() => {
         loadProfilePatient();
+        loadLockProfile();
     }, [current_user?.userId])
 
     const viewProfilePatient = (evt, pp) => {
@@ -279,7 +301,7 @@ const Profile = () => {
     //     setSelectedProfile(e.target.value);
     // }
 
-    if (profilePatient !== null && profilePatient.length !== 0) {
+    if ((profilePatient !== null && profilePatient.length !== 0) && lockProfile.length !== 0) {
         let next = q.get("next")
         if (next !== null)
             return <Navigate to={next} />
