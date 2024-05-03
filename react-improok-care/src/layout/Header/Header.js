@@ -31,7 +31,7 @@ const Header = () => {
     };
 
     const handleNurseClick = () => {
-        nav("/nurse/medicaltest")
+        nav("/nurse/medicaltest/unchecked")
     };
 
     const menuItems = [

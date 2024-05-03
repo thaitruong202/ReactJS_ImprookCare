@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import "./Appointment.css";
 import { authApi, endpoints } from "../../configs/Apis";
-import printer from "../../assets/images/printer.png"
-import schedule from "../../assets/images/schedule.png"
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const Appointment = () => {

@@ -46,3 +46,52 @@ div.test-service-history-null {
 div.test-service-history-null h5 {
     margin-top: 2rem;
 }
+
+div.test-service-menu>div {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+}
+
+div.test-service-menu {
+    display: flex;
+    list-style: none;
+    background: white;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+div.test-service-menu>div>a {
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 16px;
+    border: 1px solid black;
+    padding-left: 0.75rem !important;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+.active {
+    background-color: #183e9f;
+    border-radius: 0.25rem;
+}
+  
+.active .text {
+    color: white;
+}
+
+div.test-body-pdf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin: auto;
+    max-width: 85rem;
+    align-items: center;
+    margin-bottom: 5rem;
+}

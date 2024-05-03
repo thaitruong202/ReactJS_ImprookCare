@@ -30,7 +30,7 @@ const Examination = () => {
                             <NavLink
                                 activeClassName="active"
                                 onClick={() => handleItemClick("testservice")}
-                                to="testservice">
+                                to="testservice/unchecktestservice">
                                 <span className="text">Xét nghiệm</span>
                             </NavLink>
                             <NavLink

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BookingManagementContext, UserContext } from "../../App";
 import "./Prescription.css";
 import { Button, Form, Table } from "react-bootstrap";
@@ -41,8 +41,6 @@ const Prescription = () => {
 
     // const { bookingId, profilePatientName, profileDoctorName, bookingPrice } = useContext(BookingManagementContext)
     const nav = useNavigate();
-    // const location = useLocation();
-    // const paramA = location.state?.paramA;
 
     const currentDate = new Date();
     const currentFormattedDate = currentDate.toISOString().split('T')[0];
@@ -97,7 +95,6 @@ const Prescription = () => {
     const loadMedicine = async () => {
         try {
             setLoading(true);
-
             let res = await Apis.get(endpoints['medicines'])
             setMedicineList(res.data);
             setLoading(false);
@@ -234,9 +231,9 @@ const Prescription = () => {
         // }
     }
 
-    const removePres = () => {
-        cookie.remove("pres");
-    }
+    // const removePres = () => {
+    //     cookie.remove("pres");
+    // }
 
     // const medicinePages = Array.from({ length: totalMedicinePages }, (_, index) => index + 1);
     // const handleMedicinePageChange = (pageNumber) => {
@@ -322,7 +319,7 @@ const Prescription = () => {
                         </div>
                         <div className="Booking_Price">
                             <Form.Label style={{ width: "40%" }}>Phí khám</Form.Label>
-                            <Form.Control type="Text" value={bookingPrice} disabled />
+                            <Form.Control type="Text" value={bookingPrice.toLocaleString('vi-VN') + ' VNĐ'} disabled />
                         </div>
                         <div className="Symptom">
                             <Form.Label style={{ width: "40%" }}>Triệu chứng</Form.Label>

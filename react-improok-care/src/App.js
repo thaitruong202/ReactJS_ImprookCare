@@ -71,6 +71,10 @@ import Examination from "./components/Examination/Examination";
 import Nurse from "./components/Nurse/Nurse";
 import MedicalTest from "./components/Nurse/MedicalTest";
 import TestPdf from "./components/Test/TestPdf";
+import CheckedTest from "./components/Nurse/CheckedTest";
+import UncheckedTest from "./components/Nurse/UncheckedTest";
+import CheckTestService from "./components/TestService/CheckTestService";
+import UncheckTestService from "./components/TestService/UncheckTestService";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -138,7 +142,10 @@ const App = () => {
                   <Route path='examination' element={<Examination />}>
                     <Route path='prescription' element={<Prescription />} />
                     <Route path='prescriptionhistory' element={<PrescriptionHistory />} />
-                    <Route path='testservice' element={<TestService />} />
+                    <Route path='testservice' element={<TestService />}>
+                      <Route path='checktestservice' element={<CheckTestService />} />
+                      <Route path='unchecktestservice' element={<UncheckTestService />} />
+                    </Route>
                     <Route path='reexamination' element={<ReExamination />} />
                   </Route>
                   {/* <Route path='zego' element={<ZegoVideo />} /> */}
@@ -156,7 +163,10 @@ const App = () => {
                   <Route path='revenue' element={<Revenue />} />
                 </Route>
                 <Route path='/nurse' element={<Nurse />}>
-                  <Route path='medicaltest' element={<MedicalTest />} />
+                  <Route path='medicaltest' element={<MedicalTest />}>
+                    <Route path='checked' element={<CheckedTest />} />
+                    <Route path='unchecked' element={<UncheckedTest />} />
+                  </Route>
                 </Route>
               </Routes>
               <ScrollToTop />

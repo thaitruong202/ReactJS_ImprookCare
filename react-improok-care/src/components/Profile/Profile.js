@@ -108,12 +108,6 @@ const Profile = () => {
             let res = await authApi().get(e)
             setProfilePatient(res.data.content);
             console.log(res.data.content);
-            // res.data.forEach(element => {
-            //     if (element.isLock === false) {
-            //         setLockProfile(true);
-            //         return;
-            //     }
-            // });
         } catch (error) {
             console.log(error)
         }
@@ -170,7 +164,7 @@ const Profile = () => {
                 setLoading(true);
                 ///console.log(name + '' + phonenumber + '' + provincename + '' + districtname + '' + wardname + '' + personalAddress + '' + email + '' + relationship)
                 const dateInput = document.getElementById('birthdayInput');
-                const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
+                const selectedDate = dateInput.value;
 
                 const birthDate = new Date(selectedDate).toISOString().split('T')[0];
 
