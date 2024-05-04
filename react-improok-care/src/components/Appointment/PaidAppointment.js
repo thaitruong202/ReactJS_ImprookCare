@@ -15,17 +15,47 @@ const PaidAppointment = () => {
     // const [selectedProfilePatientName, setSelectedProfilePatientName] = useState("");
     // const [loading, setLoading] = useState(false);
 
+    // const loadPaidAppointment = async () => {
+    //     try {
+    //         let e = endpoints['booking-user-view-page']
+    //         e += "?pageNumber=0"
+    //         console.log(e)
+    //         let res = await authApi().post(e, {
+    //             "userId": current_user?.userId,
+    //             "bookingStatusId": "6"
+    //         })
+    //         console.log(res.data.content)
+    //         setPaidAppointment(res.data.content)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
     const loadPaidAppointment = async () => {
         try {
             let e = endpoints['booking-user-view-page']
             e += "?pageNumber=0"
             console.log(e)
-            let res = await authApi().post(e, {
+
+            // Gửi yêu cầu lấy booking với bookingStatusId là 5
+            let res1 = await authApi().post(e, {
+                "userId": current_user?.userId,
+                "bookingStatusId": "5"
+            })
+
+            // Gửi yêu cầu lấy booking với bookingStatusId là 6
+            let res2 = await authApi().post(e, {
                 "userId": current_user?.userId,
                 "bookingStatusId": "6"
             })
-            console.log(res.data.content)
-            setPaidAppointment(res.data.content)
+
+            console.log(res1.data.content)
+            console.log(res2.data.content)
+
+            // Kết hợp kết quả từ hai yêu cầu vào cùng một danh sách
+            const bookings = [...res1.data.content, ...res2.data.content]
+
+            setPaidAppointment(bookings)
         } catch (error) {
             console.log(error)
         }

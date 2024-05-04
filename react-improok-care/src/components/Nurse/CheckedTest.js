@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Form, Modal, Table } from "react-bootstrap";
 import { UserContext } from "../../App";
 import { authApi, endpoints } from "../../configs/Apis";
@@ -14,9 +14,9 @@ const CheckedTest = () => {
     const [testResultValue, setTestResultValue] = useState('')
     const [testResultDiagnosis, setTestResultDiagnosis] = useState('')
 
-    const [selectedImage, setSelectedImage] = useState('');
+    // const [selectedImage, setSelectedImage] = useState('');
     const [testResultDetail, setTestResultDetail] = useState(null);
-    const testImage = useRef();
+    // const testImage = useRef();
 
     useEffect(() => {
         const loadTestList = async () => {
@@ -31,18 +31,18 @@ const CheckedTest = () => {
         loadTestList()
     }, [testResultDetail])
 
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
+    // const handleImageChange = (event) => {
+    //     const file = event.target.files[0];
+    //     const reader = new FileReader();
 
-        reader.onloadend = () => {
-            setSelectedImage(reader.result);
-        };
+    //     reader.onloadend = () => {
+    //         setSelectedImage(reader.result);
+    //     };
 
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    };
+    //     if (file) {
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
 
     const loadTestResultDetail = async (testResultId) => {
         try {

@@ -27,8 +27,8 @@ const Prescription = () => {
     const [searchFromPrice, setSearchFromPrice] = useState(null);
     const [searchToPrice, setSearchToPrice] = useState(null);
 
-    const [diagnosis, setDiagnosis] = useState(null)
-    const [symptom, setSymptom] = useState(null)
+    const [diagnosis, setDiagnosis] = useState('')
+    const [symptom, setSymptom] = useState('')
     const [usageInstruction, setUsageInstruction] = useState(null);
 
     const [pres, setPres] = useState(cookie.load("pres") || null)
@@ -150,7 +150,6 @@ const Prescription = () => {
         loadMedicine();
     }, [])
 
-
     // const addMedicine = (medicineList) => {
     //     let pres = cookie.load("pres") || null
     //     if (pres === null)
@@ -191,6 +190,7 @@ const Prescription = () => {
                 quantity: 1,
                 unitPrice: selectedMedicine.unitPrice,
                 usageInstruction: selectedMedicine.usageInstruction,
+                medicalReminderDTO: {},
             };
         }
         cookie.save("pres", pres);
@@ -280,6 +280,8 @@ const Prescription = () => {
                 toast.success(res.data);
                 setLoading(false);
                 cookie.remove("pres");
+                setDiagnosis('');
+                setSymptom('');
                 setPres([]);
             } catch (error) {
                 console.log(error);
@@ -291,6 +293,24 @@ const Prescription = () => {
 
     if (bookingId === null)
         nav('/bookingmanagement');
+
+    const handleReminderChange = (medicineId, time) => {
+        const updatedPres = {
+            ...pres,
+            [medicineId]: {
+                ...pres[medicineId],
+                medicalReminderDTO: {
+                    ...pres[medicineId].medicalReminderDTO,
+                    [time]: {
+                        timeReminderId: time
+                    }
+                }
+            }
+        };
+        setPres(updatedPres);
+        cookie.save("pres", updatedPres);
+        console.log(updatedPres);
+    };
 
     return <>
         <div className="Prescription_Wrapper">
@@ -441,6 +461,7 @@ const Prescription = () => {
                                             <th>Số lượng</th>
                                             <th>Đơn giá</th>
                                             <th>Cách dùng</th>
+                                            <th>Chỉ định</th>
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
@@ -451,9 +472,9 @@ const Prescription = () => {
                                             {Object.values(pres).map(p => {
                                                 return <>
                                                     <tr key={p.medicineId}>
-                                                        <td>{p.medicineId}</td>
-                                                        <td style={{ width: "25%" }}>{p.medicineName}</td>
-                                                        <td>
+                                                        <td style={{ width: "4%" }}>{p.medicineId}</td>
+                                                        <td style={{ width: "18%" }}>{p.medicineName}</td>
+                                                        <td style={{ width: "10%" }}>
                                                             <Form.Control
                                                                 type="number"
                                                                 value={pres[p.medicineId].quantity}
@@ -474,8 +495,8 @@ const Prescription = () => {
                                                                 max="50"
                                                             />
                                                         </td>
-                                                        <td>{p.unitPrice} VNĐ</td>
-                                                        <td>
+                                                        <td style={{ width: "12%" }}>{p.unitPrice} VNĐ</td>
+                                                        <td style={{ width: "20%" }}>
                                                             {/* <Form.Control type="text" defaultValue={usageInstructions} onChange={(e) => setUsageInstructions(e.target.value)} required /> */}
                                                             <Form.Control
                                                                 type="text"
@@ -494,6 +515,14 @@ const Prescription = () => {
                                                             />
                                                         </td>
                                                         <td>
+                                                            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', justifyContent: 'center' }}>
+                                                                <span><input className="Remember_Check" type="checkbox" onChange={() => handleReminderChange(p.medicineId, 1)} /> Sáng</span>
+                                                                <span><input className="Remember_Check" type="checkbox" onChange={() => handleReminderChange(p.medicineId, 2)} /> Trưa</span>
+                                                                <span><input className="Remember_Check" type="checkbox" onChange={() => handleReminderChange(p.medicineId, 3)} /> Chiều</span>
+                                                                <span><input className="Remember_Check" type="checkbox" onChange={() => handleReminderChange(p.medicineId, 4)} /> Tối</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style={{ width: '9%' }}>
                                                             <Button variant="danger" onClick={() => deleteMedicine(p)}>Xóa</Button>
                                                         </td>
                                                     </tr>

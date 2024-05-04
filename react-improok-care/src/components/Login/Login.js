@@ -42,7 +42,6 @@ const Login = () => {
 
                 console.log(data)
                 cookie.save('user', data)
-                // connectNotification(data.userId);
 
                 // connectNoti = connectNotification(data.userId);
                 connectNoti = reConnectNotification(false, data.userId)

@@ -123,7 +123,8 @@ const History = () => {
         const process = async () => {
             try {
                 setLoading(true);
-                let res = await authApi().get(endpoints['prescription-detail-by-prescription-id'](pl.prescriptionId))
+                // let res = await authApi().get(endpoints['prescription-detail-by-prescription-id'](pl.prescriptionId))
+                let res = await authApi().get(endpoints['prescription-detail-reminder'](pl.prescriptionId))
                 setPrescriptionDetail(res.data)
                 console.log(res.data);
                 setLoading(false);
@@ -349,7 +350,7 @@ const History = () => {
                                                                                 <tr>
                                                                                     <th>#</th>
                                                                                     <th>Tên thuốc</th>
-                                                                                    <th>Hướng dẫn sử dụng</th>
+                                                                                    <th>Chỉ định</th>
                                                                                     <th>Số lượng</th>
                                                                                     <th>Đơn giá</th>
                                                                                     <th>Thành tiền</th>
@@ -360,15 +361,35 @@ const History = () => {
                                                                                 tempTotal += presd.quantity * presd.unitPrice;
                                                                             })} */}
                                                                                 {Object.values(prescriptionDetail).map(presd => {
-                                                                                    tempTotal += presd.quantity * presd.unitPrice
+                                                                                    tempTotal += presd.prescriptionDetail.quantity * presd.prescriptionDetail.unitPrice
+                                                                                    const timeReminderNames = presd.timeReminders.map(timeReminder => timeReminder.timeReminderId.timeReminderName);
                                                                                     return <>
-                                                                                        <tr key={presd.prescriptionDetailId}>
-                                                                                            <td>{presd.prescriptionDetailId}</td>
-                                                                                            <td>{presd.medicineName}</td>
-                                                                                            <td>{presd.usageInstruction}</td>
-                                                                                            <td>{presd.quantity}</td>
-                                                                                            <td>{presd.unitPrice} VNĐ</td>
-                                                                                            <td>{presd.quantity * presd.unitPrice} VNĐ</td>
+                                                                                        <tr key={presd.prescriptionDetail.prescriptionDetailId}>
+                                                                                            <td>{presd.prescriptionDetail.prescriptionDetailId}</td>
+                                                                                            <td>{presd.prescriptionDetail.medicineName}</td>
+                                                                                            <td>
+                                                                                                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', justifyContent: 'center' }}>
+                                                                                                    <span>
+                                                                                                        <input className="Remember_Check" type="checkbox" checked={timeReminderNames.includes('Sáng')} />
+                                                                                                        Sáng
+                                                                                                    </span>
+                                                                                                    <span>
+                                                                                                        <input className="Remember_Check" type="checkbox" checked={timeReminderNames.includes('Trưa')} />
+                                                                                                        Trưa
+                                                                                                    </span>
+                                                                                                    <span>
+                                                                                                        <input className="Remember_Check" type="checkbox" checked={timeReminderNames.includes('Chiều')} />
+                                                                                                        Chiều
+                                                                                                    </span>
+                                                                                                    <span>
+                                                                                                        <input className="Remember_Check" type="checkbox" checked={timeReminderNames.includes('Tối')} />
+                                                                                                        Tối
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>{presd.prescriptionDetail.quantity}</td>
+                                                                                            <td>{presd.prescriptionDetail.unitPrice} VNĐ</td>
+                                                                                            <td>{presd.prescriptionDetail.quantity * presd.prescriptionDetail.unitPrice} VNĐ</td>
                                                                                         </tr>
                                                                                     </>
                                                                                     // { tempTotal += presd.quantity * presd.unitPrice } {/* Cập nhật giá trị tempTotal */ }

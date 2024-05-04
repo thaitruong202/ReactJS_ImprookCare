@@ -75,6 +75,10 @@ import CheckedTest from "./components/Nurse/CheckedTest";
 import UncheckedTest from "./components/Nurse/UncheckedTest";
 import CheckTestService from "./components/TestService/CheckTestService";
 import UncheckTestService from "./components/TestService/UncheckTestService";
+import UpdatePrescription from "./components/Doctor/UpdatePrescription";
+import Reminder from "./components/Reminder/Reminder";
+import PrescriptionReminder from "./components/Reminder/PrescriptionReminder";
+import CustomReminder from "./components/Reminder/CustomReminder";
 
 export const UserContext = createContext();
 export const BookingManagementContext = createContext();
@@ -127,6 +131,10 @@ const App = () => {
                   </Route>
                   <Route path='history' element={<History />} />
                   <Route path='paymenthistory' element={<PaymentHistory />} />
+                  <Route path='reminder' element={<Reminder />} >
+                    <Route path='prescriptionreminder' element={<PrescriptionReminder />} />
+                    <Route path='customreminder' element={<CustomReminder />} />
+                  </Route>
                   <Route path='profile' element={<Profile />} />
                   <Route path='message' element={<Message />} />
                   <Route path='consultantchat' element={<ConsultantChat />} />
@@ -139,6 +147,7 @@ const App = () => {
                   <Route path='profiledoctor' element={<ProfileDoctor />} />
                   <Route path='doctormessage' element={<DoctorMessage />} />
                   <Route path='videocall' element={<VideoCall />} />
+                  <Route path='updateprescription/:bookingId' element={<UpdatePrescription />} />
                   <Route path='examination' element={<Examination />}>
                     <Route path='prescription' element={<Prescription />} />
                     <Route path='prescriptionhistory' element={<PrescriptionHistory />} />

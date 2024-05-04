@@ -35,7 +35,7 @@ const CompletedAppointment = () => {
 
     const viewBookingDetail = (evt, bookingId) => {
         evt.preventDefault();
-        nav(`/appointmentdetail?bookingId=${bookingId}`)
+        nav(`/appointmentdetail/?bookingId=${bookingId}`)
     }
 
     return <>

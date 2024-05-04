@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, BookingManagementContext } from "../../App";
-import { Badge, Table } from "react-bootstrap";
+import { Badge, Button, Table } from "react-bootstrap";
 import cookie from "react-cookies"
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 

@@ -129,8 +129,11 @@ const Profile = () => {
 
     useEffect(() => {
         loadProfilePatient();
-        loadLockProfile();
     }, [current_user?.userId])
+
+    useEffect(() => {
+        loadLockProfile()
+    }, [lockProfile])
 
     const viewProfilePatient = (evt, pp) => {
         evt.preventDefault();
