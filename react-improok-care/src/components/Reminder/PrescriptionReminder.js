@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Table } from "react-bootstrap";
+import { Button, Form, Table, Modal } from "react-bootstrap";
 import { UserContext } from "../../App";
 import { authApi, endpoints } from "../../configs/Apis";
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
@@ -11,6 +11,8 @@ const PrescriptionReminder = () => {
     const [profilePatient, setProfilePatient] = useState([])
     const [selectedProfilePatient, setSelectedProfilePatient] = useState('')
 
+    const [showModal, setShowModal] = useState(false)
+
     const [loading, setLoading] = useState(false);
 
     const [prescription, setPrescription] = useState([]);
@@ -18,6 +20,8 @@ const PrescriptionReminder = () => {
     const [totalPrescriptionPages, setTotalPrescriptionPages] = useState('1');
     const [prescriptionList, setPrescriptionList] = useState([]);
     const [prescriptionDetail, setPrescriptionDetail] = useState([]);
+
+    const [medicalReminder, setMedicalReminder] = useState([])
 
 
     const loadProfilePatient = async () => {
@@ -75,6 +79,17 @@ const PrescriptionReminder = () => {
             setPrescriptionDetail(res.data)
             console.log(res.data);
             setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const loadMedicalReminder = async (pl) => {
+        try {
+            let res = await authApi().get(endpoints['medical-reminder'](pl.prescriptionId))
+            setMedicalReminder(res.data);
+            console.log(res.data);
+            setShowModal(true)
         } catch (error) {
             console.log(error);
         }
@@ -194,13 +209,33 @@ const PrescriptionReminder = () => {
                                                             </tbody>
                                                         </Table>
                                                         <div className="Payment_Button">
-                                                            <Button variant="primary">Tạo lịch nhắc</Button>
+                                                            <Button variant="primary" onClick={() => loadMedicalReminder(pl)}>Tạo lịch nhắc</Button>
                                                         </div>
                                                     </div>
                                                 </AccordionDetails>
                                             </Accordion>
                                         </>
                                     })}
+                                    {showModal && (
+                                        <Modal fullscreen={true} show={showModal} onHide={() => setShowModal(false)}
+                                            style={{ display: 'block', backgroundColor: 'rgba(0.0.0.0.5)', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, zIndex: 9999 }}
+                                        >
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>Nhắc uống thuốc</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <div className="test-body">
+                                                    <div className="test-body-info">
+
+                                                    </div>
+                                                </div>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={() => setShowModal(false)}>Đóng</Button>
+                                                <Button variant="primary">Lưu</Button>
+                                            </Modal.Footer>
+                                        </Modal>
+                                    )}
                                 </>
                             }
                         </div>
