@@ -11,9 +11,7 @@ const UpdatePrescription = () => {
     const [pres, setPres] = useState([])
     const [medicineList, setMedicineList] = useState([])
     const [prescription, setPrescription] = useState([])
-    // const [presList, setPresList] = useState([])
     const [loading, setLoading] = useState(false)
-
     const [diagnosis, setDiagnosis] = useState('')
     const [symptom, setSymptom] = useState('')
 
@@ -126,7 +124,6 @@ const UpdatePrescription = () => {
             }
             return p;
         });
-
         setPres(updatedPres);
     };
 
