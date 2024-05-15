@@ -11,6 +11,7 @@ import cookie from "react-cookies";
 import { UserContext, WebSocketContext } from "../../App";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { reConnectNotification } from "../../utils/WebSocket";
+import Swal from 'sweetalert2'
 
 var connectNoti = null
 
@@ -27,45 +28,79 @@ const Login = () => {
         evt.preventDefault();
 
         const process = async () => {
-            try {
                 setLoading(true);
-                let res = await Apis.post(endpoints['login'], {
-                    "username": username.trim(),
-                    "password": password
+                Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes, Login!"
+                }).then(async (result) => {
+                  if (result.isConfirmed) {
+                    try {
+
+                        let res = await Apis.post(endpoints['login'], {
+                            "username": username.trim(),
+                            "password": password
+                        });
+
+                        cookie.save("token", res.data);
+
+                        let { data } = await authApi().get(endpoints['current-user']);
+
+                        console.log(data)
+                        cookie.save('user', data)
+
+                        // connectNoti = connectNotification(data.userId);
+                        connectNoti = reConnectNotification(false, data.userId)
+                        // cookie.save("socket", connectNoti)
+
+                        dispatch({
+                            "type": "login",
+                            "payload": data
+                        });
+                        dispatchWebSocket({
+                            "type": "login",
+                            "payload": connectNoti
+                        });
+
+                        setLoading(false)
+                        console.log("Login", connectNoti);
+                        if (res.status === 200)
+                            toast.success("Đăng nhập thành công!");
+                        Swal.fire({
+                          title: "Đăng nhập thành công!",
+                          text: "Bạn vừa mới đăng nhập.",
+                          icon: "success"
+                        });
+                        } catch (err) {
+                            setLoading(false);
+                            Swal.fire({
+                              title: "Đăng nhập thất bại!",
+                              text: "Sai tài khoản hoặc mật khẩu.",
+                              icon: "error"
+                            });
+                            toast.error("Sai tài khoản hoặc mật khẩu!");
+                        }
+                    }
+                    else {
+                        setLoading(false)
+                    }
                 });
+                // let res = await Apis.post(endpoints['login'], {
+                //     "username": username.trim(),
+                //     "password": password
+                // });
 
-                cookie.save("token", res.data);
-                console.log(res)
-                console.log(cookie.load("token"))
+                // cookie.save("token", res.data);
+                // console.log(res)
+                // console.log(cookie.load("token"))
 
-                let { data } = await authApi().get(endpoints['current-user']);
-
-                console.log(data)
-                cookie.save('user', data)
-
-                // connectNoti = connectNotification(data.userId);
-                connectNoti = reConnectNotification(false, data.userId)
-                // cookie.save("socket", connectNoti)
-
-                dispatch({
-                    "type": "login",
-                    "payload": data
-                });
-                dispatchWebSocket({
-                    "type": "login",
-                    "payload": connectNoti
-                });
-
-                setLoading(false)
-                console.log("Login", connectNoti);
-                if (res.status === 200)
-                    toast.success("Đăng nhập thành công!");
+                
 
                 // connectNotification(clientStomp, data.userId);
-            } catch (err) {
-                setLoading(false);
-                toast.error("Sai tài khoản hoặc mật khẩu!");
-            }
         }
         process();
     }
