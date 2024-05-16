@@ -5,7 +5,8 @@ import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { useNavigate } from "react-router-dom";
 import cookie from "react-cookies";
 import moment from "moment";
-import { MdMenu, MdPayments } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
+import { FaWallet } from "react-icons/fa";
 
 const PaidAppointment = () => {
     const [paidAppointment, setPaidAppointment] = useState([]);
@@ -112,7 +113,7 @@ const PaidAppointment = () => {
                                     <td>{timeBegin} - {timeEnd}</td>
                                     <td><Badge bg="secondary">{pa.statusId.statusValue}</Badge></td>
                                     <td><Button variant="primary" onClick={(e) => viewBookingDetail(e, pa.bookingId)}><MdMenu /></Button></td>
-                                    <td><Button variant="primary" onClick={() => servicePayment(pa.scheduleId.profileDoctorId.bookingPrice, pa.profilePatientId.name, pa.bookingId)}><MdPayments /></Button></td>
+                                    <td><Button variant="primary" onClick={() => servicePayment(pa.scheduleId.profileDoctorId.bookingPrice, pa.profilePatientId.name, pa.bookingId)}><FaWallet /></Button></td>
                                 </tr>
                             </>
                         })}

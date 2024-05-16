@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Form, Modal, Table } from "react-bootstrap";
 import { UserContext } from "../../App";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
-import medicaltest from "../../assets/images/medical-test.png"
+// import medicaltest from "../../assets/images/medical-test.png"
 import moment from "moment";
+import { MdMenu } from "react-icons/md";
 
 const CheckedTest = () => {
     const [current_user,] = useContext(UserContext)
@@ -128,7 +129,7 @@ const CheckedTest = () => {
                                         <td>{tl.testResultDiagnosis}</td>
                                         <td>{tl.bookingId.scheduleId.profileDoctorId.specialtyId.specialtyName}</td>
                                         <td>{tl.bookingId.scheduleId.profileDoctorId.name}</td>
-                                        <td><Button variant="primary" onClick={() => loadTestResultDetail(tl.testResultId)}>Chi tiết</Button></td>
+                                        <td><Button variant="primary" onClick={() => loadTestResultDetail(tl.testResultId)}><MdMenu /></Button></td>
                                     </tr>
                                     : ""}
                             </>
@@ -179,7 +180,7 @@ const CheckedTest = () => {
                                     <Form.Control type="text" value={testResultDetail?.testServiceId.testServiceName} disabled />
                                 </div>
                             </div>
-                            <div className="test-body-image">
+                            {/* <div className="test-body-image">
                                 <h4>Kết quả</h4>
                                 <div className="test-image-choice">
                                     {testResultDetail?.testResultImage ? (
@@ -192,7 +193,7 @@ const CheckedTest = () => {
                                         </div>
                                     )}
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="test-body-pdf">
                                 <button className="create-pdf-butt" onClick={() => createPdf()}>Tạo PDF</button>
                                 {pdfUrl && (

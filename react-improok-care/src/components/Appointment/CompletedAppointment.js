@@ -51,7 +51,9 @@ const CompletedAppointment = () => {
                             <th>Ngày</th>
                             <th>Khung giờ</th>
                             <th>Tình trạng</th>
-                            <th>Thao tác</th>
+                            <th>Chi tiết</th>
+                            <th>Đơn thuốc</th>
+                            <th>Xét nghiệm</th>
                         </tr>
                     </thead>
                     <tbody>
