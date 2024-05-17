@@ -181,10 +181,10 @@ const History = () => {
         process();
     }
 
-    // useEffect(() => {
-    //     loadPrescription();
-    //     loadPrescriptionPage();
-    // }, [])
+    useEffect(() => {
+        loadPrescription();
+        // loadPrescriptionPage();
+    }, [])
 
     return <>
         <div className="History_Wrapper">
