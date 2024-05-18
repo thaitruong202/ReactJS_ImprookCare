@@ -63,6 +63,7 @@ const TestHistory = () => {
     const createPdf = async () => {
         try {
             let response = await Apis.post(endpoints['create-pdf-result'], {
+                "profilePatientId": testDetail?.bookingId.profilePatientId.profilePatientId,
                 "profilePatientName": testDetail?.bookingId.profilePatientId.name,
                 "profileDoctorName": testDetail?.bookingId.scheduleId.profileDoctorId.name,
                 "nurseName": testDetail?.userId === null ? "Chưa xét nghiệm" : `${testDetail?.userId.lastname} ${testDetail?.userId.firstname}`,

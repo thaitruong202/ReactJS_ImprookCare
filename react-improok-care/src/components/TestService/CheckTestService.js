@@ -82,6 +82,7 @@ const CheckTestService = () => {
     const createPdf = async () => {
         try {
             let response = await Apis.post(endpoints['create-pdf-result'], {
+                "profilePatientId": testResultDetail?.bookingId.profilePatientId.profilePatientId,
                 "profilePatientName": testResultDetail?.bookingId.profilePatientId.name,
                 "profileDoctorName": testResultDetail?.bookingId.scheduleId.profileDoctorId.name,
                 "nurseName": testResultDetail?.userId === null ? "Chưa xét nghiệm" : `${testResultDetail?.userId.lastname} ${testResultDetail?.userId.firstname}`,

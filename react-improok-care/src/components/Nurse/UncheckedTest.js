@@ -4,6 +4,7 @@ import { UserContext } from "../../App";
 import { authApi, endpoints } from "../../configs/Apis";
 // import medicaltest from "../../assets/images/medical-test.png"
 import { MdMenu } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const UncheckedTest = () => {
     const [current_user,] = useContext(UserContext)
@@ -63,11 +64,12 @@ const UncheckedTest = () => {
             form.append("userId", current_user?.userId)
             form.append("testResultValue", testResultValue)
             form.append("testResultDiagnosis", testResultDiagnosis)
-            if (testImage.current.files[0] !== undefined) {
-                form.append("image", testImage.current.files[0]);
-            } else {
-                form.append("image", new Blob());
-            }
+            // if (testImage.current.files[0] !== undefined) {
+            //     form.append("image", testImage.current.files[0]);
+            // } else {
+            //     form.append("image", new Blob());
+            // }
+            form.append("image", new Blob());
 
             let res = await authApi().post(endpoints['return-test-result'], form, {
                 headers: {
@@ -76,6 +78,9 @@ const UncheckedTest = () => {
             })
             console.log(res.data)
             setShowModal(false)
+            Swal.fire(
+                'Thành công', "Điền xét nghiệm thành công!", 'success'
+            );
         } catch (error) {
             console.log(error)
         }
