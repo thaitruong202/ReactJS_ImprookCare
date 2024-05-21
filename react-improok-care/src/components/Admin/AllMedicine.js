@@ -81,7 +81,6 @@ const AllMedicine = () => {
 
     useEffect(() => {
         loadMedicine();
-        // loadMedicinePage();
     }, [])
 
     useEffect(() => {

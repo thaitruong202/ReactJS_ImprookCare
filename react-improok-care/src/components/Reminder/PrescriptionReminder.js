@@ -6,6 +6,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import reminder from "../../assets/images/reminder.png"
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const PrescriptionReminder = () => {
     const [current_user,] = useContext(UserContext)
@@ -65,7 +66,8 @@ const PrescriptionReminder = () => {
     }
 
     useEffect(() => {
-        viewPrescription()
+        if (selectedProfilePatient)
+            viewPrescription()
     }, [selectedProfilePatient])
 
     const loadPrescriptionDetail = async (pl) => {
@@ -151,7 +153,8 @@ const PrescriptionReminder = () => {
                     customTime: `${startDates} ${reminderTime}:00`,
                     startDate: startDates,
                     medicineName: mr.prescriptionDetailId.medicineId.medicineName,
-                    email: mr.prescriptionDetailId.prescriptionId.bookingId.profilePatientId.email
+                    email: mr.prescriptionDetailId.prescriptionId.bookingId.profilePatientId.email,
+                    userId: current_user?.userId
                 };
                 medicalReminderData.push(data);
             });
@@ -160,6 +163,9 @@ const PrescriptionReminder = () => {
             console.log(res.data)
             medicalReminderData = [];
             setShowModal(false)
+            Swal.fire(
+                'Thành công', "Tạo nhắc uống thuốc thành công!", 'success'
+            );
         } catch (error) {
             console.log(error)
         }
