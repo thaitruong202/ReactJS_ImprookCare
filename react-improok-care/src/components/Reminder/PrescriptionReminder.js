@@ -149,17 +149,17 @@ const PrescriptionReminder = () => {
                 const reminderTime = medicineTime[index] || formattedDate
 
                 const data = {
-                    medicalReminderId: mr.medicalReminderId,
+                    medicalReminderId: mr.medicalReminderId.toString(),
                     customTime: `${startDates} ${reminderTime}:00`,
                     startDate: startDates,
                     medicineName: mr.prescriptionDetailId.medicineId.medicineName,
                     email: mr.prescriptionDetailId.prescriptionId.bookingId.profilePatientId.email,
-                    userId: current_user?.userId
+                    userId: current_user?.userId.toString()
                 };
                 medicalReminderData.push(data);
             });
             console.log(medicalReminderData)
-            let res = await authApi().post(endpoints['add-list-medical-schedule'], medicalReminder);
+            let res = await authApi().post(endpoints['add-list-medical-schedule'], medicalReminderData);
             console.log(res.data)
             medicalReminderData = [];
             setShowModal(false)
