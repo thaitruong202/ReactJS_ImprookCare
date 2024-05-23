@@ -79,7 +79,6 @@ const ReminderList = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Tên thuốc</th>
                                     <th>Thời gian uống</th>
                                     <th>Ngày bắt đầu</th>
@@ -92,7 +91,6 @@ const ReminderList = () => {
                                     const timeBegin = new Date(rl.customTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                                     return <>
                                         <tr key={rl.medicalScheduleId}>
-                                            <td>{rl.medicalScheduleId}</td>
                                             <td>{rl.medicineName}</td>
                                             <td>{timeBegin}</td>
                                             <td>{moment(rl.startDate).format('DD-MM-YYYY')}</td>
