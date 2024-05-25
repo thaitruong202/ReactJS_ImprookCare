@@ -2,7 +2,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 const SERVER_CONTEXT = "/IMPROOK_CARE";
-export const SERVER = "http://localhost:2024";
+export const SERVER = "https://springboot-improokcare.onrender.com";
 
 export const endpoints = {
     "login": `${SERVER_CONTEXT}/api/public/login/`,
@@ -118,7 +118,7 @@ export const endpoints = {
     "update-prescription": `${SERVER_CONTEXT}/api/auth/doctor/update-prescription/`,
     "create-pdf-result": `${SERVER_CONTEXT}/api/public/generate-pdf-test-result/`,
     "web-socket": `${SERVER_CONTEXT}/api/public/webSocket/`,
-    "web-notification": `${SERVER_CONTEXT}/api/public/notification`,
+    "web-notification": `${SERVER_CONTEXT}/api/public/notification/`,
     "payment-detail": (paymentHistoryId) => `${SERVER_CONTEXT}/api/auth/payment-history/${paymentHistoryId}/`,
     "add-list-medical-schedule": `${SERVER_CONTEXT}/api/auth/add-list-medical-schedule/`,
     "load-medical-schedule": (userId) => `${SERVER_CONTEXT}/api/auth/user/${userId}/medical-schedule/`
