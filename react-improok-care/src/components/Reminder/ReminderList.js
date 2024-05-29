@@ -27,6 +27,7 @@ const ReminderList = () => {
             let res = await authApi().get(endpoints['load-medical-schedule'](current_user?.userId))
             console.log(res.data.content)
             setReminderList(res.data.content)
+            setTotalPages(res.data.totalPages)
         } catch (error) {
             console.log(error)
         }
@@ -45,7 +46,7 @@ const ReminderList = () => {
             let res = await authApi().get(e)
             console.log(res.data.content)
             setReminderList(res.data.content)
-            setTotalPages(res.data.totalPages)
+            // setTotalPages(res.data.totalPages)
         } catch (error) {
             console.log(error)
         }
@@ -101,6 +102,45 @@ const ReminderList = () => {
         }
     }
 
+    const deleteMedicalSchedule = async (medicalScheduleId) => {
+        try {
+            let res = await authApi().delete(endpoints['delete-medical-schedule-id'](medicalScheduleId))
+            console.log(res.data)
+            getReminderList()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleShowModal = (medicalScheduleId, medicalReminderId) => {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success mr-2',
+                cancelButton: 'btn btn-danger',
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: "Xóa nhắc uống thuốc",
+            text: "Bạn sẽ không thể hoàn tác tác vụ này!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: "Xóa",
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed && medicalReminderId === null) {
+                deleteMedicalSchedule(medicalScheduleId)
+                swalWithBootstrapButtons.fire(
+                    'Thành công', "Xóa nhắc uống thuốc thành công!", 'success'
+                );
+            } else if (result.isConfirmed && medicalReminderId !== null) {
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+            }
+        });
+    };
+
     return (
         <>
             <div className="reminder-list-wrapper">
@@ -130,7 +170,9 @@ const ReminderList = () => {
                                             <td>{moment(rl.startDate).format('DD-MM-YYYY')}</td>
                                             <td>{rl.email}</td>
                                             <td><Button variant="primary" onClick={() => getReminderListDetail(rl.medicalScheduleId)}><FaEdit /></Button></td>
-                                            <td><Button variant="primary"><FaTrashCan /></Button></td>
+                                            <td><Button variant="primary"
+                                                onClick={() => handleShowModal(rl.medicalScheduleId, rl.medicalReminderId)}
+                                            ><FaTrashCan /></Button></td>
                                         </tr>
                                     </>
                                 })}

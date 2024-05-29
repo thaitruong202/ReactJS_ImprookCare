@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import { Autocomplete, Stack, TextField } from "@mui/material";
 import cookie from "react-cookies"
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const UpdatePrescription = () => {
