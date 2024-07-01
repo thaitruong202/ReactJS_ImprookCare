@@ -65,7 +65,7 @@ const Refund = () => {
             let vnp_TransactionStatus = res.data.vnp_TransactionStatus;
             let vnp_securehash = res.data.vnp_SecureHash;
             let e = endpoints['add-payment']
-            e += `?bookingId=${bookingId}&vnp_ResponseId=${vnp_ResponseId}&vnp_command=${vnp_command}&vnp_ResponseCode=${vnp_ResponseCode}&vnp_Message=${vnp_Message}&vnp_tmncode=${vnp_tmncode}&vnp_txnref=${vnp_txnref}&vnp_amount=${vnp_amount}&vnp_orderinfo=${vnp_orderinfo}&vnp_bankcode=${vnp_bankcode}&vnp_PayDate=${vnp_PayDate}&vnp_TransactionNo=${vnp_TransactionNo}&vnp_TransactionStatus=${vnp_TransactionStatus}&vnp_securehash=${vnp_securehash}`;
+            e += `?bookingId=${bookingId}&vnp_ResponseId=${vnp_ResponseId}&vnp_command=${vnp_command}&vnp_ResponseCode="01"&vnp_Message=${vnp_Message}&vnp_tmncode=${vnp_tmncode}&vnp_txnref=${vnp_txnref}&vnp_amount=${vnp_amount}&vnp_orderinfo=${vnp_orderinfo}&vnp_bankcode=${vnp_bankcode}&vnp_PayDate=${vnp_PayDate}&vnp_TransactionNo=${vnp_TransactionNo}&vnp_TransactionStatus=${vnp_TransactionStatus}&vnp_securehash=${vnp_securehash}`;
             console.log(e);
             let pay = await authApi().get(e)
             console.log(pay.data)

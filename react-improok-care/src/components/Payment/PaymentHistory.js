@@ -5,11 +5,12 @@ import profile404 from "../../assets/images/profile.png"
 import paymentcard from "../../assets/images/payment-card.png"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import { authApi, endpoints } from "../../configs/Apis";
+import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { Badge, Button, Modal, Table } from "react-bootstrap";
 import success from "../../assets/images/success.png"
 import { MdMenu } from "react-icons/md"
 import moment from "moment"
+import Swal from "sweetalert2"
 
 const PaymentHistory = () => {
     const [current_user,] = useContext(UserContext);
@@ -17,6 +18,7 @@ const PaymentHistory = () => {
     const [selectedProfile, setSelectedProfile] = useState();
     const [paymentList, setPaymentList] = useState([])
     const [showModal, setShowModal] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const [paymentDetail, setPaymentDetail] = useState([])
 
@@ -54,6 +56,42 @@ const PaymentHistory = () => {
             setShowModal(true)
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const cancelBooking = async (bookingId) => {
+        try {
+            const requestBody = bookingId.toString()
+            let res = await authApi().post(endpoints['cancel-booking'], requestBody, {
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            })
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const refund = async (bookingId, name, price) => {
+        try {
+            setLoading(true);
+            // let bookingId = q.get('bookingId')
+            let uri = "Bệnh nhân " + name + " đã được hoàn tiền thành công "
+            let encoded = encodeURIComponent(uri)
+            let res = await Apis.post(endpoints['vnpay-payment'], {
+                "amount": price,
+                "orderInfor": encoded,
+                "returnUrl": `http://localhost:3000/refund/?bookingId=${bookingId}`
+            });
+            window.location.href = res.data;
+            setLoading(false);
+            console.log(res.data);
+        } catch (error) {
+            Swal.fire(
+                'Thất bại', "Có lỗi xảy ra!", 'error'
+            );
+            console.log(error);
         }
     }
 
@@ -206,6 +244,7 @@ const PaymentHistory = () => {
                                                                         </div>
                                                                     </Modal.Body>
                                                                     <Modal.Footer>
+                                                                        {(paymentDetail.bookingId.statusId.statusId === 1 || paymentDetail.bookingId.statusId.statusId === 5) && paymentDetail.bookingId.bookingCancel === 0 ? <Button variant="primary" onClick={() => { cancelBooking(paymentDetail.bookingId.bookingId); refund(paymentDetail.bookingId.bookingId, paymentDetail.bookingId.profilePatientId.name, paymentDetail.bookingId.scheduleId.profileDoctorId.bookingPrice) }}>Hoàn tiền</Button> : ""}
                                                                         <Button variant="secondary" onClick={() => setShowModal(false)}>Đóng</Button>
                                                                     </Modal.Footer>
                                                                 </Modal>
