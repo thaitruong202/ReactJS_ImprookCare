@@ -127,9 +127,9 @@ const Profile = () => {
         loadProfilePatient();
     }, [current_user?.userId])
 
-    useEffect(() => {
-        loadLockProfile()
-    }, [lockProfile])
+    // useEffect(() => {
+    //     loadLockProfile()
+    // }, [lockProfile])
 
     const viewProfilePatient = (evt, pp) => {
         evt.preventDefault();
@@ -305,7 +305,7 @@ const Profile = () => {
             return <Navigate to={next} />
     }
 
-    const autoFill = () => {
+    const autoFill = async () => {
         try {
             setName(current_user?.lastname + " " + current_user?.firstname)
             setPhonenumber(current_user?.username)
@@ -314,7 +314,12 @@ const Profile = () => {
                 setGender(true)
             else
                 setGender(false)
-            setCurrentFormattedDate(current_user?.birthday.toISOString().split('T')[0])
+            // setCurrentFormattedDate(current_user?.birthday.toISOString().split('T')[0])
+            setCurrentFormattedDate(moment(current_user?.birthday).format('YYYY-MM-DD'))
+            console.log(moment(current_user?.birthday).format('YYYY-MM-DD'))
+            console.log(typeof (moment(current_user?.birthday).format('YYYY-MM-DD')))
+            console.log(currentDate.toISOString().split('T')[0])
+            console.log(typeof (currentDate.toISOString().split('T')[0]))
         } catch (error) {
             console.log(error)
         }
@@ -568,7 +573,7 @@ const Profile = () => {
                                         </div>
                                         <div className="Profile_Birthday">
                                             <Form.Label style={{ width: "30%" }}>Ngày sinh</Form.Label>
-                                            <input type="date" id="birthdayInput" defaultValue={currentFormattedDate} />
+                                            <input type="date" id="birthdayInput" value={currentFormattedDate} onChange={(e) => setCurrentFormattedDate(e.target.value)} />
                                         </div>
                                         <div className="Profile_Relationship">
                                             <Form.Label style={{ width: "22%" }}>Mối quan hệ</Form.Label>
@@ -584,7 +589,7 @@ const Profile = () => {
                                         <div className="Update_Button">
                                             <button type="button" onClick={exitAddProfileClick}>Thoát</button>
                                             <Button type="submit">Thêm hồ sơ mới</Button>
-                                            <button type="button" onClick={autoFill}>Tự động điền</button>
+                                            <button type="button" onClick={() => autoFill()}>Tự động điền</button>
                                         </div>
                                     </Form>
                                 </div>

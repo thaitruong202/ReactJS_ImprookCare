@@ -132,17 +132,18 @@ const PaidAppointment = () => {
                         {Object.values(paidAppointment).map((pa, index) => {
                             const timeBegin = new Date(pa.scheduleId.timeSlotId?.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                             const timeEnd = new Date(pa.scheduleId.timeSlotId?.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                            return <>
-                                <tr key={index}>
-                                    <td>{pa.bookingId}</td>
-                                    <td>{pa.profilePatientId.name}</td>
-                                    <td>{moment(pa.scheduleId.date).format('DD-MM-YYYY')}</td>
-                                    <td>{timeBegin} - {timeEnd}</td>
-                                    <td><Badge bg="secondary">{pa.statusId.statusValue}</Badge></td>
-                                    <td><Button variant="primary" onClick={(e) => viewBookingDetail(e, pa.bookingId)}><MdMenu /></Button></td>
-                                    <td><Button variant="primary" onClick={() => servicePayment(pa.scheduleId.profileDoctorId.bookingPrice, pa.profilePatientId.name, pa.bookingId)}><FaWallet /></Button></td>
-                                </tr>
-                            </>
+                            if (pa.bookingCancel === false)
+                                return <>
+                                    <tr key={index}>
+                                        <td>{pa.bookingId}</td>
+                                        <td>{pa.profilePatientId.name}</td>
+                                        <td>{moment(pa.scheduleId.date).format('DD-MM-YYYY')}</td>
+                                        <td>{timeBegin} - {timeEnd}</td>
+                                        <td><Badge bg="secondary">{pa.statusId.statusValue}</Badge></td>
+                                        <td><Button variant="primary" onClick={(e) => viewBookingDetail(e, pa.bookingId)}><MdMenu /></Button></td>
+                                        <td><Button variant="primary" onClick={() => servicePayment(pa.scheduleId.profileDoctorId.bookingPrice, pa.profilePatientId.name, pa.bookingId)}><FaWallet /></Button></td>
+                                    </tr>
+                                </>
                         })}
                     </tbody>
                 </Table>

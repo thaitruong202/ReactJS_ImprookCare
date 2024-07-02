@@ -13,6 +13,7 @@ const UpdateUser = () => {
     const [roles, setRoles] = useState([]);
     const [selectedRole, setSelectedRole] = useState('1');
     const [gender, setGender] = useState();
+    const [email, setEmail] = useState('')
 
     const updateChange = (evt, field) => {
         setUserUpdate(current => {

@@ -20,11 +20,13 @@ const Personal = () => {
         "firstname": current_user?.firstname,
         "lastname": current_user?.lastname,
         "userId": current_user?.userId,
+        "email": current_user?.email,
         "birthday": current_user?.birthday,
         "gender": current_user?.gender,
         "avatar": current_user?.avatar
     })
     const [checkPersonalInfo, setCheckPersonalInfo] = useState(true);
+    const [isEmailValid, setIsEmailValid] = useState(false)
 
     const formattedDate = new Date(current_user?.birthday);
     formattedDate.setHours(formattedDate.getHours() + 7);
@@ -153,6 +155,29 @@ const Personal = () => {
 
     // console.log(current_user)
 
+    const validateEmail = (evt) => {
+        evt.preventDefault();
+
+        const emailInput = document.getElementById('emailInput');
+        const errorMsg = document.getElementById('errorMsg');
+        const email = emailInput.value;
+
+        // Kiểm tra định dạng email
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (email === '') {
+            errorMsg.style.display = 'none';
+            setIsEmailValid(false)
+        } else if (!emailRegex.test(email)) {
+            errorMsg.style.display = 'block';
+            setIsEmailValid(false);
+        } else {
+            errorMsg.style.display = 'none';
+            setIsEmailValid(true);
+            // setEmail(evt.target.value);
+            change(evt, "email")
+        }
+    }
+
     return <>
         <div className="PersonalPage_Wrapper">
             <div className="PersonalPage">
@@ -226,7 +251,8 @@ const Personal = () => {
                                     </div>
                                     <div className="Personal_Email">
                                         <Form.Label style={{ width: "30%" }}>Email</Form.Label>
-                                        <Form.Control defaultValue={current_user?.email} type="email" placeholder="Email" required />
+                                        <Form.Control defaultValue={current_user?.email === null ? "" : current_user?.email} onChange={(e) => validateEmail(e)} type="email" placeholder="Email" required id="emailInput" />
+                                        <p id="errorMsg" style={{ color: 'red', display: 'none' }}>Email không hợp lệ</p>
                                     </div>
                                     <div className="Personal_Gender">
                                         <Form.Label style={{ width: "22%" }}>Giới tính</Form.Label>

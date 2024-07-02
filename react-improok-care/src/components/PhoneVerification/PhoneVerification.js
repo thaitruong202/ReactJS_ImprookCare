@@ -194,18 +194,6 @@ const PhoneVerification = () => {
                                             <div className="Separate"></div>
                                             {loading === true ? <Spinner /> : <button type="submit" className="PhoneVerification_Butt">Xác thực</button>}
                                         </Form>
-                                        <div className="Separate"></div>
-                                        <div className="PhoneVerification_Option">
-                                            <div className="PhoneVerification_Or">
-                                                <div></div>
-                                                <span>Or</span>
-                                                <div></div>
-                                            </div>
-                                            <div className="PhoneVerification_Another">
-                                                <button><Google /> Google</button>
-                                                <button><Facebook /> Facebook</button>
-                                            </div>
-                                        </div>
                                         <div className="PhoneVerification_Policy">
                                             <div>
                                                 Bằng việc đăng kí, bạn đã đồng ý với Spring Care về

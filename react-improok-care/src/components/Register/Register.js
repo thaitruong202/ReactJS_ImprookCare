@@ -205,17 +205,6 @@ const Register = (props) => {
                                             <a href="/">Đăng ký với SMS</a>
                                         </div> */}
                                     <div className="Separate"></div>
-                                    <div className="Register_Option">
-                                        <div className="Register_Or">
-                                            <div></div>
-                                            <span>Or</span>
-                                            <div></div>
-                                        </div>
-                                        <div className="Register_Another">
-                                            <button><Google /> Google</button>
-                                            <button><Facebook /> Facebook</button>
-                                        </div>
-                                    </div>
                                     <div className="Register_Policy">
                                         <div>
                                             Bằng việc đăng kí, bạn đã đồng ý với Spring Care về

@@ -618,10 +618,6 @@ const Admin = () => {
                 return <>
                     <Revenue />
                 </>
-            case "patient":
-                return <>
-                    <div>Nội dung thống kê bệnh nhân</div>
-                </>
             default:
                 return null;
         }
@@ -745,12 +741,6 @@ const Admin = () => {
                                                                 <MonetizationOn />
                                                             </ListItemIcon>
                                                             <ListItemText primary="Thống kê doanh thu" />
-                                                        </ListItemButton>
-                                                        <ListItemButton sx={{ pl: 4 }}>
-                                                            <ListItemIcon>
-                                                                <LocalHospital />
-                                                            </ListItemIcon>
-                                                            <ListItemText primary="Thống kê bệnh nhân" />
                                                         </ListItemButton>
                                                     </List>
                                                 </Collapse>

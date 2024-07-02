@@ -131,20 +131,9 @@ const Login = () => {
                                     </Form>
                                     <div className="Login_Help">
                                         <span>
-                                            <span><input className="Remember_Check" type="checkbox" /> Nhớ mật khẩu</span>
+
                                         </span>
                                         <Link to="/forgetpassword">Quên mật khẩu?</Link>
-                                    </div>
-                                    <div className="Login_Option">
-                                        <div className="Login_Or">
-                                            <div></div>
-                                            <span>Hoặc</span>
-                                            <div></div>
-                                        </div>
-                                        <div className="Login_Another">
-                                            <button><Google /> Google</button>
-                                            <button><Facebook /> Facebook</button>
-                                        </div>
                                     </div>
                                 </div>
                                 <div className="To_Register">

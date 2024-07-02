@@ -99,7 +99,7 @@ const Overview = () => {
             <div className="Overview_Stats">
                 <div className="Stats_Booking">
                     <div>
-                        <BarChart labels={statsLabelsUserByBooking} titleLabel="Biểu đồ thống kê lượt Booking" data={statsDataUserByBooking} />
+                        <BarChart labels={statsLabelsUserByBooking} titleLabel="Biểu đồ thống kê lượt đặt khám" data={statsDataUserByBooking} />
                     </div>
                 </div>
                 <div className="Stats_Revenue">

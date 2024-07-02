@@ -92,16 +92,17 @@ const CompletedAppointment = () => {
                         {Object.values(completedAppointment).map((ca, index) => {
                             const timeBegin = new Date(ca.scheduleId.timeSlotId?.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                             const timeEnd = new Date(ca.scheduleId.timeSlotId?.timeEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                            return <>
-                                <tr key={index}>
-                                    <td>{ca.bookingId}</td>
-                                    <td>{ca.profilePatientId.name}</td>
-                                    <td>{moment(ca.scheduleId.date).format('DD-MM-YYYY')}</td>
-                                    <td>{timeBegin} - {timeEnd}</td>
-                                    <td><Badge bg="success">{ca.statusId.statusValue}</Badge></td>
-                                    <td><Button variant="primary" onClick={(e) => viewBookingDetail(e, ca.bookingId)}><MdMenu /></Button></td>
-                                </tr>
-                            </>
+                            if (ca.bookingCancel === false)
+                                return <>
+                                    <tr key={index}>
+                                        <td>{ca.bookingId}</td>
+                                        <td>{ca.profilePatientId.name}</td>
+                                        <td>{moment(ca.scheduleId.date).format('DD-MM-YYYY')}</td>
+                                        <td>{timeBegin} - {timeEnd}</td>
+                                        <td><Badge bg="success">{ca.statusId.statusValue}</Badge></td>
+                                        <td><Button variant="primary" onClick={(e) => viewBookingDetail(e, ca.bookingId)}><MdMenu /></Button></td>
+                                    </tr>
+                                </>
                         })}
                     </tbody>
                 </Table>

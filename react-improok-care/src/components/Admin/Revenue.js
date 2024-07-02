@@ -109,18 +109,18 @@ const Revenue = () => {
             <div className="Stats_Revenue_Detail">
                 <div className="Stats_Service_Price">
                     <div className="Stats_Service_Price_Paid">
-                        <BarChart labels={statsLabelsServicePricePaid} titleLabel="Biểu đồ thống kê số tiền khám đã trả" data={statsDataServicePricePaid} />
+                        <BarChart labels={statsLabelsServicePricePaid} titleLabel="Biểu đồ thống kê số tiền khám đã thanh toán" data={statsDataServicePricePaid} />
                     </div>
                     <div className="Stats_Service_Price_Unpaid">
-                        <BarChart labels={statsLabelsServicePriceUnpaid} titleLabel="Biểu đồ thống kê số tiền khám chưa trả" data={statsDataServicePriceUnpaid} />
+                        <BarChart labels={statsLabelsServicePriceUnpaid} titleLabel="Biểu đồ thống kê số tiền khám chưa thanh toán" data={statsDataServicePriceUnpaid} />
                     </div>
                 </div>
                 <div className="Stats_Medicine_Prescription">
                     <div className="Stats_Medicine_Prescription_Paid">
-                        <BarChart labels={statsLabelsMedicinePrescriptionPaid} titleLabel="Biểu đồ thống kê số tiền thuốc đã trả" data={statsDataMedicinePrescriptionPaid} />
+                        <BarChart labels={statsLabelsMedicinePrescriptionPaid} titleLabel="Biểu đồ thống kê số tiền thuốc đã thanh toán" data={statsDataMedicinePrescriptionPaid} />
                     </div>
                     <div className="Stats_Medicine_Prescription_Unpaid">
-                        <BarChart labels={statsLabelsMedicinePrescriptionUnpaid} titleLabel="Biểu đồ thống kê số tiền thuốc chưa trả" data={statsDataMedicinePrescriptionUnpaid} />
+                        <BarChart labels={statsLabelsMedicinePrescriptionUnpaid} titleLabel="Biểu đồ thống kê số tiền thuốc chưa thanh toán" data={statsDataMedicinePrescriptionUnpaid} />
                     </div>
                 </div>
             </div>
