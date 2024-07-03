@@ -136,38 +136,21 @@ const AcceptBooking = (props) => {
         }
     }
 
-    const refund = async (bookingId, name, price) => {
+    const getPaymentHistory = async (bookingId, name) => {
         try {
-            setLoading(true);
-            // let bookingId = q.get('bookingId')
-            let uri = "Bệnh nhân " + name + " đã được hoàn tiền thành công "
-            let encoded = encodeURIComponent(uri)
-            let res = await Apis.post(endpoints['vnpay-payment'], {
-                "amount": price,
-                "orderInfor": encoded,
-                "returnUrl": `http://localhost:3000/refund/?bookingId=${bookingId}`
-            });
-            window.location.href = res.data;
-            setLoading(false);
-            console.log(res.data);
-        } catch (error) {
-            Swal.fire(
-                'Thất bại', "Có lỗi xảy ra!", 'error'
-            );
-            console.log(error);
-        }
-    }
-
-    const getPaymentHistory = async (bookingId) => {
-        try {
-            // let bookingId = q.get('bookingId')
             let res = await authApi().get(endpoints['get-payment-by-booking'](bookingId))
             console.log(res.data)
-            // let e = endpoints['add-payment']
-            // e += `?bookingId=${bookingId}&vnp_ResponseId=${res.data.vnp_ResponseId}&vnp_command=${res.data.vnp_command}&vnp_ResponseCode=${`01`}&vnp_Message=${res.data.vnp_Message}&vnp_tmncode=${res.data.vnp_tmncode}&vnp_txnref=${res.data.vnp_txnref}&vnp_amount=${res.data.vnp_amount}&vnp_orderinfo=${res.data.vnp_orderinfo}&vnp_bankcode=${res.data.vnp_bankcode}&vnp_PayDate=${res.datavnp_PayDate}&vnp_TransactionNo=${res.data.vnp_TransactionNo}&vnp_TransactionStatus=${res.data.vnp_TransactionStatus}&vnp_securehash=${res.data.vnp_securehash}`;
-            // console.log(e);
-            // let pay = await authApi().get(e)
-            // console.log(pay.data)
+            let e = endpoints['add-payment']
+            e += `?bookingId=${bookingId}&vnp_ResponseId=${res.data.vnpResponseid}&vnp_command=${res.data.vnpCommand}&vnp_ResponseCode=${`01`}&vnp_Message=${res.data.vnpMessage}&vnp_tmncode=${res.data.vnpTmncode}&vnp_txnref=${res.data.vnpTxnref}&vnp_amount=${res.data.vnpAmount}&vnp_orderinfo=${{ name } + ` đã được hoàn tiền thành công`}&vnp_bankcode=${res.data.vnpBankcode}&vnp_PayDate=${res.data.vnpPaydate}&vnp_TransactionNo=${res.data.vnpTransactionno}&vnp_TransactionStatus=${res.data.vnpTransactionstatus}&vnp_securehash=${res.data.vnpSecurehash}`;
+            console.log(e);
+            let pay = await authApi().get(e)
+            let mes = await Apis.post(endpoints['send-custom-email'], {
+                "mailTo": "2051052125thai@ou.edu.vn",
+                "mailSubject": "Hoàn tiền",
+                "mailContent": `${name} đã được hoàn tiền giao dịch ${res.data.vnpResponseid} với số tiền là ${res.data.vnpAmount} VNĐ`
+            })
+            console.log(mes.data)
+            console.log(pay.data)
         } catch (error) {
             console.log(error)
         }
@@ -206,7 +189,7 @@ const AcceptBooking = (props) => {
                                     <td><Button variant="primary" onClick={(e) => handleCreatePrescription(e, ab[0], ab[6], ab[10].profilePatientId, ab[11].profileDoctorId)}><Link to='/doctor/examination/prescription' class="toPrescription" onClick={() => removePres()}><FaBookMedical /></Link></Button></td>
                                     {/* <td><Button variant="primary"><Link to={`/zego/?roomID=${ab[9]}`} class="toPrescription">Meeting</Link></Button></td> */}
                                     <td><Button variant="primary" onClick={() => handleMeetingClick(ab[9])}><FaVideo /></Button></td>
-                                    <td><Button variant="primary" onClick={() => { getPaymentHistory(ab[0]) }}>Hủy & Hoàn tiền</Button></td>
+                                    <td><Button variant="primary" onClick={() => { cancelBooking(ab[0]); getPaymentHistory(ab[0], name) }}>Hủy & Hoàn tiền</Button></td>
                                 </tr>
                             </>
                         })}

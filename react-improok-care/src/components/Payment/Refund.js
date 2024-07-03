@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
-import "./Refund.css";
 import success from "../../assets/images/success.png"
 import { Badge } from "react-bootstrap";
 import { UserContext } from "../../App";

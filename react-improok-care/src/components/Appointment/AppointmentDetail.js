@@ -4,7 +4,6 @@ import { Badge } from "react-bootstrap";
 import "./AppointmentDetail.css"
 import { useSearchParams } from "react-router-dom";
 import moment from "moment";
-import Swal from "sweetalert2";
 
 const AppointmentDetail = () => {
     const [bookingDetail, setBookingDetail] = useState([]);
@@ -44,45 +43,23 @@ const AppointmentDetail = () => {
         process();
     }
 
-    const refund = async () => {
-        try {
-            setLoading(true);
-            let bookingId = q.get('bookingId')
-            let uri = "Bệnh nhân " + bookingDetail[5] + " đã được hoàn tiền thành công "
-            let encoded = encodeURIComponent(uri)
-            let res = await Apis.post(endpoints['vnpay-payment'], {
-                "amount": bookingDetail[3],
-                "orderInfor": encoded,
-                "returnUrl": `http://localhost:3000/refund/?bookingId=${bookingId}`
-            });
-            window.location.href = res.data;
-            setLoading(false);
-            console.log(res.data);
-        } catch (error) {
-            Swal.fire(
-                'Thất bại', "Có lỗi xảy ra!", 'error'
-            );
-            console.log(error);
-        }
-    }
-
     useEffect(() => {
         viewBookingDetail()
     }, [])
 
-    const getPaymentHistory = async () => {
+    const getPaymentHistory = async (name) => {
         try {
             let bookingId = q.get('bookingId')
             let res = await authApi().get(endpoints['get-payment-by-booking'](bookingId))
             console.log(res.data)
             let e = endpoints['add-payment']
-            e += `?bookingId=${bookingId}&vnp_ResponseId=${res.data.vnpResponseid}&vnp_command=${res.data.vnpCommand}&vnp_ResponseCode=${`01`}&vnp_Message=${res.data.vnpMessage}&vnp_tmncode=${res.data.vnpTmncode}&vnp_txnref=${res.data.vnpTxnref}&vnp_amount=${res.data.vnpAmount}&vnp_orderinfo=${res.data.vnpOrderinfo}&vnp_bankcode=${res.data.vnpBankcode}&vnp_PayDate=${res.data.vnpPaydate}&vnp_TransactionNo=${res.data.vnpTransactionno}&vnp_TransactionStatus=${res.data.vnpTransactionstatus}&vnp_securehash=${res.data.vnpSecurehash}`;
+            e += `?bookingId=${bookingId}&vnp_ResponseId=${res.data.vnpResponseid}&vnp_command=${res.data.vnpCommand}&vnp_ResponseCode=${`01`}&vnp_Message=${res.data.vnpMessage}&vnp_tmncode=${res.data.vnpTmncode}&vnp_txnref=${res.data.vnpTxnref}&vnp_amount=${res.data.vnpAmount}&vnp_orderinfo=${{ name } + ` đã được hoàn tiền thành công`}&vnp_bankcode=${res.data.vnpBankcode}&vnp_PayDate=${res.data.vnpPaydate}&vnp_TransactionNo=${res.data.vnpTransactionno}&vnp_TransactionStatus=${res.data.vnpTransactionstatus}&vnp_securehash=${res.data.vnpSecurehash}`;
             console.log(e);
             let pay = await authApi().get(e)
             let mes = await Apis.post(endpoints['send-custom-email'], {
                 "mailTo": "2051052125thai@ou.edu.vn",
                 "mailSubject": "Hoàn tiền",
-                "mailContent": `Bạn đã được hoàn tiền với giao dịch ${res.data.vnpResponseid} với số tiền là ${res.data.vnpAmount} VNĐ`
+                "mailContent": `${name} đã được hoàn tiền giao dịch ${res.data.vnpResponseid} với số tiền là ${res.data.vnpAmount} VNĐ`
             })
             console.log(mes.data)
             console.log(pay.data)
@@ -153,7 +130,7 @@ const AppointmentDetail = () => {
                     </div>
                 </div>
                 <div className="Cancel_Button">
-                    {bookingDetail[12]?.statusValue === "Đã khám xong" || bookingDetail[12]?.statusValue === "Đã xác nhận" ? '' : bookingDetail[12]?.statusValue === "Chưa thanh toán" || bookingDetail[12]?.statusValue === "Tái khám" ? <button type="button" onClick={(evt) => cancelBooking(evt)}>Hủy lịch</button> : <button type="button" onClick={(evt) => { getPaymentHistory() }}>Hủy lịch & Hoàn tiền</button>}
+                    {bookingDetail[12]?.statusValue === "Đã khám xong" || bookingDetail[12]?.statusValue === "Đã xác nhận" ? '' : bookingDetail[12]?.statusValue === "Chưa thanh toán" || bookingDetail[12]?.statusValue === "Tái khám" ? <button type="button" onClick={(evt) => cancelBooking(evt)}>Hủy lịch</button> : <button type="button" onClick={(evt) => { cancelBooking(evt); getPaymentHistory(bookingDetail[5]) }}>Hủy lịch & Hoàn tiền</button>}
                 </div>
             </div>
         </div>

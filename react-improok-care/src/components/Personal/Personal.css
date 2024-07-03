@@ -32,7 +32,7 @@ div.Personal_Avatar {
 div.Personal_FirstName,
 div.Personal_LastName,
 div.Personal_UserName,
-div.Personal_Email,
+div.Personal_Email>div,
 div.Personal_Gender,
 div.Personal_Birthday {
     display: flex;
@@ -100,4 +100,18 @@ div.Update_Button button:focus-visible {
 
 div.PersonalPage_Right_Header>h2{
     color: #183e9f;
+}
+
+div.Personal_Email>p {
+    font-size: .7rem;
+    margin: 0;
+    position: absolute;
+    margin-top: -0.7rem;
+    margin-left: 18%;
+}
+
+div.PersonalPage_Right_Content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
