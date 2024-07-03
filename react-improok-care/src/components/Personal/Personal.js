@@ -53,6 +53,12 @@ const Personal = () => {
 
         const process = async () => {
             try {
+                if (isEmailValid === false) {
+                    Swal.fire(
+                        'Thất bại', 'Địa chỉ email không hợp lệ!', 'error'
+                    );
+                    return
+                }
                 const dateInput = document.getElementById('dateInput');
                 const selectedDate = dateInput.value; // Lấy giá trị ngày từ trường input
 
@@ -209,8 +215,10 @@ const Personal = () => {
                                         <Form.Control value={current_user?.firstname} type="text" disabled />
                                     </div>
                                     <div className="Personal_Email">
-                                        <Form.Label style={{ width: "30%" }}>Email</Form.Label>
-                                        <Form.Control value={current_user?.email} type="email" disabled />
+                                        <div>
+                                            <Form.Label style={{ width: "30%" }}>Email</Form.Label>
+                                            <Form.Control value={current_user?.email} type="email" disabled />
+                                        </div>
                                     </div>
                                     <div className="Personal_Gender">
                                         <Form.Label style={{ width: "30%" }}>Giới tính</Form.Label>
@@ -250,8 +258,10 @@ const Personal = () => {
                                         <Form.Control defaultValue={current_user?.firstname} onChange={(e) => change(e, "firstname")} type="text" placeholder="Tên" required />
                                     </div>
                                     <div className="Personal_Email">
-                                        <Form.Label style={{ width: "30%" }}>Email</Form.Label>
-                                        <Form.Control defaultValue={current_user?.email === null ? "" : current_user?.email} onChange={(e) => validateEmail(e)} type="email" placeholder="Email" required id="emailInput" />
+                                        <div>
+                                            <Form.Label style={{ width: "30%" }}>Email</Form.Label>
+                                            <Form.Control defaultValue={current_user?.email === null ? "" : current_user?.email} onChange={(e) => validateEmail(e)} type="email" placeholder="Email" required id="emailInput" />
+                                        </div>
                                         <p id="errorMsg" style={{ color: 'red', display: 'none' }}>Email không hợp lệ</p>
                                     </div>
                                     <div className="Personal_Gender">

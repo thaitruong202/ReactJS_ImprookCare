@@ -34,7 +34,7 @@ const NewBooking = (props) => {
                     let mes = await Apis.post(endpoints['send-custom-email'], {
                         "mailTo": "2051052125thai@ou.edu.vn",
                         "mailSubject": "Xác nhận lịch khám",
-                        "mailContent": `Lịch khám của quý khách đã được xác nhận! Giờ khám bệnh là ${time} Vui lòng đến trước giờ khám bệnh 15’. \n`
+                        "mailContent": `Lịch khám của quý khách đã được xác nhận! Giờ khám bệnh là ${time}. Vui lòng đến trước giờ khám bệnh 15’. <br/>`
                             + "Đây là liên kết meeting: " + `<a href=${link} style=\"background-color: #03cb6e; padding: 10px; color: #fff; border-radius: 0.42rem; \">\n`
                             + "                <strong>Vui lòng bấm vào đây</strong>\n"
                             + "            </a>\n"
@@ -127,7 +127,7 @@ const NewBooking = (props) => {
     //     setShowModal(true);
     // };
 
-    const handleShowModal = (title, buttText, cfmText, action, bookingId, name, price) => {
+    const handleShowModal = (title, buttText, cfmText, action, bookingId, name) => {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success mr-2',
@@ -151,7 +151,7 @@ const NewBooking = (props) => {
                 );
                 if (buttText === "Từ chối") {
                     cancelBooking(bookingId)
-                    refund(bookingId, name, price)
+                    getPaymentHistory(bookingId, name)
                 }
             } else if (result.dismiss === Swal.DismissReason.cancel) {
             }
@@ -180,25 +180,23 @@ const NewBooking = (props) => {
         }
     }
 
-    const refund = async (bookingId, name, price) => {
+    const getPaymentHistory = async (bookingId, name) => {
         try {
-            setLoading(true);
-            // let bookingId = q.get('bookingId')
-            let uri = "Bệnh nhân " + name + " đã được hoàn tiền thành công "
-            let encoded = encodeURIComponent(uri)
-            let res = await Apis.post(endpoints['vnpay-payment'], {
-                "amount": price,
-                "orderInfor": encoded,
-                "returnUrl": `http://localhost:3000/refund/?bookingId=${bookingId}`
-            });
-            window.location.href = res.data;
-            setLoading(false);
-            console.log(res.data);
+            let res = await authApi().get(endpoints['get-payment-by-booking'](bookingId))
+            console.log(res.data)
+            let e = endpoints['add-payment']
+            e += `?bookingId=${bookingId}&vnp_ResponseId=${res.data.vnpResponseid}&vnp_command=${res.data.vnpCommand}&vnp_ResponseCode=${`01`}&vnp_Message=${res.data.vnpMessage}&vnp_tmncode=${res.data.vnpTmncode}&vnp_txnref=${res.data.vnpTxnref}&vnp_amount=${res.data.vnpAmount}&vnp_orderinfo=${{ name } + ` đã được hoàn tiền thành công`}&vnp_bankcode=${res.data.vnpBankcode}&vnp_PayDate=${res.data.vnpPaydate}&vnp_TransactionNo=${res.data.vnpTransactionno}&vnp_TransactionStatus=${res.data.vnpTransactionstatus}&vnp_securehash=${res.data.vnpSecurehash}`;
+            console.log(e);
+            let pay = await authApi().get(e)
+            let mes = await Apis.post(endpoints['send-custom-email'], {
+                "mailTo": "2051052125thai@ou.edu.vn",
+                "mailSubject": "Hoàn tiền",
+                "mailContent": `${name} đã được hoàn tiền giao dịch ${res.data.vnpResponseid} với số tiền là ${res.data.vnpAmount} VNĐ`
+            })
+            console.log(mes.data)
+            console.log(pay.data)
         } catch (error) {
-            Swal.fire(
-                'Thất bại', "Có lỗi xảy ra!", 'error'
-            );
-            console.log(error);
+            console.log(error)
         }
     }
 
