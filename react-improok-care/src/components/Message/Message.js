@@ -170,7 +170,7 @@ const Message = () => {
         setLoading(true);
         // connectNotification();
 
-        console.log(doctorId, current_user?.userId, messageContent);
+        console.log(doctorId, current_user?.userId, messageContent, avatar);
 
         let form = new FormData();
         form.append("profileDoctorId", doctorId);
@@ -180,7 +180,9 @@ const Message = () => {
 
         if (avatar.current.files[0] !== undefined && avatar !== null) {
             // form.append("avatar", avatar.current.files[0]);
-            form.append("avatar", chatImg);
+            form.append("avatar", avatar.current.files[0]);
+            console.log(avatar)
+            // form.append("avatar", chatImg);
         } else {
             form.append("avatar", new Blob());
         }

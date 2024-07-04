@@ -68,7 +68,7 @@ const Refund = () => {
             console.log(e);
             let pay = await authApi().get(e)
             let mes = await Apis.post(endpoints['send-custom-email'], {
-                "mailTo": "2051052125thai@ou.edu.vn",
+                "mailTo": "2051050549tuan@ou.edu.vn",
                 "mailSubject": "Hoàn tiền",
                 "mailContent": `Bạn đã được hoàn tiền với giao dịch ${vnp_ResponseId} với số tiền là ${vnp_amount} VNĐ`
             })

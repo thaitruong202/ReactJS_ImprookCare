@@ -61,7 +61,7 @@ const AppointmentDetail = () => {
             console.log(e);
             let pay = await authApi().get(e)
             let mes = await Apis.post(endpoints['send-custom-email'], {
-                "mailTo": "2051052125thai@ou.edu.vn",
+                "mailTo": "2051050549tuan@ou.edu.vn",
                 "mailSubject": "Hoàn tiền",
                 "mailContent": `${name} đã được hoàn tiền giao dịch ${res.data.vnpResponseid} với số tiền là ${res.data.vnpAmount} VNĐ`
             })

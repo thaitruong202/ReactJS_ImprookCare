@@ -6,6 +6,7 @@ import Spinner from "../../layout/Spinner"
 import { Navigate } from "react-router-dom";
 import doctorai from "../../assets/images/doctor_ai.png";
 import { authApi, endpoints } from "../../configs/Apis";
+import { toast } from "react-toastify";
 
 const ConsultantChat = () => {
     const [current_user,] = useContext(UserContext);
@@ -42,6 +43,8 @@ const ConsultantChat = () => {
             setMessageContent('');
             setLoading(false);
         } catch (error) {
+            setLoading(false)
+            toast.error("You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors")
             console.log(error)
         }
     }

@@ -32,7 +32,7 @@ const NewBooking = (props) => {
                     let time = new Date(res.data.scheduleId.timeSlotId.timeBegin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                     console.log(time)
                     let mes = await Apis.post(endpoints['send-custom-email'], {
-                        "mailTo": "2051052125thai@ou.edu.vn",
+                        "mailTo": "2051050549tuan@ou.edu.vn",
                         "mailSubject": "Xác nhận lịch khám",
                         "mailContent": `Lịch khám của quý khách đã được xác nhận! Giờ khám bệnh là ${time}. Vui lòng đến trước giờ khám bệnh 15’. <br/>`
                             + "Đây là liên kết meeting: " + `<a href=${link} style=\"background-color: #03cb6e; padding: 10px; color: #fff; border-radius: 0.42rem; \">\n`
@@ -189,7 +189,7 @@ const NewBooking = (props) => {
             console.log(e);
             let pay = await authApi().get(e)
             let mes = await Apis.post(endpoints['send-custom-email'], {
-                "mailTo": "2051052125thai@ou.edu.vn",
+                "mailTo": "2051050549tuan@ou.edu.vn",
                 "mailSubject": "Hoàn tiền",
                 "mailContent": `${name} đã được hoàn tiền giao dịch ${res.data.vnpResponseid} với số tiền là ${res.data.vnpAmount} VNĐ`
             })

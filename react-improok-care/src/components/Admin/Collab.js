@@ -75,7 +75,7 @@ const Collab = () => {
                     toast.error(res.data);
                 }
                 let mes = await Apis.post(endpoints['send-custom-email'], {
-                    "mailTo": "2051052125thai@ou.edu.vn",
+                    "mailTo": "2051050549thai@ou.edu.vn",
                     "mailSubject": "Xác nhận hợp tác!",
                     "mailContent": "Bạn đã được xác nhận trở thành bác sĩ của IMPROOK"
                 })
@@ -108,7 +108,7 @@ const Collab = () => {
                     toast.error(res.data);
                 }
                 let mes = await Apis.post(endpoints['send-custom-email'], {
-                    "mailTo": "2051052125thai@ou.edu.vn",
+                    "mailTo": "2051050549tuan@ou.edu.vn",
                     "mailSubject": "Từ chối hợp tác!",
                     "mailContent": "Rất tiếc nhưng bạn không đủ điều kiện để trở thành bác sĩ của hệ thống. Mong sẽ có cơ hội hợp tác với bạn vào dịp khác"
                 })
