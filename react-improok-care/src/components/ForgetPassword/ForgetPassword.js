@@ -98,7 +98,9 @@ const ForgetPassword = () => {
                 setSuccessVerification(!successVerification);
                 setLoading(false);
             } catch (error) {
+                setLoading(false)
                 console.log(error);
+                toast.error(error.response.data)
             }
         }
         process();
@@ -165,7 +167,7 @@ const ForgetPassword = () => {
                                 <img src={LoginLogo} alt="IMPROOKCARE" />
                             </div>
                             <div className="ForgetPassword_Right">
-                                <Form className="ForgetPassword_Form">
+                                <div className="ForgetPassword_Form">
                                     <div className="ForgetPassword_Detail">
                                         <div className="ForgetPassword_Header">
                                             <div>QUÊN MẬT KHẨU</div>
@@ -229,7 +231,7 @@ const ForgetPassword = () => {
                                             {/* {loading === true ? <Spinner /> : <button type="button" className="ForgetPassword_Butt">Xác thực</button>} */}
                                         </div>
                                     </div>
-                                </Form>
+                                </div>
                             </div>
                         </div>
                     </div>

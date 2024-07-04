@@ -95,6 +95,8 @@ const PhoneVerification = () => {
                 setLoading(false);
                 nav('/register');
             } catch (error) {
+                setLoading(false);
+                toast.error(error.response.data)
                 console.log(error);
             }
         }

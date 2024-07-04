@@ -127,9 +127,9 @@ const Profile = () => {
         loadProfilePatient();
     }, [current_user?.userId])
 
-    // useEffect(() => {
-    //     loadLockProfile()
-    // }, [lockProfile])
+    useEffect(() => {
+        loadLockProfile()
+    }, [lockProfile])
 
     const viewProfilePatient = (evt, pp) => {
         evt.preventDefault();
@@ -315,6 +315,7 @@ const Profile = () => {
             else
                 setGender(false)
             // setCurrentFormattedDate(current_user?.birthday.toISOString().split('T')[0])
+            setPersonalAddress("850 Nguyễn Tất Thành")
             setCurrentFormattedDate(moment(current_user?.birthday).format('YYYY-MM-DD'))
             console.log(moment(current_user?.birthday).format('YYYY-MM-DD'))
             console.log(typeof (moment(current_user?.birthday).format('YYYY-MM-DD')))

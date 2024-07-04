@@ -93,7 +93,7 @@ const PaidAppointment = () => {
             let uri = patientName + " đã thanh toán tiền khám thành công"
             let encoded = encodeURIComponent(uri)
             let res = await Apis.post(endpoints['vnpay-payment'], {
-                "amount": 11000,
+                "amount": price,
                 "orderInfor": encoded,
                 "returnUrl": "http://localhost:3000/payment/"
             });

@@ -3,7 +3,7 @@ import reminder from "../../assets/images/reminder.png"
 import { useContext, useEffect, useState } from "react";
 import { BookingManagementContext } from "../../App";
 import { authApi, endpoints } from '../../configs/Apis';
-import { Button, Modal, Table } from 'react-bootstrap';
+import { Button, Form, Modal, Table } from 'react-bootstrap';
 
 const PrescriptionHistory = () => {
     const [booking,] = useContext(BookingManagementContext);
@@ -12,6 +12,14 @@ const PrescriptionHistory = () => {
     const [prescriptionDetail, setPrescriptionDetail] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    const [profilePatientName, setProfilePatientName] = useState('');
+    const [profileDoctorName, setProfileDoctorName] = useState('');
+
+    const [diagnosis, setDiagnosis] = useState('')
+    const [symptom, setSymptom] = useState('')
+    const [notes, setNotes] = useState('')
+
 
     useEffect(() => {
         const loadPrescriptionHistory = async () => {
@@ -34,6 +42,11 @@ const PrescriptionHistory = () => {
         const process = async () => {
             try {
                 setShowModal(true);
+                setProfileDoctorName(lp.bookingId.scheduleId.profileDoctorId.name)
+                setProfilePatientName(lp.bookingId.profilePatientId.name)
+                setSymptom(lp.symptoms)
+                setDiagnosis(lp.diagnosis)
+                setNotes(lp.notes)
                 setLoading(true);
                 // let res = await authApi().get(endpoints['prescription-detail-by-prescription-id'](pl.prescriptionId))
                 let res = await authApi().get(endpoints['prescription-detail-reminder'](lp.prescriptionId))
@@ -102,7 +115,31 @@ const PrescriptionHistory = () => {
                                             <Modal.Title>Thông tin đơn thuốc</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <Table striped bordered hover>
+                                            <div className="Prescription_Right_Body_1">
+                                                <div className="Prescription_Info_1">
+                                                    <div className="Patient_Name">
+                                                        <Form.Label style={{ width: "40%" }}>Bệnh nhân</Form.Label>
+                                                        <Form.Control type="text" value={profilePatientName} disabled />
+                                                    </div>
+                                                    <div className="Doctor_Name">
+                                                        <Form.Label style={{ width: "40%" }}>Bác sĩ</Form.Label>
+                                                        <Form.Control type="text" value={profileDoctorName} disabled />
+                                                    </div>
+                                                    <div className="Symptom">
+                                                        <Form.Label style={{ width: "40%" }}>Triệu chứng</Form.Label>
+                                                        <Form.Control type="Text" value={symptom} disabled />
+                                                    </div>
+                                                    <div className="Diagnosis">
+                                                        <Form.Label style={{ width: "40%" }}>Chuẩn đoán</Form.Label>
+                                                        <Form.Control type="Text" value={diagnosis} disabled />
+                                                    </div>
+                                                </div>
+                                                <div className="Notes">
+                                                    <Form.Label style={{ width: "40%" }}>Ghi chú</Form.Label>
+                                                    <Form.Control as="textarea" aria-label="With textarea" value={notes} disabled />
+                                                </div>
+                                            </div>
+                                            <Table striped bordered hover style={{ marginTop: '2rem' }}>
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>

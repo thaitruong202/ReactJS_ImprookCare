@@ -174,7 +174,7 @@ const PaymentHistory = () => {
                                                                                 <td>{pl.bookingId.profilePatientId.name}</td>
                                                                                 <td>{timeBegin} - {timeEnd}</td>
                                                                                 {/* <td>{pl.bookingId.scheduleId.profileDoctorId.specialtyId.specialtyName}</td> */}
-                                                                                <td>{pl.vnpTransactionstatus === "00" ? <Badge bg="success">Thành công</Badge> : <Badge bg="danger">Thất bại</Badge>}</td>
+                                                                                <td>{pl.vnpResponsecode === "00" ? <Badge bg="success">Thanh toán thành công</Badge> : pl.vnpResponsecode === "01" ? <Badge bg="primary">Hoàn tiền thành công</Badge> : <Badge bg="danger">Thất bại</Badge>}</td>
                                                                                 <td><Button variant="primary" onClick={() => viewPaymentDetail(pl)}><MdMenu /></Button></td>
                                                                             </tr>
                                                                         </>
