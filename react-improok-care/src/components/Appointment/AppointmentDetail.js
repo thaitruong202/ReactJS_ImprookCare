@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import Apis, { authApi, endpoints } from "../../configs/Apis";
 import { Badge } from "react-bootstrap";
 import "./AppointmentDetail.css"
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const AppointmentDetail = () => {
     const [bookingDetail, setBookingDetail] = useState([]);
     const [q] = useSearchParams();
     const [loading, setLoading] = useState(false)
+
+    const nav = useNavigate()
 
     const viewBookingDetail = async () => {
         try {
@@ -52,8 +55,9 @@ const AppointmentDetail = () => {
             let bookingId = q.get('bookingId')
             let res = await authApi().get(endpoints['get-payment-by-booking'](bookingId))
             console.log(res.data)
+            console.log(name)
             let e = endpoints['add-payment']
-            e += `?bookingId=${bookingId}&vnp_ResponseId=${res.data.vnpResponseid}&vnp_command=${res.data.vnpCommand}&vnp_ResponseCode=${`01`}&vnp_Message=${res.data.vnpMessage}&vnp_tmncode=${res.data.vnpTmncode}&vnp_txnref=${res.data.vnpTxnref}&vnp_amount=${res.data.vnpAmount}&vnp_orderinfo=${{ name } + ` đã được hoàn tiền thành công`}&vnp_bankcode=${res.data.vnpBankcode}&vnp_PayDate=${res.data.vnpPaydate}&vnp_TransactionNo=${res.data.vnpTransactionno}&vnp_TransactionStatus=${res.data.vnpTransactionstatus}&vnp_securehash=${res.data.vnpSecurehash}`;
+            e += `?bookingId=${bookingId}&vnp_ResponseId=${res.data.vnpResponseid}&vnp_command=${res.data.vnpCommand}&vnp_ResponseCode=${`01`}&vnp_Message=${res.data.vnpMessage}&vnp_tmncode=${res.data.vnpTmncode}&vnp_txnref=${res.data.vnpTxnref}&vnp_amount=${res.data.vnpAmount}&vnp_orderinfo=${name + ` đã được hoàn tiền thành công`}&vnp_bankcode=${res.data.vnpBankcode}&vnp_PayDate=${res.data.vnpPaydate}&vnp_TransactionNo=${res.data.vnpTransactionno}&vnp_TransactionStatus=${res.data.vnpTransactionstatus}&vnp_securehash=${res.data.vnpSecurehash}`;
             console.log(e);
             let pay = await authApi().get(e)
             let mes = await Apis.post(endpoints['send-custom-email'], {
@@ -63,6 +67,10 @@ const AppointmentDetail = () => {
             })
             console.log(mes.data)
             console.log(pay.data)
+            nav("/user/appointment/paid")
+            Swal.fire(
+                'Thành công', "Hoàn tiền thành công", 'success'
+            );
         } catch (error) {
             console.log(error)
         }
@@ -130,7 +138,7 @@ const AppointmentDetail = () => {
                     </div>
                 </div>
                 <div className="Cancel_Button">
-                    {bookingDetail[12]?.statusValue === "Đã khám xong" || bookingDetail[12]?.statusValue === "Đã xác nhận" ? '' : bookingDetail[12]?.statusValue === "Chưa thanh toán" || bookingDetail[12]?.statusValue === "Tái khám" ? <button type="button" onClick={(evt) => cancelBooking(evt)}>Hủy lịch</button> : <button type="button" onClick={(evt) => { cancelBooking(evt); getPaymentHistory(bookingDetail[5]) }}>Hủy lịch & Hoàn tiền</button>}
+                    {bookingDetail[12]?.statusValue === "Đã khám xong" || bookingDetail[12]?.statusValue === "Đã xác nhận" || bookingDetail[11] === true ? '' : bookingDetail[12]?.statusValue === "Chưa thanh toán" || bookingDetail[12]?.statusValue === "Tái khám" ? <button type="button" onClick={(evt) => cancelBooking(evt)}>Hủy lịch</button> : <button type="button" onClick={(evt) => { cancelBooking(evt); getPaymentHistory(bookingDetail[5]) }}>Hủy lịch & Hoàn tiền</button>}
                 </div>
             </div>
         </div>

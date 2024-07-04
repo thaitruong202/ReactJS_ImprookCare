@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import Apis, { endpoints } from "../../configs/Apis";
+import Apis, { authApi, endpoints } from "../../configs/Apis";
 import avatar_user from "../../assets/images/avatar-user.png"
 
 const AddUser = () => {
@@ -74,7 +74,7 @@ const AddUser = () => {
 
                 setLoading(true);
 
-                let res = await Apis.post(endpoints['admin-add-user'], form);
+                let res = await authApi().post(endpoints['admin-add-user'], form);
                 if (res.status === 200) {
                     toast.success(res.data)
                 }

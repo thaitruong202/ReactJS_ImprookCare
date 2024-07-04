@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap"
 import medicine_image from "../../assets/images/medicine.png"
 import { toast } from "react-toastify";
-import Apis, { endpoints } from "../../configs/Apis";
+import Apis, { authApi, endpoints } from "../../configs/Apis";
 
 
 const AddMedicine = () => {
@@ -78,7 +78,7 @@ const AddMedicine = () => {
 
                 setLoading(true);
 
-                let res = await Apis.post(endpoints['admin-add-medicine'], form);
+                let res = await authApi().post(endpoints['admin-add-medicine'], form);
                 if (res.status === 200) {
                     toast.success(res.data);
                     loadMedicine();
